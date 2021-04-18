@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 废弃
+
 # 安装到 $GOPATH/bin 目录中
 go install \
     github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
@@ -10,7 +12,7 @@ go install \
 # 采用buf的方式生成
 wget https://github.com/bufbuild/buf/releases/download/v0.41.0/buf-Darwin-x86_64.tar.gz
 tar xvzf buf-Darwin-x86_64.tar.gz
-mv buf/bin/ ${GOPATH}/bin/
+mv buf/bin/* ${GOPATH}/bin/
 
 
 # 弃用：protoc使用起来不方便
