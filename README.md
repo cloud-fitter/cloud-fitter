@@ -15,3 +15,16 @@ wget https://github.com/bufbuild/buf/releases/download/v0.41.0/buf-Darwin-x86_64
 tar xvzf buf-Darwin-x86_64.tar.gz
 mv buf/bin/ ${GOPATH}/bin/
 ```
+
+## 验证环境搭建
+
+```shell script
+# 编译通过
+go build 
+
+## 运行二进制文件
+./cloud-fitter
+
+## 通过HTTP请求访问到结果
+curl --location --request POST 'http://localhost:8081/v1/demo'
+```

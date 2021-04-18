@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"net"
 	"net/http"
 
 	"github.com/golang/glog"
@@ -11,6 +12,17 @@ import (
 
 	gw "github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
 )
+
+type server struct {
+	// pb.go中自动生成的，是个空结构体
+	gw.YourServiceServer
+}
+
+func (s *server) Echo(ctx context.Context, req *gw.StringMessage) (*gw.StringMessage, error) {
+	return &gw.StringMessage{
+		Value: "Hello, My Friend! Welcome to Cloud Fitter",
+	}, nil
+}
 
 var (
 	// command-line options:
@@ -39,6 +51,19 @@ func run() error {
 func main() {
 	flag.Parse()
 	defer glog.Flush()
+
+	go func() {
+		lis, err := net.Listen("tcp", ":9090")
+		if err != nil {
+			glog.Fatalf("failed to listen: %v", err)
+		}
+
+		s := grpc.NewServer()
+		gw.RegisterYourServiceServer(s, &server{})
+		if err := s.Serve(lis); err != nil {
+			glog.Fatalf("failed to serve: %v", err)
+		}
+	}()
 
 	if err := run(); err != nil {
 		glog.Fatal(err)
