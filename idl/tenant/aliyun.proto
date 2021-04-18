@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package pbtenant;
+
+option go_package = "github.com/cloud-fitter/gen/pbtenant";
+
+enum AliyunRegionId {
+  cn_qingdao = 0;     // 青岛
+  cn_beijing = 1;     // 北京
+  cn_zhangjiakou = 2; // 张家口
+  cn_huhehaote = 3;   // 呼和浩特
+  cn_wulanchabu = 4;  // 乌兰察布
+  cn_hangzhou = 5;    // 杭州
+  cn_shanghai = 6;    // 上海
+  cn_shenzhen = 7;    // 深圳
+  cn_heyuan = 8;      // 河源
+  cn_guangzhou = 9;   // 广州
+  cn_chengdu = 10;    // 成都
+
+  cn_hongkong = 20;    // 中国香港-香港
+  ap_southeast_1 = 21; // 亚太东南1-新加坡
+  ap_southeast_2 = 22; // 亚太东南2-悉尼
+  ap_southeast_3 = 23; // 亚太东南3-吉隆坡
+  ap_southeast_5 = 24; // 亚太东南5-雅加达
+  ap_south_1 = 25;     // 亚太南部1-孟买
+  ap_northeast_1 = 26; // 亚太东北1-东京
+  us_west_1 = 27;      // 美国西部1-硅谷
+  us_east_1 = 28;      // 美国东部1-弗吉尼亚
+  eu_central_1 = 29;   // 欧洲中部1-法兰克福
+  eu_west_1 = 30;      // 英国（伦敦）-伦敦
+  me_east_1 = 31;      // 中东东部1-迪拜
+}

@@ -1,0 +1,19 @@
+syntax = "proto3";
+package pbtenant;
+
+option go_package = "github.com/cloud-fitter/gen/pbtenant";
+
+import "google/api/annotations.proto";
+
+message StringMessage {
+  string value = 1;
+}
+
+service YourService {
+  rpc Echo(StringMessage) returns (StringMessage) {
+    option (google.api.http) = {
+      post: "/v1/demo"
+      body: "*"
+    };
+  }
+}
