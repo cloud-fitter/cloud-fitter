@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+cloud-fitter
 
 # Test binary, built with `go test -c`
 *.test
@@ -12,7 +13,7 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
 
 # buf for protobuf
 buf.lock
@@ -20,3 +21,6 @@ buf.lock
 # idea project
 .idea/
 .vscode/
+
+# remove go sum
+go.sum
