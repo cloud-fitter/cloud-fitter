@@ -1,15 +1,20 @@
 syntax = "proto3";
-package pbtenant;
+package pbecs;
 
-option go_package = "github.com/cloud-fitter/gen/pbtenant";
+option go_package = "github.com/cloud-fitter/gen/pbecs";
 
 import "google/api/annotations.proto";
+
+message ECSInstance {
+  string host_name = 1;
+  repeated string public_ips = 2;
+}
 
 message StringMessage {
   string value = 1;
 }
 
-service YourService {
+service ECSService {
   rpc Echo(StringMessage) returns (StringMessage) {
     option (google.api.http) = {
       post: "/v1/demo"

@@ -1,0 +1,97 @@
+syntax = "proto3";
+package pbtenant;
+
+option go_package = "github.com/cloud-fitter/gen/pbtenant";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+// 云配置信息
+message CloudConfigs {
+  // 阿里云的配置
+  repeated CloudConfig ali = 1;
+  // 腾讯云的配置
+  repeated CloudConfig tencent = 2;
+}
+
+message CloudConfig {
+  // 账户名称，由用户自定义，必须全局唯一，方便多个系统之间的维护
+  string name = 1;
+  // 认证方式1：与 access_secret 结合使用，两者均非空时生效
+  string access_id = 2;
+  // 认证方式1：与 access_id 结合使用，两者均非空时生效
+  string access_secret = 3;
+}
+
+// 阿里云区域，需要将对应的 _ 转化为 -
+enum AliRegionId {
+  cn_qingdao = 0;     // 青岛
+  cn_beijing = 1;     // 北京
+  cn_zhangjiakou = 2; // 张家口
+  cn_huhehaote = 3;   // 呼和浩特
+  cn_wulanchabu = 4;  // 乌兰察布
+  cn_hangzhou = 5;    // 杭州
+  cn_shanghai = 6;    // 上海
+  cn_shenzhen = 7;    // 深圳
+  cn_heyuan = 8;      // 河源
+  cn_guangzhou = 9;   // 广州
+  cn_chengdu = 10;    // 成都
+
+  cn_hongkong = 20;    // 中国香港-香港
+  ap_southeast_1 = 21; // 亚太东南1-新加坡
+  ap_southeast_2 = 22; // 亚太东南2-悉尼
+  ap_southeast_3 = 23; // 亚太东南3-吉隆坡
+  ap_southeast_5 = 24; // 亚太东南5-雅加达
+  ap_south_1 = 25;     // 亚太南部1-孟买
+  ap_northeast_1 = 26; // 亚太东北1-东京
+  us_west_1 = 27;      // 美国西部1-硅谷
+  us_east_1 = 28;      // 美国东部1-弗吉尼亚
+  eu_central_1 = 29;   // 欧洲中部1-法兰克福
+  eu_west_1 = 30;      // 英国（伦敦）-伦敦
+  me_east_1 = 31;      // 中东东部1-迪拜
+}
+
+// 阿里云区域，需要将对应的 _ 转化为 -
+enum TencentRegionId {
+  ap_bangkok = 0;     // 曼谷
+  ap_beijing = 1;     // 北京
+  ap_chengdu = 2; // 成都
+  ap_chongqing = 3;   // 重庆
+  ap_guangzhou = 4;  // 广州
+  ap_guangzhou_open = 5;    // 广州Open
+  ap_hongkong = 6;    // 中国香港
+  ap_mumbai = 7;    // 孟买
+  ap_seoul = 8;      // 首尔
+  ap_shanghai = 9;   // 上海
+  ap_shanghai_fsi = 10;    // 上海金融
+  ap_shenzhen_fsi = 11;    // 深圳金融
+  ap_singapore = 12; // 新加坡
+  ap_tokyo = 13; // 东京
+  eu_frankfurt = 14; // 法兰克福
+  eu_moscow = 15; // 莫斯科
+  na_ashburn = 16;     // 阿什本
+  na_siliconvalley = 17;// 硅谷
+  na_toronto = 18;      // 多伦多
+}
+
+message StringMessage {
+  string value = 1;
+}
+
+service TenantService {
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
+    description: "所有云租户的认证服务"
+    external_docs: {
+      url: "https://github.com/cloud-fitter/cloud-fitter";
+      description: "Find out more about CloudFitter";
+    }
+  };
+
+  rpc Echo(StringMessage) returns (StringMessage) {
+    option (google.api.http) = {
+      post: "/v1/demo"
+      body: "*"
+    };
+  }
+}

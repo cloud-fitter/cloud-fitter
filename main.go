@@ -6,8 +6,10 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 
 	gw "github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
@@ -49,8 +51,17 @@ func run() error {
 }
 
 func main() {
+	var configFile string
+	flag.StringVar(&configFile, "c", "config.yaml", "config file path")
 	flag.Parse()
 	defer glog.Flush()
+
+	if err := tenanter.LoadCloudConfigs(configFile); err != nil {
+		if !errors.Is(err, tenanter.ErrLoadTenanterFileEmpty) {
+			glog.Fatalf("LoadCloudConfigs error %+v", err)
+		}
+		glog.Warningf("LoadCloudConfigs empty file path %s", configFile)
+	}
 
 	go func() {
 		lis, err := net.Listen("tcp", ":9090")
@@ -60,7 +71,7 @@ func main() {
 
 		s := grpc.NewServer()
 		gw.RegisterYourServiceServer(s, &server{})
-		if err := s.Serve(lis); err != nil {
+		if err = s.Serve(lis); err != nil {
 			glog.Fatalf("failed to serve: %v", err)
 		}
 	}()

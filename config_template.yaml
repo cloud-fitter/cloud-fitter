@@ -1,0 +1,8 @@
+ali:
+  - name: "demo"
+    accessid: ""
+    accesssecret: ""
+tencent:
+  - name: "demo2"
+    accessid: ""
+    accesssecret: ""

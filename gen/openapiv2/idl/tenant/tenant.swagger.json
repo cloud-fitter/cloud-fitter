@@ -1,12 +1,17 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "idl/demo/service.proto",
+    "title": "idl/tenant/tenant.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "YourService"
+      "name": "TenantService",
+      "description": "所有云租户的认证服务",
+      "externalDocs": {
+        "description": "Find out more about CloudFitter",
+        "url": "https://github.com/cloud-fitter/cloud-fitter"
+      }
     }
   ],
   "consumes": [
@@ -18,12 +23,12 @@
   "paths": {
     "/v1/demo": {
       "post": {
-        "operationId": "YourService_Echo",
+        "operationId": "TenantService_Echo",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/demoStringMessage"
+              "$ref": "#/definitions/pbtenantStringMessage"
             }
           },
           "default": {
@@ -39,18 +44,18 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/demoStringMessage"
+              "$ref": "#/definitions/pbtenantStringMessage"
             }
           }
         ],
         "tags": [
-          "YourService"
+          "TenantService"
         ]
       }
     }
   },
   "definitions": {
-    "demoStringMessage": {
+    "pbtenantStringMessage": {
       "type": "object",
       "properties": {
         "value": {

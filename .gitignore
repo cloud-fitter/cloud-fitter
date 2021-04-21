@@ -24,3 +24,6 @@ buf.lock
 
 # remove go sum
 go.sum
+
+# config file
+config.yaml

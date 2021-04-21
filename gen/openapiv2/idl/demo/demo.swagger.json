@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "idl/tenant/service.proto",
+    "title": "idl/demo/demo.proto",
     "version": "version not set"
   },
   "tags": [
@@ -18,12 +18,13 @@
   "paths": {
     "/v1/demo": {
       "post": {
+        "summary": "Echo 样例服务",
         "operationId": "YourService_Echo",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbtenantStringMessage"
+              "$ref": "#/definitions/demoStringMessage"
             }
           },
           "default": {
@@ -39,18 +40,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbtenantStringMessage"
+              "$ref": "#/definitions/demoStringMessage"
             }
           }
         ],
         "tags": [
           "YourService"
-        ]
+        ],
+        "deprecated": true,
+        "security": [],
+        "externalDocs": {
+          "description": "Find out more about the interface",
+          "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+        }
       }
     }
   },
   "definitions": {
-    "pbtenantStringMessage": {
+    "demoStringMessage": {
       "type": "object",
       "properties": {
         "value": {
