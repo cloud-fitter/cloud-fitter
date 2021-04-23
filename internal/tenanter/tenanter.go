@@ -1,8 +1,10 @@
 package tenanter
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"sync"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
@@ -10,9 +12,12 @@ import (
 	"github.com/pkg/errors"
 )
 
+const osEnvKey = "CLOUD_FITTER_CONFIGS"
+
 var (
 	ErrTenantNameExist       = errors.New("tenant name already exist")
 	ErrLoadTenanterFromFile  = errors.New("load tenanter from file failed")
+	ErrLoadTenanterFromOsEnv = errors.New("load tenanter from os env failed")
 	ErrLoadTenanterFileEmpty = errors.New("load tenanter from file failed")
 )
 
@@ -27,6 +32,13 @@ type globalStore struct {
 }
 
 func LoadCloudConfigs(configFile string) error {
+	if err := LoadCloudConfigsFromFile(configFile); errors.Is(err, ErrLoadTenanterFileEmpty) {
+		return LoadCloudConfigsFromOsEnv()
+	}
+	return nil
+}
+
+func LoadCloudConfigsFromFile(configFile string) error {
 	b, err := ioutil.ReadFile(configFile)
 	if err != nil {
 		return ErrLoadTenanterFileEmpty
@@ -37,6 +49,20 @@ func LoadCloudConfigs(configFile string) error {
 		return errors.WithMessage(ErrLoadTenanterFromFile, err.Error())
 	}
 
+	return load(configs)
+}
+
+func LoadCloudConfigsFromOsEnv() error {
+	data := os.Getenv(osEnvKey)
+	var configs = new(pbtenant.CloudConfigs)
+	if err := json.Unmarshal([]byte(data), configs); err != nil {
+		return errors.WithMessage(ErrLoadTenanterFromOsEnv, err.Error())
+	}
+
+	return load(configs)
+}
+
+func load(configs *pbtenant.CloudConfigs) error {
 	gStore.Lock()
 	defer gStore.Unlock()
 

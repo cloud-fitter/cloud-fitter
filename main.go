@@ -56,11 +56,11 @@ func main() {
 	flag.Parse()
 	defer glog.Flush()
 
-	if err := tenanter.LoadCloudConfigs(configFile); err != nil {
+	if err := tenanter.LoadCloudConfigsFromFile(configFile); err != nil {
 		if !errors.Is(err, tenanter.ErrLoadTenanterFileEmpty) {
-			glog.Fatalf("LoadCloudConfigs error %+v", err)
+			glog.Fatalf("LoadCloudConfigsFromFile error %+v", err)
 		}
-		glog.Warningf("LoadCloudConfigs empty file path %s", configFile)
+		glog.Warningf("LoadCloudConfigsFromFile empty file path %s", configFile)
 	}
 
 	go func() {

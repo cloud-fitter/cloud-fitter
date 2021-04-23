@@ -4,4 +4,6 @@ go:
   - 1.15.x
 env:
   - GO111MODULE=on
+before_script:
+  - go build
 script: go test ./...
