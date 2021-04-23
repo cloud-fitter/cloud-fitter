@@ -1,23 +1,52 @@
 syntax = "proto3";
 package pbecs;
 
-option go_package = "github.com/cloud-fitter/gen/pbecs";
+option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs";
 
+import "idl/pbtenant/tenant.proto";
 import "google/api/annotations.proto";
 
 message ECSInstance {
-  string host_name = 1;
-  repeated string public_ips = 2;
+  // 实例id
+  string instance_id = 1;
+  // 实例名称
+  string instance_name = 2;
+  // 地域，数据中心
+  string region_id = 3;
+  // 可用区，物理隔离
+  string zone_id = 4;
+  // 公网ip
+  repeated string public_ips = 5;
+  // 状态
+  string status = 6;
+  // 创建时间
+  string creation_time = 7;
+  // 实例描述
+  string description = 8;
 }
 
-message StringMessage {
-  string value = 1;
+message ECSStatisticReq {
+  pbtenant.CloudProvider provider = 1;
+}
+
+message ECSStatisticResp {
+  message list {
+    // 云提供商
+    pbtenant.CloudProvider provider = 1;
+    // 区域Id，参考 tenant.proto 中的各个云的区域
+    int32 regionId = 2;
+    // 数量
+    int64 count = 3;
+    // 区域名称，方便可读，参考 tenant.proto 中的各个云的区域
+    string regionName = 4;
+  }
+  repeated list ecses = 1;
 }
 
 service ECSService {
-  rpc Echo(StringMessage) returns (StringMessage) {
+  rpc ECSStatistic(ECSStatisticReq) returns (ECSStatisticResp) {
     option (google.api.http) = {
-      post: "/v1/demo"
+      post: "/ecs/statistic"
       body: "*"
     };
   }

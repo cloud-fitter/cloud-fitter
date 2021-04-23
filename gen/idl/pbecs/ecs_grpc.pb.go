@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ECSServiceClient interface {
-	Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error)
+	ECSStatistic(ctx context.Context, in *ECSStatisticReq, opts ...grpc.CallOption) (*ECSStatisticResp, error)
 }
 
 type eCSServiceClient struct {
@@ -29,9 +29,9 @@ func NewECSServiceClient(cc grpc.ClientConnInterface) ECSServiceClient {
 	return &eCSServiceClient{cc}
 }
 
-func (c *eCSServiceClient) Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error) {
-	out := new(StringMessage)
-	err := c.cc.Invoke(ctx, "/pbecs.ECSService/Echo", in, out, opts...)
+func (c *eCSServiceClient) ECSStatistic(ctx context.Context, in *ECSStatisticReq, opts ...grpc.CallOption) (*ECSStatisticResp, error) {
+	out := new(ECSStatisticResp)
+	err := c.cc.Invoke(ctx, "/pbecs.ECSService/ECSStatistic", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *eCSServiceClient) Echo(ctx context.Context, in *StringMessage, opts ...
 // All implementations must embed UnimplementedECSServiceServer
 // for forward compatibility
 type ECSServiceServer interface {
-	Echo(context.Context, *StringMessage) (*StringMessage, error)
+	ECSStatistic(context.Context, *ECSStatisticReq) (*ECSStatisticResp, error)
 	mustEmbedUnimplementedECSServiceServer()
 }
 
@@ -50,8 +50,8 @@ type ECSServiceServer interface {
 type UnimplementedECSServiceServer struct {
 }
 
-func (UnimplementedECSServiceServer) Echo(context.Context, *StringMessage) (*StringMessage, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
+func (UnimplementedECSServiceServer) ECSStatistic(context.Context, *ECSStatisticReq) (*ECSStatisticResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ECSStatistic not implemented")
 }
 func (UnimplementedECSServiceServer) mustEmbedUnimplementedECSServiceServer() {}
 
@@ -66,20 +66,20 @@ func RegisterECSServiceServer(s grpc.ServiceRegistrar, srv ECSServiceServer) {
 	s.RegisterService(&ECSService_ServiceDesc, srv)
 }
 
-func _ECSService_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StringMessage)
+func _ECSService_ECSStatistic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ECSStatisticReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ECSServiceServer).Echo(ctx, in)
+		return srv.(ECSServiceServer).ECSStatistic(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pbecs.ECSService/Echo",
+		FullMethod: "/pbecs.ECSService/ECSStatistic",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ECSServiceServer).Echo(ctx, req.(*StringMessage))
+		return srv.(ECSServiceServer).ECSStatistic(ctx, req.(*ECSStatisticReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,8 +92,8 @@ var ECSService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ECSServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Echo",
-			Handler:    _ECSService_Echo_Handler,
+			MethodName: "ECSStatistic",
+			Handler:    _ECSService_ECSStatistic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

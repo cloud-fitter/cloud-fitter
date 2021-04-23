@@ -2,7 +2,6 @@ package tenanter
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"sync"
@@ -15,20 +14,19 @@ import (
 const osEnvKey = "CLOUD_FITTER_CONFIGS"
 
 var (
-	ErrTenantNameExist       = errors.New("tenant name already exist")
+	// ErrTenantNameExist       = errors.New("tenant name already exist")
 	ErrLoadTenanterFromFile  = errors.New("load tenanter from file failed")
 	ErrLoadTenanterFromOsEnv = errors.New("load tenanter from os env failed")
 	ErrLoadTenanterFileEmpty = errors.New("load tenanter from file failed")
 )
 
-type Tenanter interface {
-}
+type Tenanter interface{}
 
-var gStore = globalStore{stores: make(map[string]Tenanter)}
+var gStore = globalStore{stores: make(map[pbtenant.CloudProvider]map[string]Tenanter)}
 
 type globalStore struct {
 	sync.RWMutex
-	stores map[string]Tenanter
+	stores map[pbtenant.CloudProvider]map[string]Tenanter
 }
 
 func LoadCloudConfigs(configFile string) error {
@@ -66,48 +64,33 @@ func load(configs *pbtenant.CloudConfigs) error {
 	gStore.Lock()
 	defer gStore.Unlock()
 
-	// 保证原子性，先全部检查无重复，再插入
-	for _, c := range configs.Ali {
-		if _, ok := gStore.stores[c.Name]; ok {
-			return errors.WithMessage(ErrTenantNameExist, fmt.Sprintf("name is %s", c.Name))
-		}
-	}
-	for _, c := range configs.Tencent {
-		if _, ok := gStore.stores[c.Name]; ok {
-			return errors.WithMessage(ErrTenantNameExist, fmt.Sprintf("name is %s", c.Name))
-		}
-	}
-	for _, c := range configs.Huawei {
-		if _, ok := gStore.stores[c.Name]; ok {
-			return errors.WithMessage(ErrTenantNameExist, fmt.Sprintf("name is %s", c.Name))
-		}
+	for k := range pbtenant.CloudProvider_name {
+		gStore.stores[pbtenant.CloudProvider(k)] = make(map[string]Tenanter)
 	}
 
-	for _, c := range configs.Ali {
+	// 这里 name 会覆盖
+	for _, c := range configs.Configs {
 		if c.AccessId != "" && c.AccessSecret != "" {
-			gStore.stores[c.Name] = NewTenantWithAccessKey(c.AccessId, c.AccessSecret)
-		}
-	}
-	for _, c := range configs.Tencent {
-		if c.AccessId != "" && c.AccessSecret != "" {
-			gStore.stores[c.Name] = NewTenantWithAccessKey(c.AccessId, c.AccessSecret)
-		}
-	}
-	for _, c := range configs.Huawei {
-		if c.AccessId != "" && c.AccessSecret != "" {
-			gStore.stores[c.Name] = NewTenantWithAccessKey(c.AccessId, c.AccessSecret)
+			gStore.stores[c.Provider][c.Name] = NewTenantWithAccessKey(c.AccessId, c.AccessSecret)
 		}
 	}
 	return nil
 }
 
-func GetTenanter(name string) (Tenanter, bool) {
+func GetTenantersMap(provider pbtenant.CloudProvider) map[string]Tenanter {
+	gStore.RLock()
+	defer gStore.RUnlock()
+
+	return gStore.stores[provider]
+}
+
+func GetTenanter(provider pbtenant.CloudProvider, name string) (Tenanter, bool) {
 	gStore.RLock()
 	defer gStore.RUnlock()
 
 	if gStore.stores == nil {
 		return nil, false
 	}
-	tenanter, ok := gStore.stores[name]
+	tenanter, ok := gStore.stores[provider][name]
 	return tenanter, ok
 }

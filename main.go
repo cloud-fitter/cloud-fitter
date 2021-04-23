@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/cloud-fitter/cloud-fitter/internal/server"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -14,17 +15,6 @@ import (
 
 	gw "github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
 )
-
-type server struct {
-	// pb.go中自动生成的，是个空结构体
-	gw.YourServiceServer
-}
-
-func (s *server) Echo(ctx context.Context, req *gw.StringMessage) (*gw.StringMessage, error) {
-	return &gw.StringMessage{
-		Value: "Hello, My Friend! Welcome to Cloud Fitter",
-	}, nil
-}
 
 var (
 	// command-line options:
@@ -70,7 +60,7 @@ func main() {
 		}
 
 		s := grpc.NewServer()
-		gw.RegisterYourServiceServer(s, &server{})
+		gw.RegisterYourServiceServer(s, &server.Server{})
 		if err = s.Serve(lis); err != nil {
 			glog.Fatalf("failed to serve: %v", err)
 		}
