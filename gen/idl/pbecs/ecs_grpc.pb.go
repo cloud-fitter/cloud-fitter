@@ -97,5 +97,5 @@ var ECSService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "idl/ecs/ecs.proto",
+	Metadata: "idl/pbecs/ecs.proto",
 }

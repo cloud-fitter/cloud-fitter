@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"sync"
 
-	pbtenant "github.com/cloud-fitter/cloud-fitter/gen/idl/tenant"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/go-yaml/yaml"
 	"github.com/pkg/errors"
 )
@@ -51,6 +51,11 @@ func LoadCloudConfigs(configFile string) error {
 			return errors.WithMessage(ErrTenantNameExist, fmt.Sprintf("name is %s", c.Name))
 		}
 	}
+	for _, c := range configs.Huawei {
+		if _, ok := gStore.stores[c.Name]; ok {
+			return errors.WithMessage(ErrTenantNameExist, fmt.Sprintf("name is %s", c.Name))
+		}
+	}
 
 	for _, c := range configs.Ali {
 		if c.AccessId != "" && c.AccessSecret != "" {
@@ -62,7 +67,11 @@ func LoadCloudConfigs(configFile string) error {
 			gStore.stores[c.Name] = NewTenantWithAccessKey(c.AccessId, c.AccessSecret)
 		}
 	}
-
+	for _, c := range configs.Huawei {
+		if c.AccessId != "" && c.AccessSecret != "" {
+			gStore.stores[c.Name] = NewTenantWithAccessKey(c.AccessId, c.AccessSecret)
+		}
+	}
 	return nil
 }
 

@@ -1,0 +1,115 @@
+syntax = "proto3";
+package pbtenant;
+
+option go_package = "github.com/cloud-fitter/gen/pbtenant";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+// 云配置信息
+message CloudConfigs {
+  // 阿里云
+  repeated CloudConfig ali = 1;
+  // 腾讯云
+  repeated CloudConfig tencent = 2;
+  // 华为云
+  repeated CloudConfig huawei = 3;
+}
+
+message CloudConfig {
+  // 账户名称，由用户自定义，必须全局唯一，方便多个系统之间的维护
+  string name = 1;
+  // 认证方式1：与 access_secret 结合使用，两者均非空时生效
+  string access_id = 2;
+  // 认证方式1：与 access_id 结合使用，两者均非空时生效
+  string access_secret = 3;
+}
+
+// 阿里云区域，需要将对应的 _ 转化为 -
+enum AliRegionId {
+  ali_all = 0;
+  ali_cn_qingdao = 1;     // 青岛
+  ali_cn_beijing = 2;     // 北京
+  ali_cn_zhangjiakou = 3; // 张家口
+  ali_cn_huhehaote = 4;   // 呼和浩特
+  ali_cn_wulanchabu = 5;  // 乌兰察布
+  ali_cn_hangzhou = 6;    // 杭州
+  ali_cn_shanghai = 7;    // 上海
+  ali_cn_shenzhen = 8;    // 深圳
+  ali_cn_heyuan = 9;      // 河源
+  ali_cn_guangzhou = 10;   // 广州
+  ali_cn_chengdu = 11;    // 成都
+  ali_cn_hongkong = 12;    // 中国香港-香港
+  ali_ap_southeast_1 = 13; // 亚太东南1-新加坡
+  ali_ap_southeast_2 = 14; // 亚太东南2-悉尼
+  ali_ap_southeast_3 = 15; // 亚太东南3-吉隆坡
+  ali_ap_southeast_5 = 16; // 亚太东南5-雅加达
+  ali_ap_south_1 = 17;     // 亚太南部1-孟买
+  ali_ap_northeast_1 = 18; // 亚太东北1-东京
+  ali_us_west_1 = 19;      // 美国西部1-硅谷
+  ali_us_east_1 = 20;      // 美国东部1-弗吉尼亚
+  ali_eu_central_1 = 21;   // 欧洲中部1-法兰克福
+  ali_eu_west_1 = 22;      // 英国（伦敦）-伦敦
+  ali_me_east_1 = 23;      // 中东东部1-迪拜
+}
+
+// 阿里云区域，需要将对应的 _ 转化为 -
+enum TencentRegionId {
+  tc_all = 0;
+  tc_ap_bangkok = 1;     // 曼谷
+  tc_ap_beijing = 2;     // 北京
+  tc_ap_chengdu = 3; // 成都
+  tc_ap_chongqing = 4;   // 重庆
+  tc_ap_guangzhou = 5;  // 广州
+  tc_ap_guangzhou_open = 6;    // 广州Open
+  tc_ap_hongkong = 7;    // 中国香港
+  tc_ap_mumbai = 8;    // 孟买
+  tc_ap_seoul = 9;      // 首尔
+  tc_ap_shanghai = 10;   // 上海
+  tc_ap_shanghai_fsi = 11;    // 上海金融
+  tc_ap_shenzhen_fsi = 12;    // 深圳金融
+  tc_ap_singapore = 13; // 新加坡
+  tc_ap_tokyo = 14; // 东京
+  tc_eu_frankfurt = 15; // 法兰克福
+  tc_eu_moscow = 16; // 莫斯科
+  tc_na_ashburn = 17;     // 阿什本
+  tc_na_siliconvalley = 18;// 硅谷
+  tc_na_toronto = 19;      // 多伦多
+}
+
+// 华为云区域，需要将对应的 _ 转化为 -
+enum HuaweiRegionId {
+  hw_all = 0;
+  hw_cn_north_1 = 1;
+  hw_cn_north_4 = 2;
+  hw_cn_south_1 = 3;
+  hw_cn_east_2 = 4;
+  hw_cn_east_3 = 5;
+  hw_cn_southwest_2 = 6;
+  hw_ap_southeast_1 = 7;
+  hw_ap_southeast_2 = 8;
+  hw_ap_southeast_3 = 9;
+  hw_af_south_1 = 10;
+}
+
+message StringMessage {
+  string value = 1;
+}
+
+service TenantService {
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
+    description: "所有云租户的认证服务"
+    external_docs: {
+      url: "https://github.com/cloud-fitter/cloud-fitter";
+      description: "Find out more about CloudFitter";
+    }
+  };
+
+  rpc Echo(StringMessage) returns (StringMessage) {
+    option (google.api.http) = {
+      post: "/v1/demo"
+      body: "*"
+    };
+  }
+}

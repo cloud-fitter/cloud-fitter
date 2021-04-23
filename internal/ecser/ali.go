@@ -3,8 +3,8 @@ package ecser
 import (
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests"
 	aliecs "github.com/aliyun/alibaba-cloud-sdk-go/services/ecs"
-	pbecs "github.com/cloud-fitter/cloud-fitter/gen/idl/ecs"
-	pbtenant "github.com/cloud-fitter/cloud-fitter/gen/idl/tenant"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/pkg/errors"
 )

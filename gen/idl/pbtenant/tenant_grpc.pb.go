@@ -97,5 +97,5 @@ var TenantService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "idl/tenant/tenant.proto",
+	Metadata: "idl/pbtenant/tenant.proto",
 }

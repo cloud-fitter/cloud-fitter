@@ -1,8 +1,8 @@
 package ecser
 
 import (
-	pbecs "github.com/cloud-fitter/cloud-fitter/gen/idl/ecs"
-	pbtenant "github.com/cloud-fitter/cloud-fitter/gen/idl/tenant"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/pkg/errors"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"

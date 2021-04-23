@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "idl/ecs/ecs.proto",
+    "title": "idl/pbecs/ecs.proto",
     "version": "version not set"
   },
   "tags": [

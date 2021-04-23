@@ -8,8 +8,9 @@ import (
 )
 
 var (
-	demoTenant  tenanter.Tenanter
-	demo2Tenant tenanter.Tenanter
+	aliTenant tenanter.Tenanter
+	tcTenant  tenanter.Tenanter
+	hwTenant  tenanter.Tenanter
 )
 
 func TestMain(m *testing.M) {
@@ -19,11 +20,14 @@ func TestMain(m *testing.M) {
 	}
 
 	var ok bool
-	if demoTenant, ok = tenanter.GetTenanter("demo"); !ok {
-		panic("get demo tenanter failed")
+	if aliTenant, ok = tenanter.GetTenanter("demo"); !ok {
+		panic("get aliTenant failed")
 	}
-	if demo2Tenant, ok = tenanter.GetTenanter("demo2"); !ok {
-		panic("get demo2 tenanter failed")
+	if tcTenant, ok = tenanter.GetTenanter("demo2"); !ok {
+		panic("get tcTenant failed")
+	}
+	if hwTenant, ok = tenanter.GetTenanter("demo3"); !ok {
+		panic("get hwTenant failed")
 	}
 	os.Exit(m.Run())
 }

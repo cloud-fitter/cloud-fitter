@@ -6,3 +6,7 @@ tencent:
   - name: "demo2"
     accessid: ""
     accesssecret: ""
+huawei:
+  - name: "demo3"
+    accessid: ""
+    accesssecret: ""
