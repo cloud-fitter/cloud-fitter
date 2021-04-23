@@ -1,7 +1,9 @@
 # cloud-fitter 公有云适配口
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/cloud-fitter/cloud-fitter?style=flat-square)](https://goreportcard.com/report/github.com/cloud-fitter/cloud-fitter)
 [![Build Status](https://travis-ci.com/cloud-fitter/cloud-fitter.svg?branch=master)](https://travis-ci.com/cloud-fitter/cloud-fitter)
 [![codecov](https://codecov.io/gh/cloud-fitter/cloud-fitter/branch/master/graph/badge.svg?token=OJJG8KF8A3)](https://codecov.io/gh/cloud-fitter/cloud-fitter)
+[![LICENSE](https://img.shields.io/github/license/cloud-fitter/cloud-fitter.svg?style=flat-square)](https://github.com/cloud-fitter/cloud-fitter/blob/master/LICENSE)
 
 ## 开发环境准备
 
