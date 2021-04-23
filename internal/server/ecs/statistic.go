@@ -30,11 +30,11 @@ func Statistic(provider pbtenant.CloudProvider) ([]*pbecs.ECSStatisticRespList, 
 
 	switch provider {
 	case pbtenant.CloudProvider_ali_cloud:
-		for _, t := range tenanters {
+		for i := range tenanters {
 			var wg sync.WaitGroup
 			wg.Add(len(pbtenant.AliRegionId_name))
 			for rId := range pbtenant.AliRegionId_name {
-				go func(rId int32) {
+				go func(rId int32, t tenanter.Tenanter) {
 					defer wg.Done()
 					if rId != int32(pbtenant.AliRegionId_ali_all) {
 						if ali, err := ecser.NewAliEcsClient(rId, t); err == nil {
@@ -45,16 +45,16 @@ func Statistic(provider pbtenant.CloudProvider) ([]*pbecs.ECSStatisticRespList, 
 							}
 						}
 					}
-				}(rId)
+				}(rId, tenanters[i].Clone())
 			}
 			wg.Wait()
 		}
 	case pbtenant.CloudProvider_tencent_cloud:
-		for _, t := range tenanters {
+		for i := range tenanters {
 			var wg sync.WaitGroup
 			wg.Add(len(pbtenant.TencentRegionId_name))
 			for rId := range pbtenant.TencentRegionId_name {
-				go func(rId int32) {
+				go func(rId int32, t tenanter.Tenanter) {
 					defer wg.Done()
 					if rId != int32(pbtenant.TencentRegionId_tc_all) {
 						if tc, err := ecser.NewTencentCvmClient(rId, t); err == nil {
@@ -65,7 +65,7 @@ func Statistic(provider pbtenant.CloudProvider) ([]*pbecs.ECSStatisticRespList, 
 							}
 						}
 					}
-				}(rId)
+				}(rId, tenanters[i].Clone())
 			}
 			wg.Wait()
 		}

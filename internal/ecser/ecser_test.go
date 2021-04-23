@@ -8,10 +8,10 @@ import (
 )
 
 func TestEcser_DescribeInstances(t *testing.T) {
-	ali, _ := NewAliEcsClient(int32(pbtenant.AliRegionId_ali_cn_hangzhou), aliTenant)
+	ali, _ := NewAliEcsClient(int32(pbtenant.AliRegionId_ali_cn_hangzhou), aliTenant.Clone())
 	aliFailed, _ := NewAliEcsClient(int32(pbtenant.AliRegionId_ali_cn_hangzhou), tenanter.NewTenantWithAccessKey("", ""))
 
-	tc, _ := NewTencentCvmClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tcTenant)
+	tc, _ := NewTencentCvmClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tcTenant.Clone())
 	tcFailed, _ := NewTencentCvmClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tenanter.NewTenantWithAccessKey("", ""))
 
 	// hw, _ := NewHuaweiEcsClient(pbtenant.HuaweiRegionId_hw_cn_north_1, hwTenant)
@@ -58,10 +58,10 @@ func TestEcser_DescribeInstances(t *testing.T) {
 }
 
 func TestEcser_ECSStatistic(t *testing.T) {
-	ali, _ := NewAliEcsClient(int32(pbtenant.AliRegionId_ali_cn_hangzhou), aliTenant)
+	ali, _ := NewAliEcsClient(int32(pbtenant.AliRegionId_ali_cn_hangzhou), aliTenant.Clone())
 	aliFailed, _ := NewAliEcsClient(int32(pbtenant.AliRegionId_ali_cn_hangzhou), tenanter.NewTenantWithAccessKey("", ""))
 
-	tc, _ := NewTencentCvmClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tcTenant)
+	tc, _ := NewTencentCvmClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tcTenant.Clone())
 	tcFailed, _ := NewTencentCvmClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tenanter.NewTenantWithAccessKey("", ""))
 
 	// hw, _ := NewHuaweiEcsClient(pbtenant.HuaweiRegionId_hw_cn_north_1, hwTenant)

@@ -12,10 +12,17 @@ func NewTenantWithAccessKey(accessKeyId, accessKeySecret string) Tenanter {
 	}
 }
 
-func (tennat *AccessKeyTenant) GetId() string {
-	return tennat.id
+func (tenant *AccessKeyTenant) GetId() string {
+	return tenant.id
 }
 
-func (tennat *AccessKeyTenant) GetSecret() string {
-	return tennat.secret
+func (tenant *AccessKeyTenant) GetSecret() string {
+	return tenant.secret
+}
+
+func (tenant *AccessKeyTenant) Clone() Tenanter {
+	return &AccessKeyTenant{
+		id:     tenant.id,
+		secret: tenant.secret,
+	}
 }

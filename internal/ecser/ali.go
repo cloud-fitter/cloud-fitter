@@ -25,6 +25,7 @@ func NewAliEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
 
 	switch t := tenant.(type) {
 	case *tenanter.AccessKeyTenant:
+		// 阿里云的sdk有并发问题，go test 加上-race 能检测出来
 		client, err = aliecs.NewClientWithAccessKey(rName, t.GetId(), t.GetSecret())
 	default:
 	}

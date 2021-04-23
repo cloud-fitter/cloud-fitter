@@ -14,18 +14,19 @@ import (
 const osEnvKey = "CLOUD_FITTER_CONFIGS"
 
 var (
-	// ErrTenantNameExist       = errors.New("tenant name already exist")
 	ErrLoadTenanterFromFile  = errors.New("load tenanter from file failed")
 	ErrLoadTenanterFromOsEnv = errors.New("load tenanter from os env failed")
 	ErrLoadTenanterFileEmpty = errors.New("load tenanter from file failed")
 )
 
-type Tenanter interface{}
+type Tenanter interface {
+	Clone() Tenanter
+}
 
 var gStore = globalStore{stores: make(map[pbtenant.CloudProvider]map[string]Tenanter)}
 
 type globalStore struct {
-	sync.RWMutex
+	sync.Mutex
 	stores map[pbtenant.CloudProvider]map[string]Tenanter
 }
 
@@ -78,19 +79,23 @@ func load(configs *pbtenant.CloudConfigs) error {
 }
 
 func GetTenantersMap(provider pbtenant.CloudProvider) map[string]Tenanter {
-	gStore.RLock()
-	defer gStore.RUnlock()
+	gStore.Lock()
+	defer gStore.Unlock()
 
-	return gStore.stores[provider]
+	tmap := make(map[string]Tenanter, len(gStore.stores[provider]))
+	for k := range gStore.stores[provider] {
+		tmap[k] = gStore.stores[provider][k].Clone()
+	}
+	return tmap
 }
 
 func GetTenanter(provider pbtenant.CloudProvider, name string) (Tenanter, bool) {
-	gStore.RLock()
-	defer gStore.RUnlock()
+	gStore.Lock()
+	defer gStore.Unlock()
 
-	if gStore.stores == nil {
+	tenanter, ok := gStore.stores[provider][name]
+	if !ok {
 		return nil, false
 	}
-	tenanter, ok := gStore.stores[provider][name]
-	return tenanter, ok
+	return tenanter.Clone(), true
 }
