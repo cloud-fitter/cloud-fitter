@@ -1,6 +1,7 @@
 # cloud-fitter 公有云适配口
 
 [![Build Status](https://travis-ci.com/cloud-fitter/cloud-fitter.svg?branch=master)](https://travis-ci.com/cloud-fitter/cloud-fitter)
+[![codecov](https://codecov.io/gh/cloud-fitter/cloud-fitter/branch/master/graph/badge.svg?token=OJJG8KF8A3)](https://codecov.io/gh/cloud-fitter/cloud-fitter)
 
 ## 开发环境准备
 
