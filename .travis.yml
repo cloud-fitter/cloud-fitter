@@ -6,4 +6,7 @@ env:
   - GO111MODULE=on
 before_script:
   - go build
-script: go test ./...
+script:
+  - "./unittest.sh"
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
