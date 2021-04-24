@@ -9,6 +9,8 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 enum OurTeam {
   // github: Junedayday
   junedayday = 0;
+  // github: cloud-users
+  cloud_users = 1;
 }
 
 message StringMessage { string value = 1; }
