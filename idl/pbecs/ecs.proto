@@ -25,9 +25,7 @@ message ECSInstance {
   string description = 8;
 }
 
-message ECSStatisticReq {
-  pbtenant.CloudProvider provider = 1;
-}
+message ECSStatisticReq { pbtenant.CloudProvider provider = 1; }
 
 message ECSStatisticResp {
   message list {
@@ -46,8 +44,8 @@ message ECSStatisticResp {
 service ECSService {
   rpc ECSStatistic(ECSStatisticReq) returns (ECSStatisticResp) {
     option (google.api.http) = {
-      post: "/ecs/statistic"
-      body: "*"
+      post : "/ecs/statistic"
+      body : "*"
     };
   }
 }
