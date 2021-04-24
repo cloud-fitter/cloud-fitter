@@ -6,25 +6,16 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
+	"github.com/cloud-fitter/cloud-fitter/internal/server"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
-
-	gw "github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
 )
-
-type server struct {
-	// pb.go中自动生成的，是个空结构体
-	gw.YourServiceServer
-}
-
-func (s *server) Echo(ctx context.Context, req *gw.StringMessage) (*gw.StringMessage, error) {
-	return &gw.StringMessage{
-		Value: "Hello, My Friend! Welcome to Cloud Fitter",
-	}, nil
-}
 
 var (
 	// command-line options:
@@ -41,8 +32,11 @@ func run() error {
 	// Note: Make sure the gRPC server is running properly and accessible
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := gw.RegisterYourServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
-	if err != nil {
+	if err := demo.RegisterYourServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+		return err
+	}
+
+	if err := pbecs.RegisterECSServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return err
 	}
 
@@ -52,7 +46,7 @@ func run() error {
 
 func main() {
 	var configFile string
-	flag.StringVar(&configFile, "c", "config.yaml", "config file path")
+	flag.StringVar(&configFile, "conf", "config/config.yaml", "config file path")
 	flag.Parse()
 	defer glog.Flush()
 
@@ -63,6 +57,8 @@ func main() {
 		glog.Warningf("LoadCloudConfigsFromFile empty file path %s", configFile)
 	}
 
+	glog.Infof("load tenant from file finished %+v", tenanter.GetTenantersMap(pbtenant.CloudProvider_ali_cloud))
+
 	go func() {
 		lis, err := net.Listen("tcp", ":9090")
 		if err != nil {
@@ -70,7 +66,9 @@ func main() {
 		}
 
 		s := grpc.NewServer()
-		gw.RegisterYourServiceServer(s, &server{})
+		demo.RegisterYourServiceServer(s, &server.Server{})
+		pbecs.RegisterECSServiceServer(s, &server.Server{})
+
 		if err = s.Serve(lis); err != nil {
 			glog.Fatalf("failed to serve: %v", err)
 		}

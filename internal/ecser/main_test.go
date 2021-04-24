@@ -4,6 +4,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 )
 
@@ -20,13 +21,13 @@ func TestMain(m *testing.M) {
 	}
 
 	var ok bool
-	if aliTenant, ok = tenanter.GetTenanter("demo"); !ok {
+	if aliTenant, ok = tenanter.GetTenanter(pbtenant.CloudProvider_ali_cloud, "demo"); !ok {
 		panic("get aliTenant failed")
 	}
-	if tcTenant, ok = tenanter.GetTenanter("demo2"); !ok {
+	if tcTenant, ok = tenanter.GetTenanter(pbtenant.CloudProvider_tencent_cloud, "demo2"); !ok {
 		panic("get tcTenant failed")
 	}
-	if hwTenant, ok = tenanter.GetTenanter("demo3"); !ok {
+	if hwTenant, ok = tenanter.GetTenanter(pbtenant.CloudProvider_huawei_cloud, "demo3"); !ok {
 		panic("get hwTenant failed")
 	}
 	os.Exit(m.Run())

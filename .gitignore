@@ -28,3 +28,5 @@ go.sum
 
 # config file
 config.yaml
+
+log/

@@ -3,6 +3,8 @@ package tenanter
 import (
 	"os"
 	"testing"
+
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 )
 
 var (
@@ -18,13 +20,13 @@ func TestMain(m *testing.M) {
 	}
 
 	var ok bool
-	if aliTenant, ok = GetTenanter("demo"); !ok {
+	if aliTenant, ok = GetTenanter(pbtenant.CloudProvider_ali_cloud, "demo"); !ok {
 		panic("get aliTenant failed")
 	}
-	if tcTenant, ok = GetTenanter("demo2"); !ok {
+	if tcTenant, ok = GetTenanter(pbtenant.CloudProvider_tencent_cloud, "demo2"); !ok {
 		panic("get tcTenantr failed")
 	}
-	if hwTenant, ok = GetTenanter("demo3"); !ok {
+	if hwTenant, ok = GetTenanter(pbtenant.CloudProvider_huawei_cloud, "demo3"); !ok {
 		panic("get hwTenant failed")
 	}
 	os.Exit(m.Run())
