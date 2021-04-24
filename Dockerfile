@@ -7,8 +7,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build .
+RUN go build . && ls | grep -v cloud-fitter | xargs rm -rf && mkdir log/
 
 EXPOSE 8081 9090
 
-ENTRYPOINT ["./cloud-fitter conf=config.yaml"]
+ENTRYPOINT ["./cloud-fitter", "-conf=config/config.yaml","-log_dir=log/"]
