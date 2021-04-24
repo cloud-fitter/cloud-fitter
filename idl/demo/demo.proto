@@ -6,26 +6,28 @@ option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/demo";
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
-message StringMessage {
-  string value = 1;
+enum OurTeam {
+  // github: Junedayday
+  junedayday = 0;
 }
+
+message StringMessage { string value = 1; }
 
 service YourService {
   // Echo 样例服务
   rpc Echo(StringMessage) returns (StringMessage) {
     option (google.api.http) = {
-      post: "/v1/demo"
-      body: "*"
+      post : "/v1/demo"
+      body : "*"
     };
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      deprecated: true // For testing purposes.
-      external_docs: {
-        url: "https://github.com/grpc-ecosystem/grpc-gateway";
-        description: "Find out more about the interface";
+      deprecated : true // For testing purposes.
+      external_docs : {
+        url : "https://github.com/grpc-ecosystem/grpc-gateway"
+        description : "Find out more about the interface"
       }
-      security: {
-      }
+      security : {}
     };
   }
 }
