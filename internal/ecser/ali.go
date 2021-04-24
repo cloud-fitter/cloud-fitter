@@ -1,6 +1,8 @@
 package ecser
 
 import (
+	"sync"
+
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests"
 	aliecs "github.com/aliyun/alibaba-cloud-sdk-go/services/ecs"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
@@ -8,6 +10,8 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/pkg/errors"
 )
+
+var aliClientMutex sync.Mutex
 
 type AliEcs struct {
 	cli        *aliecs.Client
@@ -25,8 +29,10 @@ func NewAliEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
 
 	switch t := tenant.(type) {
 	case *tenanter.AccessKeyTenant:
-		// 阿里云的sdk有并发问题，go test 加上-race 能检测出来
+		// 阿里云的sdk有一个 map 的并发问题，go test 加上-race 能检测出来，所以这里加一个锁
+		aliClientMutex.Lock()
 		client, err = aliecs.NewClientWithAccessKey(rName, t.GetId(), t.GetSecret())
+		aliClientMutex.Unlock()
 	default:
 	}
 
