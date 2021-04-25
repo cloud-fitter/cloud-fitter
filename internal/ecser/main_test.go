@@ -12,6 +12,7 @@ var (
 	aliTenant tenanter.Tenanter
 	tcTenant  tenanter.Tenanter
 	hwTenant  tenanter.Tenanter
+	awsTenant tenanter.Tenanter
 )
 
 func TestMain(m *testing.M) {
@@ -29,6 +30,9 @@ func TestMain(m *testing.M) {
 	}
 	if hwTenant, ok = tenanter.GetTenanter(pbtenant.CloudProvider_huawei_cloud, "demo3"); !ok {
 		panic("get hwTenant failed")
+	}
+	if awsTenant, ok = tenanter.GetTenanter(pbtenant.CloudProvider_aws_cloud, "demo4"); !ok {
+		panic("get awsTenant failed")
 	}
 	os.Exit(m.Run())
 }

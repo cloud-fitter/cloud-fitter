@@ -67,6 +67,8 @@ func TestEcser_ECSStatistic(t *testing.T) {
 	// hw, _ := NewHuaweiEcsClient(pbtenant.HuaweiRegionId_hw_cn_north_1, hwTenant)
 	// hwFailed, _ := NewHuaweiEcsClient(pbtenant.HuaweiRegionId_hw_cn_north_1, tenanter.NewTenantWithAccessKey("", ""))
 
+	aws, _ := NewAwsEcsClient(awsTenant.Clone())
+
 	type args struct {
 	}
 	tests := []struct {
@@ -85,6 +87,8 @@ func TestEcser_ECSStatistic(t *testing.T) {
 		// {name: "wrong page number", fields: hw, args: args{pageNumber: 0, pageSize: 1}, wantErr: true},
 		// {name: "wrong page size", fields: hw, args: args{pageNumber: 1, pageSize: 0}, wantErr: true},
 		// {name: "right cli", fields: hw, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
+
+		{name: "right cli", fields: aws, args: args{}, wantErr: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

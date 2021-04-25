@@ -98,6 +98,32 @@ enum HuaweiRegionId {
   hw_af_south_1 = 10;
 }
 
+// 亚马逊云区域，需要将对应的 _ 转化为 -
+enum AwsRegionId {
+  aws_all = 0;
+  aws_us_east_2 = 1; // US East (Ohio)
+  aws_us_east_1	= 2; // US East (N. Virginia)
+  aws_us_west_1 = 3; // US West (N. California)
+  aws_us_west_2 = 4; // US West (Oregon)
+  aws_af_south_1 = 5; // Africa (Cape Town)
+  aws_ap_east_1 = 6; // Asia Pacific (Hong Kong)
+  aws_ap_south_1 = 7; // Asia Pacific (Mumbai)
+  aws_ap_northeast_3 = 8; // Asia Pacific (Osaka)
+  aws_ap_northeast_2 = 9; // Asia Pacific (Seoul)
+  aws_ap_northeast_1 = 10; // Asia Pacific (Singapore)
+  aws_ap_southeast_2 = 11; // Asia Pacific (Sydney)
+  aws_ap_southeast_1 = 12; // Asia Pacific (Tokyo)
+  aws_ca_central_1 = 13; // Canada (Central)
+  aws_eu_central_1 = 14; // Europe (Frankfurt)
+  aws_eu_west_1 = 15; // Europe (Ireland)
+  aws_eu_west_2 = 16; // Europe (London)
+  aws_eu_south_1 = 17; // Europe (Milan)
+  aws_eu_west_3 = 18; // Europe (Paris)
+  aws_eu_north_1 = 19; // Europe (Stockholm)
+  aws_me_south_1 = 20; // Middle East (Bahrain)
+  aws_sa_east_1 = 21; // South America (São Paulo)
+}
+
 message StringMessage {
   string value = 1;
 }
