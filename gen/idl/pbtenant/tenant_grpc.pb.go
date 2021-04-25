@@ -3,10 +3,7 @@
 package pbtenant
 
 import (
-	context "context"
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -18,7 +15,6 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TenantServiceClient interface {
-	Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error)
 }
 
 type tenantServiceClient struct {
@@ -29,20 +25,10 @@ func NewTenantServiceClient(cc grpc.ClientConnInterface) TenantServiceClient {
 	return &tenantServiceClient{cc}
 }
 
-func (c *tenantServiceClient) Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error) {
-	out := new(StringMessage)
-	err := c.cc.Invoke(ctx, "/pbtenant.TenantService/Echo", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // TenantServiceServer is the server API for TenantService service.
 // All implementations must embed UnimplementedTenantServiceServer
 // for forward compatibility
 type TenantServiceServer interface {
-	Echo(context.Context, *StringMessage) (*StringMessage, error)
 	mustEmbedUnimplementedTenantServiceServer()
 }
 
@@ -50,9 +36,6 @@ type TenantServiceServer interface {
 type UnimplementedTenantServiceServer struct {
 }
 
-func (UnimplementedTenantServiceServer) Echo(context.Context, *StringMessage) (*StringMessage, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
-}
 func (UnimplementedTenantServiceServer) mustEmbedUnimplementedTenantServiceServer() {}
 
 // UnsafeTenantServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -66,36 +49,13 @@ func RegisterTenantServiceServer(s grpc.ServiceRegistrar, srv TenantServiceServe
 	s.RegisterService(&TenantService_ServiceDesc, srv)
 }
 
-func _TenantService_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StringMessage)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TenantServiceServer).Echo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pbtenant.TenantService/Echo",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TenantServiceServer).Echo(ctx, req.(*StringMessage))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // TenantService_ServiceDesc is the grpc.ServiceDesc for TenantService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var TenantService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "pbtenant.TenantService",
 	HandlerType: (*TenantServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Echo",
-			Handler:    _TenantService_Echo_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "idl/pbtenant/tenant.proto",
+	Methods:     []grpc.MethodDesc{},
+	Streams:     []grpc.StreamDesc{},
+	Metadata:    "idl/pbtenant/tenant.proto",
 }

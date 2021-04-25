@@ -4,65 +4,14 @@
     "title": "idl/pbtenant/tenant.proto",
     "version": "version not set"
   },
-  "tags": [
-    {
-      "name": "TenantService",
-      "description": "所有云租户的认证服务",
-      "externalDocs": {
-        "description": "Find out more about CloudFitter",
-        "url": "https://github.com/cloud-fitter/cloud-fitter"
-      }
-    }
-  ],
   "consumes": [
     "application/json"
   ],
   "produces": [
     "application/json"
   ],
-  "paths": {
-    "/v1/demo": {
-      "post": {
-        "operationId": "TenantService_Echo",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/pbtenantStringMessage"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/pbtenantStringMessage"
-            }
-          }
-        ],
-        "tags": [
-          "TenantService"
-        ]
-      }
-    }
-  },
+  "paths": {},
   "definitions": {
-    "pbtenantStringMessage": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "string"
-        }
-      }
-    },
     "protobufAny": {
       "type": "object",
       "properties": {
