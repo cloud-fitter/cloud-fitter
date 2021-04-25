@@ -17,21 +17,9 @@ func TestStatistic(t *testing.T) {
 		want    []*pbecs.ECSStatisticRespList
 		wantErr bool
 	}{
-		{
-			name:    "ali",
-			args:    args{provider: pbtenant.CloudProvider_ali_cloud},
-			wantErr: false,
-		},
-		{
-			name:    "tencent",
-			args:    args{provider: pbtenant.CloudProvider_tencent_cloud},
-			wantErr: false,
-		},
-		{
-			name:    "aws",
-			args:    args{provider: pbtenant.CloudProvider_aws_cloud},
-			wantErr: false,
-		},
+		{name: "ali", args: args{provider: pbtenant.CloudProvider_ali_cloud}, wantErr: false},
+		{name: "tencent", args: args{provider: pbtenant.CloudProvider_tencent_cloud}, wantErr: false},
+		{name: "aws", args: args{provider: pbtenant.CloudProvider_aws_cloud}, wantErr: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

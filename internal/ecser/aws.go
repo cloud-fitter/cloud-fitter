@@ -8,12 +8,15 @@ import (
 	awscs "github.com/aws/aws-sdk-go-v2/service/configservice"
 	"github.com/aws/aws-sdk-go-v2/service/configservice/types"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/pkg/errors"
 )
 
 type AwsEcs struct {
-	cli *awscs.Client
+	cli        *awscs.Client
+	regionId   pbtenant.AwsRegionId
+	regionName string
 }
 
 func NewAwsEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
@@ -40,7 +43,11 @@ func NewAwsEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "init aws ecs client error")
 	}
-	return &AwsEcs{cli: client}, nil
+	return &AwsEcs{
+		cli:        client,
+		regionId:   pbtenant.AwsRegionId(regionId),
+		regionName: rName,
+	}, nil
 }
 
 func (ecs *AwsEcs) ECSStatistic() (*pbecs.ECSStatisticRespList, error) {
@@ -52,12 +59,17 @@ func (ecs *AwsEcs) ECSStatistic() (*pbecs.ECSStatisticRespList, error) {
 		return nil, errors.Wrap(err, "Aws ECSStatistic error")
 	}
 
-	result := new(pbecs.ECSStatisticRespList)
+	result := &pbecs.ECSStatisticRespList{
+		Provider:   pbtenant.CloudProvider_aws_cloud,
+		RegionId:   int32(ecs.regionId),
+		Count:      0,
+		RegionName: ecs.regionName,
+	}
 
 	for _, v := range resp.ResourceCounts {
 		result.Count += v.Count
 	}
-	return nil, nil
+	return result, nil
 }
 
 func (ecs *AwsEcs) DescribeInstances(pageNumber, pageSize int) ([]*pbecs.ECSInstance, error) {
