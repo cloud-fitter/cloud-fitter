@@ -27,6 +27,11 @@ func TestStatistic(t *testing.T) {
 			args:    args{provider: pbtenant.CloudProvider_tencent_cloud},
 			wantErr: false,
 		},
+		{
+			name:    "aws",
+			args:    args{provider: pbtenant.CloudProvider_aws_cloud},
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

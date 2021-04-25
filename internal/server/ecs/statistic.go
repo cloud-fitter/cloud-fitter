@@ -28,6 +28,7 @@ func Statistic(provider pbtenant.CloudProvider) ([]*pbecs.ECSStatisticRespList, 
 		mutex   sync.Mutex
 	)
 
+	// TODO: 这一块应该继续抽象
 	switch provider {
 	case pbtenant.CloudProvider_ali_cloud:
 		for i := range tenanters {
@@ -59,6 +60,26 @@ func Statistic(provider pbtenant.CloudProvider) ([]*pbecs.ECSStatisticRespList, 
 					if rId != int32(pbtenant.TencentRegionId_tc_all) {
 						if tc, err := ecser.NewTencentCvmClient(rId, t); err == nil {
 							if res, err := tc.ECSStatistic(); err == nil {
+								mutex.Lock()
+								results = append(results, res)
+								mutex.Unlock()
+							}
+						}
+					}
+				}(rId, tenanters[i].Clone())
+			}
+			wg.Wait()
+		}
+	case pbtenant.CloudProvider_aws_cloud:
+		for i := range tenanters {
+			var wg sync.WaitGroup
+			wg.Add(len(pbtenant.AwsRegionId_name))
+			for rId := range pbtenant.AwsRegionId_name {
+				go func(rId int32, t tenanter.Tenanter) {
+					defer wg.Done()
+					if rId != int32(pbtenant.AwsRegionId_aws_all) {
+						if aws, err := ecser.NewAwsEcsClient(rId, t); err == nil {
+							if res, err := aws.ECSStatistic(); err == nil {
 								mutex.Lock()
 								results = append(results, res)
 								mutex.Unlock()
