@@ -12,39 +12,49 @@ message ECSInstance {
   // 实例名称
   string instance_name = 2;
   // 地域，数据中心
-  string region_id = 3;
-  // 可用区，物理隔离
-  string zone_id = 4;
+  string region_name = 3;
   // 公网ip
-  repeated string public_ips = 5;
-  // 状态
-  string status = 6;
-  // 创建时间
-  string creation_time = 7;
+  repeated string public_ips = 4;
+  // 实例类型
+  string instance_type = 5;
+  // vcpu数
+  int32 cpu = 6;
+  // 内存MB
+  int32 memory = 7;
   // 实例描述
   string description = 8;
+  // 状态
+  string status = 9;
+  // 创建时间，ISO8601
+  string creation_time = 10;
+  // 过期时间
+  string expire_time = 11;
+
 }
 
-message ECSStatisticReq { pbtenant.CloudProvider provider = 1; }
+message ListReq {
+  pbtenant.CloudProvider provider = 1;
+  // 账户名称，根据统计接口返回值，或直接根据config.yaml中的配置
+  string account_name = 2;
+  // 区域Id，参考 tenant.proto 中的各个云的区域
+  int32 region_id = 3;
+  int32 page_number = 4;
+  int32 page_size = 5;
+}
 
-message ECSStatisticResp {
-  message list {
-    // 云提供商
-    pbtenant.CloudProvider provider = 1;
-    // 区域Id，参考 tenant.proto 中的各个云的区域
-    int32 regionId = 2;
-    // 数量
-    int64 count = 3;
-    // 区域名称，方便可读，参考 tenant.proto 中的各个云的区域
-    string regionName = 4;
-  }
-  repeated list ecses = 1;
+message ListResp {
+  repeated ECSInstance ecses = 1;
+  string next_token = 2;
+  int32 page_number = 3;
+  int32 page_size = 4;
+  // 请求id，出现问题后提供给云厂商，排查问题
+  string request_id = 5;
 }
 
 service ECSService {
-  rpc ECSStatistic(ECSStatisticReq) returns (ECSStatisticResp) {
+  rpc List(ListReq) returns (ListResp) {
     option (google.api.http) = {
-      post : "/ecs/statistic"
+      post : "/ecs"
       body : "*"
     };
   }

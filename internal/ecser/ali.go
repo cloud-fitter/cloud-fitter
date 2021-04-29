@@ -47,27 +47,10 @@ func NewAliEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
 	}, nil
 }
 
-func (ecs *AliEcs) ECSStatistic() (*pbecs.ECSStatisticRespList, error) {
+func (ecs *AliEcs) DescribeInstances(pageNumber, pageSize int32) (*pbecs.ListResp, error) {
 	req := aliecs.CreateDescribeInstancesRequest()
-	req.PageNumber = requests.NewInteger(1)
-	req.PageSize = requests.NewInteger(1)
-	resp, err := ecs.cli.DescribeInstances(req)
-	if err != nil {
-		return nil, errors.Wrap(err, "Aliyun DescribeInstances error")
-	}
-
-	return &pbecs.ECSStatisticRespList{
-		Provider:   pbtenant.CloudProvider_ali_cloud,
-		RegionId:   int32(ecs.regionId),
-		Count:      int64(resp.TotalCount),
-		RegionName: ecs.regionName,
-	}, nil
-}
-
-func (ecs *AliEcs) DescribeInstances(pageNumber, pageSize int) ([]*pbecs.ECSInstance, error) {
-	req := aliecs.CreateDescribeInstancesRequest()
-	req.PageNumber = requests.NewInteger(pageNumber)
-	req.PageSize = requests.NewInteger(pageSize)
+	req.PageNumber = requests.NewInteger(int(pageNumber))
+	req.PageSize = requests.NewInteger(int(pageSize))
 	resp, err := ecs.cli.DescribeInstances(req)
 	if err != nil {
 		return nil, errors.Wrap(err, "Aliyun DescribeInstances error")
@@ -76,9 +59,25 @@ func (ecs *AliEcs) DescribeInstances(pageNumber, pageSize int) ([]*pbecs.ECSInst
 	var ecses = make([]*pbecs.ECSInstance, len(resp.Instances.Instance))
 	for k, v := range resp.Instances.Instance {
 		ecses[k] = &pbecs.ECSInstance{
-			InstanceName: v.HostName,
+			InstanceId:   v.InstanceId,
+			InstanceName: v.InstanceName,
+			RegionName:   ecs.regionName,
+			InstanceType: v.InstanceType,
 			PublicIps:    v.PublicIpAddress.IpAddress,
+			Cpu:          int32(v.CPU),
+			Memory:       int32(v.Memory),
+			Description:  v.Description,
+			Status:       v.Status,
+			CreationTime: v.CreationTime,
+			ExpireTime:   v.ExpiredTime,
 		}
 	}
-	return ecses, nil
+
+	return &pbecs.ListResp{
+		Ecses:      ecses,
+		NextToken:  resp.NextToken,
+		PageNumber: int32(resp.PageNumber),
+		PageSize:   int32(resp.PageSize),
+		RequestId:  resp.RequestId,
+	}, nil
 }

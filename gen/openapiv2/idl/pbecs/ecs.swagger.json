@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/ecs/statistic": {
+    "/ecs": {
       "post": {
-        "operationId": "ECSService_ECSStatistic",
+        "operationId": "ECSService_List",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbecsECSStatisticResp"
+              "$ref": "#/definitions/pbecsListResp"
             }
           },
           "default": {
@@ -39,7 +39,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbecsECSStatisticReq"
+              "$ref": "#/definitions/pbecsListReq"
             }
           }
         ],
@@ -50,45 +50,108 @@
     }
   },
   "definitions": {
-    "ECSStatisticResplist": {
+    "pbecsECSInstance": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "type": "string",
+          "title": "实例id"
+        },
+        "instanceName": {
+          "type": "string",
+          "title": "实例名称"
+        },
+        "regionName": {
+          "type": "string",
+          "title": "地域，数据中心"
+        },
+        "publicIps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "公网ip"
+        },
+        "instanceType": {
+          "type": "string",
+          "title": "实例类型"
+        },
+        "cpu": {
+          "type": "integer",
+          "format": "int32",
+          "title": "vcpu数"
+        },
+        "memory": {
+          "type": "integer",
+          "format": "int32",
+          "title": "内存MB"
+        },
+        "description": {
+          "type": "string",
+          "title": "实例描述"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "creationTime": {
+          "type": "string",
+          "title": "创建时间，ISO8601"
+        },
+        "expireTime": {
+          "type": "string",
+          "title": "过期时间"
+        }
+      }
+    },
+    "pbecsListReq": {
       "type": "object",
       "properties": {
         "provider": {
-          "$ref": "#/definitions/pbtenantCloudProvider",
-          "title": "云提供商"
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "accountName": {
+          "type": "string",
+          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
         },
         "regionId": {
           "type": "integer",
           "format": "int32",
           "title": "区域Id，参考 tenant.proto 中的各个云的区域"
         },
-        "count": {
-          "type": "string",
-          "format": "int64",
-          "title": "数量"
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32"
         },
-        "regionName": {
-          "type": "string",
-          "title": "区域名称，方便可读，参考 tenant.proto 中的各个云的区域"
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
-    "pbecsECSStatisticReq": {
-      "type": "object",
-      "properties": {
-        "provider": {
-          "$ref": "#/definitions/pbtenantCloudProvider"
-        }
-      }
-    },
-    "pbecsECSStatisticResp": {
+    "pbecsListResp": {
       "type": "object",
       "properties": {
         "ecses": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ECSStatisticResplist"
+            "$ref": "#/definitions/pbecsECSInstance"
           }
+        },
+        "nextToken": {
+          "type": "string"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求id，出现问题后提供给云厂商，排查问题"
         }
       }
     },
@@ -101,7 +164,8 @@
         "aws_cloud",
         "google_cloud"
       ],
-      "default": "ali_cloud"
+      "default": "ali_cloud",
+      "title": "- google_cloud: 暂不支持"
     },
     "protobufAny": {
       "type": "object",

@@ -1,0 +1,36 @@
+syntax = "proto3";
+package pbcfg;
+
+option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg";
+
+import "idl/pbtenant/tenant.proto";
+import "google/api/annotations.proto";
+
+message StatisticReq { pbtenant.CloudProvider provider = 1; }
+
+message StatisticResp {
+  message list {
+    // 云提供商
+    pbtenant.CloudProvider provider = 1;
+    // 账户名称，在config.yaml里配置的name
+    string account_name = 2;
+    // 资源类型，参考 tenant.proto 中的 CloudProduct
+    pbtenant.CloudProduct product = 3;
+    // 区域Id，参考 tenant.proto 中的各个云的区域
+    int32 region_id = 4;
+    // 区域名称，方便可读，参考 tenant.proto 中的各个云的区域
+    string region_name = 5;
+    // 数量
+    int64 count = 6;
+  }
+  repeated list cfgs = 1;
+}
+
+service StatisticService {
+  rpc Statistic(StatisticReq) returns (StatisticResp) {
+    option (google.api.http) = {
+      post : "/statistic"
+      body : "*"
+    };
+  }
+}

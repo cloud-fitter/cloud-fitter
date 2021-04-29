@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ECSServiceClient interface {
-	ECSStatistic(ctx context.Context, in *ECSStatisticReq, opts ...grpc.CallOption) (*ECSStatisticResp, error)
+	List(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
 }
 
 type eCSServiceClient struct {
@@ -29,9 +29,9 @@ func NewECSServiceClient(cc grpc.ClientConnInterface) ECSServiceClient {
 	return &eCSServiceClient{cc}
 }
 
-func (c *eCSServiceClient) ECSStatistic(ctx context.Context, in *ECSStatisticReq, opts ...grpc.CallOption) (*ECSStatisticResp, error) {
-	out := new(ECSStatisticResp)
-	err := c.cc.Invoke(ctx, "/pbecs.ECSService/ECSStatistic", in, out, opts...)
+func (c *eCSServiceClient) List(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error) {
+	out := new(ListResp)
+	err := c.cc.Invoke(ctx, "/pbecs.ECSService/List", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *eCSServiceClient) ECSStatistic(ctx context.Context, in *ECSStatisticReq
 // All implementations must embed UnimplementedECSServiceServer
 // for forward compatibility
 type ECSServiceServer interface {
-	ECSStatistic(context.Context, *ECSStatisticReq) (*ECSStatisticResp, error)
+	List(context.Context, *ListReq) (*ListResp, error)
 	mustEmbedUnimplementedECSServiceServer()
 }
 
@@ -50,8 +50,8 @@ type ECSServiceServer interface {
 type UnimplementedECSServiceServer struct {
 }
 
-func (UnimplementedECSServiceServer) ECSStatistic(context.Context, *ECSStatisticReq) (*ECSStatisticResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ECSStatistic not implemented")
+func (UnimplementedECSServiceServer) List(context.Context, *ListReq) (*ListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
 func (UnimplementedECSServiceServer) mustEmbedUnimplementedECSServiceServer() {}
 
@@ -66,20 +66,20 @@ func RegisterECSServiceServer(s grpc.ServiceRegistrar, srv ECSServiceServer) {
 	s.RegisterService(&ECSService_ServiceDesc, srv)
 }
 
-func _ECSService_ECSStatistic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ECSStatisticReq)
+func _ECSService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ECSServiceServer).ECSStatistic(ctx, in)
+		return srv.(ECSServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pbecs.ECSService/ECSStatistic",
+		FullMethod: "/pbecs.ECSService/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ECSServiceServer).ECSStatistic(ctx, req.(*ECSStatisticReq))
+		return srv.(ECSServiceServer).List(ctx, req.(*ListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,8 +92,8 @@ var ECSService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ECSServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ECSStatistic",
-			Handler:    _ECSService_ECSStatistic_Handler,
+			MethodName: "List",
+			Handler:    _ECSService_List_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

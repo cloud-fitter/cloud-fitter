@@ -5,8 +5,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
-	awscs "github.com/aws/aws-sdk-go-v2/service/configservice"
-	"github.com/aws/aws-sdk-go-v2/service/configservice/types"
+	awsec2 "github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
@@ -14,13 +13,13 @@ import (
 )
 
 type AwsEcs struct {
-	cli        *awscs.Client
+	cli        *awsec2.Client
 	regionId   pbtenant.AwsRegionId
 	regionName string
 }
 
 func NewAwsEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
-	var client *awscs.Client
+	var client *awsec2.Client
 
 	rName, err := tenanter.GetAwsRegionName(regionId)
 	if err != nil {
@@ -36,12 +35,12 @@ func NewAwsEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
 		if err != nil {
 			return nil, errors.Wrap(err, "LoadDefaultConfig aws ecs client error")
 		}
-		client = awscs.NewFromConfig(cfg)
+		client = awsec2.NewFromConfig(cfg)
 	default:
 	}
 
 	if err != nil {
-		return nil, errors.Wrap(err, "init aws ecs client error")
+		return nil, errors.Wrap(err, "init aws ec2 client error")
 	}
 	return &AwsEcs{
 		cli:        client,
@@ -50,43 +49,35 @@ func NewAwsEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
 	}, nil
 }
 
-func (ecs *AwsEcs) ECSStatistic() (*pbecs.ECSStatisticRespList, error) {
-	req := new(awscs.GetDiscoveredResourceCountsInput)
-	req.ResourceTypes = []string{string(types.ResourceTypeInstance)}
+func (ecs *AwsEcs) DescribeInstances(pageNumber, pageSize int32) (*pbecs.ListResp, error) {
+	req := new(awsec2.DescribeInstancesInput)
+	req.MaxResults = pageSize
 
-	resp, err := ecs.cli.GetDiscoveredResourceCounts(context.Background(), req)
+	resp, err := ecs.cli.DescribeInstances(context.Background(), req)
 	if err != nil {
-		return nil, errors.Wrap(err, "Aws ECSStatistic error")
+		return nil, errors.Wrap(err, "Aws DescribeInstances error")
 	}
 
-	result := &pbecs.ECSStatisticRespList{
-		Provider:   pbtenant.CloudProvider_aws_cloud,
-		RegionId:   int32(ecs.regionId),
-		Count:      0,
-		RegionName: ecs.regionName,
+	var ecses []*pbecs.ECSInstance
+	for _, v := range resp.Reservations {
+		for _, v2 := range v.Instances {
+			ecses = append(ecses, &pbecs.ECSInstance{
+				InstanceId:   *v2.InstanceId,
+				InstanceName: "",
+				RegionName:   "",
+				PublicIps:    []string{*v2.PublicIpAddress},
+				InstanceType: string(v2.InstanceType),
+				Cpu:          v2.CpuOptions.CoreCount,
+				Memory:       0,
+				Description:  "",
+				Status:       string(v2.State.Name),
+				CreationTime: "",
+				ExpireTime:   "",
+			})
+		}
+
 	}
-
-	for _, v := range resp.ResourceCounts {
-		result.Count += v.Count
-	}
-	return result, nil
-}
-
-func (ecs *AwsEcs) DescribeInstances(pageNumber, pageSize int) ([]*pbecs.ECSInstance, error) {
-	// req := new(awscs.GetDiscoveredResourceCountsInput)
-	// req.ResourceTypes = []string{string(types.ResourceTypeInstance)}
-	//
-	// resp, err := ecs.cli.GetDiscoveredResourceCounts(context.Background(), req)
-	// if err != nil {
-	// 	return nil, errors.Wrap(err, "Huawei DescribeInstances error")
-	// }
-
-	// var ecses = make([]*pbecs.ECSInstance, len(resp.ResourceCounts))
-	// for k, v := range resp.ResourceCounts {
-	// 	ecses[k] = &pbecs.ECSInstance{
-	// 		InstanceName: v.ResourceType,
-	// 		PublicIps:    []string{v.AccessIPv4},
-	// 	}
-	// }
-	return nil, nil
+	return &pbecs.ListResp{
+		Ecses: ecses,
+	}, nil
 }
