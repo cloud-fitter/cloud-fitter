@@ -17,17 +17,19 @@ var (
 	ErrLoadTenanterFromFile  = errors.New("load tenanter from file failed")
 	ErrLoadTenanterFromOsEnv = errors.New("load tenanter from os env failed")
 	ErrLoadTenanterFileEmpty = errors.New("load tenanter from file failed")
+	ErrNoTenanters           = errors.New("no tenanters for the cloud")
 )
 
 type Tenanter interface {
+	AccountName() string
 	Clone() Tenanter
 }
 
-var gStore = globalStore{stores: make(map[pbtenant.CloudProvider]map[string]Tenanter)}
+var gStore = globalStore{stores: make(map[pbtenant.CloudProvider][]Tenanter)}
 
 type globalStore struct {
 	sync.Mutex
-	stores map[pbtenant.CloudProvider]map[string]Tenanter
+	stores map[pbtenant.CloudProvider][]Tenanter
 }
 
 func LoadCloudConfigs(configFile string) error {
@@ -65,37 +67,25 @@ func load(configs *pbtenant.CloudConfigs) error {
 	gStore.Lock()
 	defer gStore.Unlock()
 
-	for k := range pbtenant.CloudProvider_name {
-		gStore.stores[pbtenant.CloudProvider(k)] = make(map[string]Tenanter)
-	}
-
-	// 这里 name 会覆盖
 	for _, c := range configs.Configs {
 		if c.AccessId != "" && c.AccessSecret != "" {
-			gStore.stores[c.Provider][c.Name] = NewTenantWithAccessKey(c.AccessId, c.AccessSecret)
+			gStore.stores[c.Provider] = append(gStore.stores[c.Provider], NewTenantWithAccessKey(c.Name, c.AccessId, c.AccessSecret))
 		}
 	}
 	return nil
 }
 
-func GetTenantersMap(provider pbtenant.CloudProvider) map[string]Tenanter {
+func GetTenanters(provider pbtenant.CloudProvider) ([]Tenanter, error) {
 	gStore.Lock()
 	defer gStore.Unlock()
 
-	tmap := make(map[string]Tenanter, len(gStore.stores[provider]))
+	if len(gStore.stores[provider]) == 0 {
+		return nil, errors.WithMessagef(ErrNoTenanters, "cloud is %v", provider)
+	}
+
+	var tenanters = make([]Tenanter, len(gStore.stores[provider]))
 	for k := range gStore.stores[provider] {
-		tmap[k] = gStore.stores[provider][k].Clone()
+		tenanters[k] = gStore.stores[provider][k].Clone()
 	}
-	return tmap
-}
-
-func GetTenanter(provider pbtenant.CloudProvider, name string) (Tenanter, bool) {
-	gStore.Lock()
-	defer gStore.Unlock()
-
-	tenanter, ok := gStore.stores[provider][name]
-	if !ok {
-		return nil, false
-	}
-	return tenanter.Clone(), true
+	return tenanters, nil
 }

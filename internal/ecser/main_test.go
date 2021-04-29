@@ -9,10 +9,7 @@ import (
 )
 
 var (
-	aliTenant tenanter.Tenanter
-	tcTenant  tenanter.Tenanter
-	hwTenant  tenanter.Tenanter
-	awsTenant tenanter.Tenanter
+	aliTenant, tcTenant, hwTenant, awsTenant []tenanter.Tenanter
 )
 
 func TestMain(m *testing.M) {
@@ -20,18 +17,16 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		panic(err)
 	}
-
-	var ok bool
-	if aliTenant, ok = tenanter.GetTenanter(pbtenant.CloudProvider_ali_cloud, "demo"); !ok {
+	if aliTenant, err = tenanter.GetTenanters(pbtenant.CloudProvider_ali_cloud); err != nil {
 		panic("get aliTenant failed")
 	}
-	if tcTenant, ok = tenanter.GetTenanter(pbtenant.CloudProvider_tencent_cloud, "demo2"); !ok {
+	if tcTenant, err = tenanter.GetTenanters(pbtenant.CloudProvider_tencent_cloud); err != nil {
 		panic("get tcTenant failed")
 	}
-	if hwTenant, ok = tenanter.GetTenanter(pbtenant.CloudProvider_huawei_cloud, "demo3"); !ok {
+	if hwTenant, err = tenanter.GetTenanters(pbtenant.CloudProvider_huawei_cloud); err != nil {
 		panic("get hwTenant failed")
 	}
-	if awsTenant, ok = tenanter.GetTenanter(pbtenant.CloudProvider_aws_cloud, "demo4"); !ok {
+	if awsTenant, err = tenanter.GetTenanters(pbtenant.CloudProvider_aws_cloud); err != nil {
 		panic("get awsTenant failed")
 	}
 	os.Exit(m.Run())

@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/server"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/golang/glog"
@@ -33,11 +33,15 @@ func run() error {
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	if err := demo.RegisterYourServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
-		return err
+		return errors.Wrap(err, "RegisterYourServiceHandlerFromEndpoint error")
 	}
 
 	if err := pbecs.RegisterECSServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
-		return err
+		return errors.Wrap(err, "RegisterECSServiceHandlerFromEndpoint error")
+	}
+
+	if err := pbcfg.RegisterStatisticServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+		return errors.Wrap(err, "RegisterStatisticServiceHandlerFromEndpoint error")
 	}
 
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
@@ -46,7 +50,7 @@ func run() error {
 
 func main() {
 	var configFile string
-	flag.StringVar(&configFile, "conf", "config/config.yaml", "config file path")
+	flag.StringVar(&configFile, "conf", "config.yaml", "config file path")
 	flag.Parse()
 	defer glog.Flush()
 
@@ -57,7 +61,7 @@ func main() {
 		glog.Warningf("LoadCloudConfigsFromFile empty file path %s", configFile)
 	}
 
-	glog.Infof("load tenant from file finished %+v", tenanter.GetTenantersMap(pbtenant.CloudProvider_ali_cloud))
+	glog.Infof("load tenant from file finished")
 
 	go func() {
 		lis, err := net.Listen("tcp", ":9090")
@@ -68,6 +72,7 @@ func main() {
 		s := grpc.NewServer()
 		demo.RegisterYourServiceServer(s, &server.Server{})
 		pbecs.RegisterECSServiceServer(s, &server.Server{})
+		pbcfg.RegisterStatisticServiceServer(s, &server.Server{})
 
 		if err = s.Serve(lis); err != nil {
 			glog.Fatalf("failed to serve: %v", err)

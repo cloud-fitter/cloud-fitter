@@ -1,30 +1,23 @@
-package ecs
+package statistic
 
 import (
 	"fmt"
 	"sync"
 
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
-	"github.com/cloud-fitter/cloud-fitter/internal/ecser"
+	"github.com/cloud-fitter/cloud-fitter/internal/configger"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/pkg/errors"
 )
 
 var (
 	ErrStatisticNotSupported = errors.New("cloud not supported statistic ecs")
-	ErrNoTenantsInfo         = errors.New("no tenants info")
 )
 
-func Statistic(provider pbtenant.CloudProvider) ([]*pbecs.ECSStatisticRespList, error) {
-	tenanters := tenanter.GetTenantersMap(provider)
-
-	if len(tenanters) == 0 {
-		return nil, errors.WithMessage(ErrNoTenantsInfo, fmt.Sprintf("cloud is %d", provider))
-	}
-
+func Statistic(provider pbtenant.CloudProvider, tenanters []tenanter.Tenanter) ([]*pbcfg.StatisticRespList, error) {
 	var (
-		results []*pbecs.ECSStatisticRespList
+		results []*pbcfg.StatisticRespList
 		mutex   sync.Mutex
 	)
 
@@ -38,8 +31,8 @@ func Statistic(provider pbtenant.CloudProvider) ([]*pbecs.ECSStatisticRespList, 
 				go func(rId int32, t tenanter.Tenanter) {
 					defer wg.Done()
 					if rId != int32(pbtenant.AliRegionId_ali_all) {
-						if ali, err := ecser.NewAliEcsClient(rId, t); err == nil {
-							if res, err := ali.ECSStatistic(); err == nil {
+						if ali, err := configger.NewAliConfigClient(rId, t); err == nil {
+							if res, err := ali.Statistic(); err == nil && res.Count > 0 {
 								mutex.Lock()
 								results = append(results, res)
 								mutex.Unlock()
@@ -58,8 +51,8 @@ func Statistic(provider pbtenant.CloudProvider) ([]*pbecs.ECSStatisticRespList, 
 				go func(rId int32, t tenanter.Tenanter) {
 					defer wg.Done()
 					if rId != int32(pbtenant.TencentRegionId_tc_all) {
-						if tc, err := ecser.NewTencentCvmClient(rId, t); err == nil {
-							if res, err := tc.ECSStatistic(); err == nil {
+						if tc, err := configger.NewTencentCfgClient(rId, t); err == nil {
+							if res, err := tc.Statistic(); err == nil && res.Count > 0 {
 								mutex.Lock()
 								results = append(results, res)
 								mutex.Unlock()
@@ -78,8 +71,8 @@ func Statistic(provider pbtenant.CloudProvider) ([]*pbecs.ECSStatisticRespList, 
 				go func(rId int32, t tenanter.Tenanter) {
 					defer wg.Done()
 					if rId != int32(pbtenant.AwsRegionId_aws_all) {
-						if aws, err := ecser.NewAwsEcsClient(rId, t); err == nil {
-							if res, err := aws.ECSStatistic(); err == nil {
+						if aws, err := configger.NewAwsCfgClient(rId, t); err == nil {
+							if res, err := aws.Statistic(); err == nil && res.Count > 0 {
 								mutex.Lock()
 								results = append(results, res)
 								mutex.Unlock()

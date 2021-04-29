@@ -40,24 +40,7 @@ func NewTencentCvmClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error
 	}, nil
 }
 
-func (ecs *TencentCvm) ECSStatistic() (*pbecs.ECSStatisticRespList, error) {
-	req := cvm.NewDescribeInstancesRequest()
-	req.Offset = common.Int64Ptr(1)
-	req.Limit = common.Int64Ptr(1)
-	resp, err := ecs.cli.DescribeInstances(req)
-	if err != nil {
-		return nil, errors.Wrap(err, "Aliyun DescribeInstances error")
-	}
-
-	return &pbecs.ECSStatisticRespList{
-		Provider:   pbtenant.CloudProvider_tencent_cloud,
-		RegionId:   int32(ecs.regionId),
-		Count:      *(resp.Response.TotalCount),
-		RegionName: ecs.regionName,
-	}, nil
-}
-
-func (ecs *TencentCvm) DescribeInstances(pageNumber, pageSize int) ([]*pbecs.ECSInstance, error) {
+func (ecs *TencentCvm) DescribeInstances(pageNumber, pageSize int32) (*pbecs.ListResp, error) {
 	req := cvm.NewDescribeInstancesRequest()
 	req.Offset = common.Int64Ptr(int64((pageNumber - 1) * pageSize))
 	req.Limit = common.Int64Ptr(int64(pageSize))
@@ -69,12 +52,27 @@ func (ecs *TencentCvm) DescribeInstances(pageNumber, pageSize int) ([]*pbecs.ECS
 	var ecses = make([]*pbecs.ECSInstance, len(resp.Response.InstanceSet))
 	for k, v := range resp.Response.InstanceSet {
 		ecses[k] = &pbecs.ECSInstance{
-			InstanceId: *v.InstanceId,
-			PublicIps:  make([]string, len(v.PublicIpAddresses)),
+			InstanceId:   *v.InstanceId,
+			InstanceName: *v.InstanceName,
+			RegionName:   ecs.regionName,
+			InstanceType: *v.InstanceType,
+			PublicIps:    make([]string, len(v.PublicIpAddresses)),
+			Cpu:          int32(*v.CPU),
+			Memory:       int32(*v.Memory),
+			Description:  "",
+			Status:       *v.InstanceState,
+			CreationTime: *v.CreatedTime,
+			ExpireTime:   *v.ExpiredTime,
 		}
 		for k1, v1 := range v.PublicIpAddresses {
 			ecses[k].PublicIps[k1] = *v1
 		}
 	}
-	return ecses, nil
+	return &pbecs.ListResp{
+		Ecses:      ecses,
+		NextToken:  "",
+		PageNumber: 0,
+		PageSize:   0,
+		RequestId:  *resp.Response.RequestId,
+	}, nil
 }

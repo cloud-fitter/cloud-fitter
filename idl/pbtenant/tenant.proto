@@ -11,7 +11,15 @@ enum CloudProvider {
   tencent_cloud = 1;
   huawei_cloud = 2;
   aws_cloud = 3;
+  // 暂不支持
   google_cloud = 4;
+}
+
+enum CloudProduct {
+  // 所有产品
+  product_all = 0;
+  // ECS类产品：阿里云ECS,腾讯云CVM，华为云ECS，亚马逊EC2
+  product_ecs = 1;
 }
 
 // 云配置信息

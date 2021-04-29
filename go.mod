@@ -4,7 +4,6 @@ go 1.15
 
 require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1036
-	github.com/aws/aws-sdk-go v1.38.25 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.1.6
 	github.com/aws/aws-sdk-go-v2/credentials v1.1.6
 	github.com/aws/aws-sdk-go-v2/service/configservice v1.4.0
@@ -15,6 +14,7 @@ require (
 	github.com/huaweicloud/huaweicloud-sdk-go-v3 v0.0.40-rc
 	github.com/pkg/errors v0.9.1
 	github.com/tencentcloud/tencentcloud-sdk-go v3.0.233+incompatible
+	google.golang.org/api v0.30.0
 	google.golang.org/genproto v0.0.0-20210224155714-063164c882e6
 	google.golang.org/grpc v1.36.0
 	google.golang.org/protobuf v1.26.0
