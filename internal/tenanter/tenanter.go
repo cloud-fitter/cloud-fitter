@@ -63,6 +63,16 @@ func LoadCloudConfigsFromOsEnv() error {
 	return load(configs)
 }
 
+func ShowConfigJson() ([]byte, error) {
+	data := os.Getenv(osEnvKey)
+	var configs = new(pbtenant.CloudConfigs)
+	if err := yaml.Unmarshal([]byte(data), configs); err != nil {
+		return nil, errors.WithMessage(ErrLoadTenanterFromFile, err.Error())
+	}
+
+	return json.Marshal(configs)
+}
+
 func load(configs *pbtenant.CloudConfigs) error {
 	gStore.Lock()
 	defer gStore.Unlock()

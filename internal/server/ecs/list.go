@@ -37,6 +37,15 @@ func List(req *pbecs.ListReq, tenanters []tenanter.Tenanter) (*pbecs.ListResp, e
 			}
 		}
 
+	case pbtenant.CloudProvider_huawei_cloud:
+		for _, tenanter := range tenanters {
+			if req.AccountName == "" || tenanter.AccountName() == req.AccountName {
+				if ecs, err = ecser.NewHuaweiEcsClient(req.RegionId, tenanter); err != nil {
+					return nil, errors.WithMessage(err, "NewHuaweiEcsClient error")
+				}
+			}
+		}
+
 	case pbtenant.CloudProvider_aws_cloud:
 		for _, tenanter := range tenanters {
 			if req.AccountName == "" || tenanter.AccountName() == req.AccountName {

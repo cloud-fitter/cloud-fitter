@@ -14,6 +14,8 @@ func TestConfigger_Statistic(t *testing.T) {
 	tc, _ := NewTencentCfgClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tcTenant[0])
 	tcFailed, _ := NewAliConfigClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tenanter.NewTenantWithAccessKey("empty", "", ""))
 
+	hw, _ := NewHuaweiCfgClient(int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2), hwTenant[0])
+
 	aws, _ := NewAwsCfgClient(int32(pbtenant.AwsRegionId_aws_us_east_2), awsTenant[0])
 	awsFailed, _ := NewAwsCfgClient(int32(pbtenant.AwsRegionId_aws_us_east_2), tenanter.NewTenantWithAccessKey("empty", "", ""))
 
@@ -30,6 +32,8 @@ func TestConfigger_Statistic(t *testing.T) {
 
 		{name: "tc wrong cli", fields: tcFailed, args: args{}, wantErr: true},
 		{name: "tc right cli", fields: tc, args: args{}, wantErr: false},
+
+		{name: "hw right cli", fields: hw, args: args{}, wantErr: false},
 
 		{name: "aws wrong cli", fields: awsFailed, args: args{}, wantErr: true},
 		{name: "aws right cli", fields: aws, args: args{}, wantErr: false},
