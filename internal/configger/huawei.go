@@ -1,7 +1,7 @@
-package ecser
+package configger
 
 import (
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/core/auth/basic"
@@ -14,19 +14,26 @@ import (
 	"github.com/pkg/errors"
 )
 
-type HuaweiEcs struct {
+type HuaweiCfg struct {
 	cli        *hwecs.EcsClient
 	regionId   pbtenant.HuaweiRegionId
 	regionName string
+	tenanter.Tenanter
 }
 
-func NewHuaweiEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
+func NewHuaweiCfgClient(regionId int32, tenant tenanter.Tenanter) (cfg Configger, err error) {
 	var client *hwecs.EcsClient
 
 	rName, err := tenanter.GetHuaweiRegionName(regionId)
 	if err != nil {
 		return nil, errors.WithMessage(err, "GetHuaweiRegionName error")
 	}
+
+	defer func() {
+		if e := recover(); e != nil {
+			err = errors.Errorf("NewHuaweiCfgClient panic %v", e)
+		}
+	}()
 
 	switch t := tenant.(type) {
 	case *tenanter.AccessKeyTenant:
@@ -50,47 +57,32 @@ func NewHuaweiEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error)
 	if err != nil {
 		return nil, errors.Wrap(err, "init huawei ecs client error")
 	}
-	return &HuaweiEcs{
+	return &HuaweiCfg{
 		cli:        client,
 		regionId:   pbtenant.HuaweiRegionId(regionId),
 		regionName: rName,
-	}, nil
+		Tenanter:   tenant,
+	}, err
 }
 
-func (ecs *HuaweiEcs) DescribeInstances(pageNumber, pageSize int32) (*pbecs.ListResp, error) {
+func (cfg *HuaweiCfg) Statistic() (*pbcfg.StatisticRespList, error) {
 	req := new(model.ListServersDetailsRequest)
-	offset := (pageNumber - 1) * pageSize
+	var offset int32 = 0
+	var limit int32 = 1
 	req.Offset = &offset
-	limit := pageSize
 	req.Limit = &limit
 
-	resp, err := ecs.cli.ListServersDetails(req)
+	resp, err := cfg.cli.ListServersDetails(req)
 	if err != nil {
-		return nil, errors.Wrap(err, "Huawei DescribeInstances error")
+		return nil, errors.Wrap(err, "Huawei ListServersDetails error")
 	}
 
-	servers := *resp.Servers
-	var ecses = make([]*pbecs.ECSInstance, len(servers))
-	for k, v := range servers {
-		ecses[k] = &pbecs.ECSInstance{
-			InstanceId:   v.Id,
-			InstanceName: v.Name,
-			RegionName:   ecs.regionName,
-			InstanceType: v.Flavor.Name,
-			PublicIps:    []string{v.AccessIPv4},
-			// Cpu:          v.Flavor.Vcpus,
-			// Memory:       v.Flavor.Ram,
-			Description:  *v.Description,
-			Status:       v.Status,
-			CreationTime: v.Created,
-			ExpireTime:   v.OSSRVUSGterminatedAt,
-		}
-	}
-	return &pbecs.ListResp{
-		Ecses:      ecses,
-		NextToken:  "",
-		PageNumber: 0,
-		PageSize:   0,
-		RequestId:  "",
+	return &pbcfg.StatisticRespList{
+		Provider:    pbtenant.CloudProvider_huawei_cloud,
+		AccountName: cfg.AccountName(),
+		Product:     pbtenant.CloudProduct_product_ecs,
+		RegionId:    int32(cfg.regionId),
+		RegionName:  cfg.regionName,
+		Count:       int64(*resp.Count),
 	}, nil
 }

@@ -21,6 +21,7 @@ func TestStatistic(t *testing.T) {
 	}{
 		{name: "ali", args: args{provider: pbtenant.CloudProvider_ali_cloud, tenanters: aliTenant}, wantErr: false},
 		{name: "tencent", args: args{provider: pbtenant.CloudProvider_tencent_cloud, tenanters: tcTenant}, wantErr: false},
+		{name: "huawei", args: args{provider: pbtenant.CloudProvider_huawei_cloud, tenanters: hwTenant}, wantErr: false},
 		{name: "aws", args: args{provider: pbtenant.CloudProvider_aws_cloud, tenanters: awsTenant}, wantErr: false},
 	}
 	for _, tt := range tests {

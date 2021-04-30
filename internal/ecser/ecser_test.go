@@ -14,8 +14,8 @@ func TestEcser_DescribeInstances(t *testing.T) {
 	tc, _ := NewTencentCvmClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tcTenant[0])
 	tcFailed, _ := NewTencentCvmClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tenanter.NewTenantWithAccessKey("empty", "", ""))
 
-	// hw, _ := NewHuaweiEcsClient(pbtenant.HuaweiRegionId_hw_cn_north_1, hwTenant)
-	// hwFailed, _ := NewHuaweiEcsClient(pbtenant.HuaweiRegionId_hw_cn_north_1, tenanter.NewTenantWithAccessKey("", ""))
+	hw, _ := NewHuaweiEcsClient(int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2), hwTenant[0])
+	// hwFailed, _ := NewHuaweiEcsClient(int32(pbtenant.HuaweiRegionId_hw_cn_north_1), tenanter.NewTenantWithAccessKey("empty", "", "", ""))
 
 	aws, _ := NewAwsEcsClient(int32(pbtenant.AwsRegionId_aws_us_east_2), awsTenant[0])
 
@@ -31,22 +31,20 @@ func TestEcser_DescribeInstances(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		{name: "wrong cli", fields: aliFailed, args: args{pageNumber: 1, pageSize: 1}, wantErr: true},
-		{name: "wrong page number", fields: ali, args: args{pageNumber: 0, pageSize: 1}, wantErr: true},
-		{name: "wrong page size", fields: ali, args: args{pageNumber: 1, pageSize: 0}, wantErr: true},
-		{name: "right cli", fields: ali, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
+		{name: "ali wrong cli", fields: aliFailed, args: args{pageNumber: 1, pageSize: 1}, wantErr: true},
+		{name: "ali wrong page number", fields: ali, args: args{pageNumber: 0, pageSize: 1}, wantErr: true},
+		{name: "ali wrong page size", fields: ali, args: args{pageNumber: 1, pageSize: 0}, wantErr: true},
+		{name: "ali right cli", fields: ali, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
 
-		{name: "wrong cli", fields: tcFailed, args: args{pageNumber: 1, pageSize: 1}, wantErr: true},
-		{name: "wrong page number", fields: tc, args: args{pageNumber: 0, pageSize: 1}, wantErr: true},
-		{name: "wrong page size", fields: tc, args: args{pageNumber: 1, pageSize: 0}, wantErr: true},
-		{name: "right cli", fields: tc, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
+		{name: "tc wrong cli", fields: tcFailed, args: args{pageNumber: 1, pageSize: 1}, wantErr: true},
+		{name: "tc wrong page number", fields: tc, args: args{pageNumber: 0, pageSize: 1}, wantErr: true},
+		{name: "tc wrong page size", fields: tc, args: args{pageNumber: 1, pageSize: 0}, wantErr: true},
+		{name: "tc right cli", fields: tc, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
 
-		// {name: "wrong cli", fields: hwFailed, args: args{pageNumber: 1, pageSize: 1}, wantErr: true},
-		// {name: "wrong page number", fields: hw, args: args{pageNumber: 0, pageSize: 1}, wantErr: true},
-		// {name: "wrong page size", fields: hw, args: args{pageNumber: 1, pageSize: 0}, wantErr: true},
-		// {name: "right cli", fields: hw, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
+		// {name: "hw wrong cli", fields: hwFailed, args: args{pageNumber: 1, pageSize: 1}, wantErr: true},
+		{name: "hw right cli", fields: hw, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
 
-		{name: "right cli", fields: aws, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
+		{name: "aws right cli", fields: aws, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
 
 		// {name: "right cli", fields: google, args: args{pageNumber: 1, pageSize: 10}, wantErr: false},
 	}
@@ -55,7 +53,7 @@ func TestEcser_DescribeInstances(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			resp, err := tt.fields.DescribeInstances(tt.args.pageNumber, tt.args.pageSize)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("DescribeInstances() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("DescribeInstances() error = %+v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			t.Logf("%+v", err)

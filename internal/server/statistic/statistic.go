@@ -63,6 +63,28 @@ func Statistic(provider pbtenant.CloudProvider, tenanters []tenanter.Tenanter) (
 			}
 			wg.Wait()
 		}
+
+	case pbtenant.CloudProvider_huawei_cloud:
+		for i := range tenanters {
+			var wg sync.WaitGroup
+			wg.Add(len(pbtenant.HuaweiRegionId_name))
+			for rId := range pbtenant.HuaweiRegionId_name {
+				go func(rId int32, t tenanter.Tenanter) {
+					defer wg.Done()
+					if rId != int32(pbtenant.HuaweiRegionId_hw_all) {
+						if hw, err := configger.NewHuaweiCfgClient(rId, t); err == nil {
+							if res, err := hw.Statistic(); err == nil && res.Count > 0 {
+								mutex.Lock()
+								results = append(results, res)
+								mutex.Unlock()
+							}
+						}
+					}
+				}(rId, tenanters[i].Clone())
+			}
+			wg.Wait()
+		}
+
 	case pbtenant.CloudProvider_aws_cloud:
 		for i := range tenanters {
 			var wg sync.WaitGroup
