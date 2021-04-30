@@ -63,14 +63,10 @@ func LoadCloudConfigsFromOsEnv() error {
 	return load(configs)
 }
 
-func ShowConfigJson(configFile string) ([]byte, error) {
-	b, err := ioutil.ReadFile(configFile)
-	if err != nil {
-		return nil, ErrLoadTenanterFileEmpty
-	}
-
+func ShowConfigJson() ([]byte, error) {
+	data := os.Getenv(osEnvKey)
 	var configs = new(pbtenant.CloudConfigs)
-	if err = yaml.Unmarshal(b, configs); err != nil {
+	if err := yaml.Unmarshal([]byte(data), configs); err != nil {
 		return nil, errors.WithMessage(ErrLoadTenanterFromFile, err.Error())
 	}
 
