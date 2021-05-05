@@ -7,51 +7,83 @@ import "idl/pbtenant/tenant.proto";
 import "google/api/annotations.proto";
 
 message ECSInstance {
+  // 云类型
+  pbtenant.CloudProvider provider = 1;
+  // 账号名称
+  string accout_name = 2;
   // 实例id
-  string instance_id = 1;
+  string instance_id = 3;
   // 实例名称
-  string instance_name = 2;
+  string instance_name = 4;
   // 地域，数据中心
-  string region_name = 3;
+  string region_name = 5;
   // 公网ip
-  repeated string public_ips = 4;
+  repeated string public_ips = 6;
   // 实例类型
-  string instance_type = 5;
+  string instance_type = 7;
   // vcpu数
-  int32 cpu = 6;
+  int32 cpu = 8;
   // 内存MB
-  int32 memory = 7;
+  int32 memory = 9;
   // 实例描述
-  string description = 8;
+  string description = 10;
   // 状态
-  string status = 9;
+  string status = 11;
   // 创建时间，ISO8601
-  string creation_time = 10;
+  string creation_time = 12;
   // 过期时间
-  string expire_time = 11;
-
+  string expire_time = 13;
 }
 
-message ListReq {
+message ListDetailReq {
+  // 云名称
   pbtenant.CloudProvider provider = 1;
   // 账户名称，根据统计接口返回值，或直接根据config.yaml中的配置
   string account_name = 2;
   // 区域Id，参考 tenant.proto 中的各个云的区域
   int32 region_id = 3;
+  // 分页相关参数，页码
   int32 page_number = 4;
+  // 分页相关参数，每页数量
   int32 page_size = 5;
+  // 分页相关参数，下一页的token
+  string next_token = 6;
+}
+
+message ListDetailResp {
+  // ECS 机器集合
+  repeated ECSInstance ecses = 1;
+  // 查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询
+  bool finished = 2;
+  // 分页相关参数，页码
+  int32 page_number = 3;
+  // 分页相关参数，每页数量
+  int32 page_size = 4;
+  // 分页相关参数，下一页的token
+  string next_token = 5;
+  // 请求id，出现问题后提供给云厂商，排查问题
+  string request_id = 6;
+}
+
+message ListReq {
+  // 云名称
+  pbtenant.CloudProvider provider = 1;
 }
 
 message ListResp {
+  // ECS 机器集合
   repeated ECSInstance ecses = 1;
-  string next_token = 2;
-  int32 page_number = 3;
-  int32 page_size = 4;
-  // 请求id，出现问题后提供给云厂商，排查问题
-  string request_id = 5;
 }
 
+
 service ECSService {
+  rpc ListDetail(ListDetailReq) returns (ListDetailResp) {
+    option (google.api.http) = {
+      post : "/ecs/detail"
+      body : "*"
+    };
+  }
+
   rpc List(ListReq) returns (ListResp) {
     option (google.api.http) = {
       post : "/ecs"

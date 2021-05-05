@@ -6,31 +6,30 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	awsec2 "github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/pkg/errors"
+
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
-	"github.com/pkg/errors"
 )
 
 type AwsEcs struct {
-	cli        *awsec2.Client
-	regionId   pbtenant.AwsRegionId
-	regionName string
+	cli      *awsec2.Client
+	region   tenanter.Region
+	tenanter tenanter.Tenanter
 }
 
-func NewAwsEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
-	var client *awsec2.Client
-
-	rName, err := tenanter.GetAwsRegionName(regionId)
-	if err != nil {
-		return nil, err
-	}
+func NewAwsEcsClient(region tenanter.Region, tenant tenanter.Tenanter) (Ecser, error) {
+	var (
+		client *awsec2.Client
+		err    error
+	)
 
 	switch t := tenant.(type) {
 	case *tenanter.AccessKeyTenant:
 		cfg, err := config.LoadDefaultConfig(context.TODO(),
 			config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(t.GetId(), t.GetSecret(), "")),
-			config.WithRegion(rName),
+			config.WithRegion(region.GetName()),
 		)
 		if err != nil {
 			return nil, errors.Wrap(err, "LoadDefaultConfig aws ecs client error")
@@ -43,28 +42,31 @@ func NewAwsEcsClient(regionId int32, tenant tenanter.Tenanter) (Ecser, error) {
 		return nil, errors.Wrap(err, "init aws ec2 client error")
 	}
 	return &AwsEcs{
-		cli:        client,
-		regionId:   pbtenant.AwsRegionId(regionId),
-		regionName: rName,
+		cli:      client,
+		region:   region,
+		tenanter: tenant,
 	}, nil
 }
 
-func (ecs *AwsEcs) DescribeInstances(pageNumber, pageSize int32) (*pbecs.ListResp, error) {
-	req := new(awsec2.DescribeInstancesInput)
-	req.MaxResults = pageSize
+func (ecs *AwsEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*pbecs.ListDetailResp, error) {
+	request := new(awsec2.DescribeInstancesInput)
+	request.MaxResults = req.PageSize
+	request.NextToken = &req.NextToken
 
-	resp, err := ecs.cli.DescribeInstances(context.Background(), req)
+	resp, err := ecs.cli.DescribeInstances(ctx, request)
 	if err != nil {
-		return nil, errors.Wrap(err, "Aws DescribeInstances error")
+		return nil, errors.Wrap(err, "Aws ListDetail error")
 	}
 
 	var ecses []*pbecs.ECSInstance
 	for _, v := range resp.Reservations {
 		for _, v2 := range v.Instances {
 			ecses = append(ecses, &pbecs.ECSInstance{
+				Provider:     pbtenant.CloudProvider_aws_cloud,
+				AccoutName:   ecs.tenanter.AccountName(),
 				InstanceId:   *v2.InstanceId,
 				InstanceName: "",
-				RegionName:   "",
+				RegionName:   ecs.region.GetName(),
 				PublicIps:    []string{*v2.PublicIpAddress},
 				InstanceType: string(v2.InstanceType),
 				Cpu:          v2.CpuOptions.CoreCount,
@@ -77,7 +79,17 @@ func (ecs *AwsEcs) DescribeInstances(pageNumber, pageSize int32) (*pbecs.ListRes
 		}
 
 	}
-	return &pbecs.ListResp{
-		Ecses: ecses,
+	nextToken := ""
+	if resp.NextToken != nil {
+		return &pbecs.ListDetailResp{
+			Ecses:     ecses,
+			Finished:  false,
+			NextToken: *resp.NextToken,
+		}, nil
+	}
+	return &pbecs.ListDetailResp{
+		Ecses:     ecses,
+		Finished:  true,
+		NextToken: nextToken,
 	}, nil
 }

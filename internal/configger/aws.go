@@ -20,19 +20,15 @@ type AwsCfg struct {
 	tenanter.Tenanter
 }
 
-func NewAwsCfgClient(regionId int32, tenant tenanter.Tenanter) (Configger, error) {
+func NewAwsCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configger, error) {
 	var client *awscs.Client
-
-	rName, err := tenanter.GetAwsRegionName(regionId)
-	if err != nil {
-		return nil, err
-	}
+	var err error
 
 	switch t := tenant.(type) {
 	case *tenanter.AccessKeyTenant:
 		cfg, err := config.LoadDefaultConfig(context.TODO(),
 			config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(t.GetId(), t.GetSecret(), "")),
-			config.WithRegion(rName),
+			config.WithRegion(region.GetName()),
 		)
 		if err != nil {
 			return nil, errors.Wrap(err, "LoadDefaultConfig aws ecs client error")
@@ -46,17 +42,17 @@ func NewAwsCfgClient(regionId int32, tenant tenanter.Tenanter) (Configger, error
 	}
 	return &AwsCfg{
 		cli:        client,
-		regionId:   pbtenant.AwsRegionId(regionId),
-		regionName: rName,
+		regionId:   pbtenant.AwsRegionId(region.GetId()),
+		regionName: region.GetName(),
 		Tenanter:   tenant,
 	}, nil
 }
 
-func (cfg *AwsCfg) Statistic() (*pbcfg.StatisticRespList, error) {
+func (cfg *AwsCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, error) {
 	req := new(awscs.GetDiscoveredResourceCountsInput)
 	req.ResourceTypes = []string{}
 
-	resp, err := cfg.cli.GetDiscoveredResourceCounts(context.Background(), req)
+	resp, err := cfg.cli.GetDiscoveredResourceCounts(ctx, req)
 	if err != nil {
 		return nil, errors.Wrap(err, "Aws Statistic error")
 	}

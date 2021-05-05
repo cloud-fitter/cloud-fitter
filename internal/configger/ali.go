@@ -1,6 +1,7 @@
 package configger
 
 import (
+	"context"
 	"sync"
 
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests"
@@ -21,13 +22,9 @@ type AliCfg struct {
 	tenanter.Tenanter
 }
 
-func NewAliConfigClient(regionId int32, tenant tenanter.Tenanter) (Configger, error) {
+func NewAliCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configger, error) {
 	var client *alicfg.Client
-
-	rName, err := tenanter.GetAliRegionName(regionId)
-	if err != nil {
-		return nil, errors.WithMessage(err, "get region name")
-	}
+	var err error
 
 	switch t := tenant.(type) {
 	case *tenanter.AccessKeyTenant:
@@ -45,13 +42,13 @@ func NewAliConfigClient(regionId int32, tenant tenanter.Tenanter) (Configger, er
 
 	return &AliCfg{
 		cli:        client,
-		regionId:   pbtenant.AliRegionId(regionId),
-		regionName: rName,
+		regionId:   pbtenant.AliRegionId(region.GetId()),
+		regionName: region.GetName(),
 		Tenanter:   tenant.Clone(),
 	}, nil
 }
 
-func (cfg *AliCfg) Statistic() (*pbcfg.StatisticRespList, error) {
+func (cfg *AliCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, error) {
 	req := alicfg.CreateListDiscoveredResourcesRequest()
 	req.PageNumber = requests.NewInteger(1)
 	req.PageSize = requests.NewInteger(1)

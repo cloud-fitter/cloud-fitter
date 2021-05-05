@@ -26,10 +26,19 @@ message StatisticResp {
   repeated list cfgs = 1;
 }
 
+message StatisticAllReq {}
+
 service StatisticService {
   rpc Statistic(StatisticReq) returns (StatisticResp) {
     option (google.api.http) = {
       post : "/statistic"
+      body : "*"
+    };
+  }
+
+  rpc StatisticAll(StatisticAllReq) returns (StatisticResp) {
+    option (google.api.http) = {
+      post : "/statistic/all"
       body : "*"
     };
   }

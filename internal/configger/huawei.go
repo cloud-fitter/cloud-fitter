@@ -4,10 +4,13 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
+
+	"context"
+
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/core/auth/basic"
 	hwecs "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ecs/v2"
 	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ecs/v2/model"
-	"github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ecs/v2/region"
+	hwregion "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/ecs/v2/region"
 	hwiam "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/iam/v3"
 	iammodel "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/iam/v3/model"
 	iamregion "github.com/huaweicloud/huaweicloud-sdk-go-v3/services/iam/v3/region"
@@ -21,13 +24,8 @@ type HuaweiCfg struct {
 	tenanter.Tenanter
 }
 
-func NewHuaweiCfgClient(regionId int32, tenant tenanter.Tenanter) (cfg Configger, err error) {
+func NewHuaweiCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (cfg Configger, err error) {
 	var client *hwecs.EcsClient
-
-	rName, err := tenanter.GetHuaweiRegionName(regionId)
-	if err != nil {
-		return nil, errors.WithMessage(err, "GetHuaweiRegionName error")
-	}
 
 	defer func() {
 		if e := recover(); e != nil {
@@ -38,6 +36,7 @@ func NewHuaweiCfgClient(regionId int32, tenant tenanter.Tenanter) (cfg Configger
 	switch t := tenant.(type) {
 	case *tenanter.AccessKeyTenant:
 		auth := basic.NewCredentialsBuilder().WithAk(t.GetId()).WithSk(t.GetSecret()).Build()
+		rName := region.GetName()
 		cli := hwiam.IamClientBuilder().WithRegion(iamregion.ValueOf(rName)).WithCredential(auth).Build()
 		c := hwiam.NewIamClient(cli)
 		request := new(iammodel.KeystoneListProjectsRequest)
@@ -49,7 +48,7 @@ func NewHuaweiCfgClient(regionId int32, tenant tenanter.Tenanter) (cfg Configger
 		projectId := (*r.Projects)[0].Id
 
 		auth = basic.NewCredentialsBuilder().WithAk(t.GetId()).WithSk(t.GetSecret()).WithProjectId(projectId).Build()
-		hcClient := hwecs.EcsClientBuilder().WithRegion(region.ValueOf(rName)).WithCredential(auth).Build()
+		hcClient := hwecs.EcsClientBuilder().WithRegion(hwregion.ValueOf(rName)).WithCredential(auth).Build()
 		client = hwecs.NewEcsClient(hcClient)
 	default:
 	}
@@ -59,13 +58,13 @@ func NewHuaweiCfgClient(regionId int32, tenant tenanter.Tenanter) (cfg Configger
 	}
 	return &HuaweiCfg{
 		cli:        client,
-		regionId:   pbtenant.HuaweiRegionId(regionId),
-		regionName: rName,
+		regionId:   pbtenant.HuaweiRegionId(region.GetId()),
+		regionName: region.GetName(),
 		Tenanter:   tenant,
 	}, err
 }
 
-func (cfg *HuaweiCfg) Statistic() (*pbcfg.StatisticRespList, error) {
+func (cfg *HuaweiCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, error) {
 	req := new(model.ListServersDetailsRequest)
 	var offset int32 = 0
 	var limit int32 = 1

@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StatisticServiceClient interface {
 	Statistic(ctx context.Context, in *StatisticReq, opts ...grpc.CallOption) (*StatisticResp, error)
+	StatisticAll(ctx context.Context, in *StatisticAllReq, opts ...grpc.CallOption) (*StatisticResp, error)
 }
 
 type statisticServiceClient struct {
@@ -38,11 +39,21 @@ func (c *statisticServiceClient) Statistic(ctx context.Context, in *StatisticReq
 	return out, nil
 }
 
+func (c *statisticServiceClient) StatisticAll(ctx context.Context, in *StatisticAllReq, opts ...grpc.CallOption) (*StatisticResp, error) {
+	out := new(StatisticResp)
+	err := c.cc.Invoke(ctx, "/pbcfg.StatisticService/StatisticAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StatisticServiceServer is the server API for StatisticService service.
 // All implementations must embed UnimplementedStatisticServiceServer
 // for forward compatibility
 type StatisticServiceServer interface {
 	Statistic(context.Context, *StatisticReq) (*StatisticResp, error)
+	StatisticAll(context.Context, *StatisticAllReq) (*StatisticResp, error)
 	mustEmbedUnimplementedStatisticServiceServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedStatisticServiceServer struct {
 
 func (UnimplementedStatisticServiceServer) Statistic(context.Context, *StatisticReq) (*StatisticResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Statistic not implemented")
+}
+func (UnimplementedStatisticServiceServer) StatisticAll(context.Context, *StatisticAllReq) (*StatisticResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatisticAll not implemented")
 }
 func (UnimplementedStatisticServiceServer) mustEmbedUnimplementedStatisticServiceServer() {}
 
@@ -84,6 +98,24 @@ func _StatisticService_Statistic_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StatisticService_StatisticAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatisticAllReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StatisticServiceServer).StatisticAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pbcfg.StatisticService/StatisticAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StatisticServiceServer).StatisticAll(ctx, req.(*StatisticAllReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StatisticService_ServiceDesc is the grpc.ServiceDesc for StatisticService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var StatisticService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Statistic",
 			Handler:    _StatisticService_Statistic_Handler,
+		},
+		{
+			MethodName: "StatisticAll",
+			Handler:    _StatisticService_StatisticAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -47,12 +47,52 @@
           "ECSService"
         ]
       }
+    },
+    "/ecs/detail": {
+      "post": {
+        "operationId": "ECSService_ListDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbecsListDetailResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbecsListDetailReq"
+            }
+          }
+        ],
+        "tags": [
+          "ECSService"
+        ]
+      }
     }
   },
   "definitions": {
     "pbecsECSInstance": {
       "type": "object",
       "properties": {
+        "provider": {
+          "$ref": "#/definitions/pbtenantCloudProvider",
+          "title": "云类型"
+        },
+        "accoutName": {
+          "type": "string",
+          "title": "账号名称"
+        },
         "instanceId": {
           "type": "string",
           "title": "实例id"
@@ -104,11 +144,12 @@
         }
       }
     },
-    "pbecsListReq": {
+    "pbecsListDetailReq": {
       "type": "object",
       "properties": {
         "provider": {
-          "$ref": "#/definitions/pbtenantCloudProvider"
+          "$ref": "#/definitions/pbtenantCloudProvider",
+          "title": "云名称"
         },
         "accountName": {
           "type": "string",
@@ -121,11 +162,60 @@
         },
         "pageNumber": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "title": "分页相关参数，页码"
         },
         "pageSize": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        }
+      }
+    },
+    "pbecsListDetailResp": {
+      "type": "object",
+      "properties": {
+        "ecses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/pbecsECSInstance"
+          },
+          "title": "ECS 机器集合"
+        },
+        "finished": {
+          "type": "boolean",
+          "title": "查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求id，出现问题后提供给云厂商，排查问题"
+        }
+      }
+    },
+    "pbecsListReq": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "$ref": "#/definitions/pbtenantCloudProvider",
+          "title": "云名称"
         }
       }
     },
@@ -136,22 +226,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/pbecsECSInstance"
-          }
-        },
-        "nextToken": {
-          "type": "string"
-        },
-        "pageNumber": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "pageSize": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "requestId": {
-          "type": "string",
-          "title": "请求id，出现问题后提供给云厂商，排查问题"
+          },
+          "title": "ECS 机器集合"
         }
       }
     },
@@ -161,11 +237,9 @@
         "ali_cloud",
         "tencent_cloud",
         "huawei_cloud",
-        "aws_cloud",
-        "google_cloud"
+        "aws_cloud"
       ],
-      "default": "ali_cloud",
-      "title": "- google_cloud: 暂不支持"
+      "default": "ali_cloud"
     },
     "protobufAny": {
       "type": "object",
