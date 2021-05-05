@@ -38,7 +38,7 @@ package ecser
 // 	// // The name of the zone for this request.
 // 	// zone := "my-zone" // TODO: Update placeholder value.
 // 	//
-// 	// req := computeService.Instances.List(project, zone)
+// 	// req := computeService.Instances.ListDetail(project, zone)
 // 	// if err := req.Pages(ctx, func(page *compute.InstanceList) error {
 // 	// 	for _, instance := range page.Items {
 // 	// 		// TODO: Change code below to process each `instance` resource:
@@ -67,7 +67,7 @@ package ecser
 // // 	return nil, nil
 // // }
 //
-// func (ecs *GoogleEcs) DescribeInstances(pageNumber, pageSize int) (*pbecs.ListResp, error) {
+// func (ecs *GoogleEcs) ListDetail(pageNumber, pageSize int) (*pbecs.ListResp, error) {
 // 	// req := new(model.ListServersDetailsRequest)
 // 	// offset := int32((pageNumber - 1) * pageSize)
 // 	// req.Offset = &offset
@@ -76,7 +76,7 @@ package ecser
 // 	//
 // 	// resp, err := ecs.cli.ListServersDetails(req)
 // 	// if err != nil {
-// 	// 	return nil, errors.Wrap(err, "Google DescribeInstances error")
+// 	// 	return nil, errors.Wrap(err, "Google ListDetail error")
 // 	// }
 //
 // 	// Project ID for this request.
@@ -85,7 +85,7 @@ package ecser
 // 	// The name of the zone for this request.
 // 	zone := "asia-east2-a" // TODO: Update placeholder value.
 //
-// 	req := ecs.cli.Instances.List(project, zone)
+// 	req := ecs.cli.Instances.ListDetail(project, zone)
 // 	var ecses []*pbecs.ECSInstance
 // 	if err := req.Pages(context.Background(), func(page *compute.InstanceList) error {
 // 		for _, instance := range page.Items {

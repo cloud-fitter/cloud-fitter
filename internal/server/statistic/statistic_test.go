@@ -1,6 +1,7 @@
 package statistic
 
 import (
+	"context"
 	"testing"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
@@ -26,7 +27,7 @@ func TestStatistic(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := Statistic(tt.args.provider, tt.args.tenanters)
+			got, err := Statistic(context.Background(), tt.args.provider, tt.args.tenanters)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Statistic() error = %+v, wantErr %v", err, tt.wantErr)
 				return

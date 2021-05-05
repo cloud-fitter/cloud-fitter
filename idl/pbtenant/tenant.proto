@@ -12,7 +12,7 @@ enum CloudProvider {
   huawei_cloud = 2;
   aws_cloud = 3;
   // 暂不支持
-  google_cloud = 4;
+//  google_cloud = 4;
 }
 
 enum CloudProduct {

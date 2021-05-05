@@ -1,6 +1,7 @@
 package configger
 
 import (
+	"context"
 	"testing"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
@@ -8,16 +9,20 @@ import (
 )
 
 func TestConfigger_Statistic(t *testing.T) {
-	ali, _ := NewAliConfigClient(int32(pbtenant.AliRegionId_ali_cn_hangzhou), aliTenant[0])
-	aliFailed, _ := NewAliConfigClient(int32(pbtenant.AliRegionId_ali_cn_hangzhou), tenanter.NewTenantWithAccessKey("empty", "", ""))
+	region, _ := tenanter.NewRegion(pbtenant.CloudProvider_ali_cloud, int32(pbtenant.AliRegionId_ali_cn_hangzhou))
+	ali, _ := NewAliCfgClient(region, aliTenant[0])
+	aliFailed, _ := NewAliCfgClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
-	tc, _ := NewTencentCfgClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tcTenant[0])
-	tcFailed, _ := NewAliConfigClient(int32(pbtenant.TencentRegionId_tc_ap_beijing), tenanter.NewTenantWithAccessKey("empty", "", ""))
+	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_tencent_cloud, int32(pbtenant.TencentRegionId_tc_ap_beijing))
+	tc, _ := NewTencentCfgClient(region, tcTenant[0])
+	tcFailed, _ := NewTencentCfgClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
-	hw, _ := NewHuaweiCfgClient(int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2), hwTenant[0])
+	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_huawei_cloud, int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2))
+	hw, _ := NewHuaweiCfgClient(region, hwTenant[0])
 
-	aws, _ := NewAwsCfgClient(int32(pbtenant.AwsRegionId_aws_us_east_2), awsTenant[0])
-	awsFailed, _ := NewAwsCfgClient(int32(pbtenant.AwsRegionId_aws_us_east_2), tenanter.NewTenantWithAccessKey("empty", "", ""))
+	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_aws_cloud, int32(pbtenant.AwsRegionId_aws_us_east_2))
+	aws, _ := NewAwsCfgClient(region, awsTenant[0])
+	awsFailed, _ := NewAwsCfgClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
 	type args struct {
 	}
@@ -40,7 +45,7 @@ func TestConfigger_Statistic(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			resp, err := tt.fields.Statistic()
+			resp, err := tt.fields.Statistic(context.Background())
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Statistic() error = %+v, wantErr %v", err, tt.wantErr)
 				return
