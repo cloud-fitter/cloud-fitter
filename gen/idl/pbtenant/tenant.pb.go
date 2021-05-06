@@ -235,7 +235,7 @@ func (AliRegionId) EnumDescriptor() ([]byte, []int) {
 	return file_idl_pbtenant_tenant_proto_rawDescGZIP(), []int{2}
 }
 
-// 阿里云区域，需要将对应的 _ 转化为 -
+// 腾讯云区域，需要将对应的 _ 转化为 -
 type TencentRegionId int32
 
 const (
