@@ -2,7 +2,6 @@ package rds
 
 import (
 	"context"
-	"fmt"
 	"sync"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds"
@@ -78,7 +77,6 @@ func List(ctx context.Context, req *pbrds.ListReq) (*pbrds.ListResp, error) {
 						glog.Errorf("ListDetail error %v", err)
 						return
 					}
-					fmt.Println(resp.Rdses)
 					mutex.Lock()
 					rdses = append(rdses, resp.Rdses...)
 					mutex.Unlock()

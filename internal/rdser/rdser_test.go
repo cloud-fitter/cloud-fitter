@@ -14,10 +14,10 @@ func TestEcser_ListDetail(t *testing.T) {
 	ali, _ := NewAliRdsClient(region, aliTenant[0])
 	aliFailed, _ := NewAliRdsClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
-	// region, _ = tenanter.NewRegion(pbtenant.CloudProvider_tencent_cloud, int32(pbtenant.TencentRegionId_tc_ap_beijing))
-	// tc, _ := NewTencentCvmClient(region, tcTenant[0])
-	// tcFailed, _ := NewTencentCvmClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
-	//
+	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_tencent_cloud, int32(pbtenant.TencentRegionId_tc_ap_beijing))
+	tc, _ := NewTencentCdbClient(region, tcTenant[0])
+	tcFailed, _ := NewTencentCdbClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
+
 	// region, _ = tenanter.NewRegion(pbtenant.CloudProvider_huawei_cloud, int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2))
 	// hw, _ := NewHuaweiEcsClient(region, hwTenant[0])
 	// // hwFailed, _ := NewHuaweiEcsClient(int32(pbtenant.HuaweiRegionId_hw_cn_north_1), tenanter.NewTenantWithAccessKey("empty", "", "", ""))
@@ -40,10 +40,10 @@ func TestEcser_ListDetail(t *testing.T) {
 		{name: "ali wrong page size", fields: ali, args: args{&pbrds.ListDetailReq{PageNumber: 1, PageSize: 0}}, wantErr: true},
 		{name: "ali right cli", fields: ali, args: args{&pbrds.ListDetailReq{PageNumber: 1, PageSize: 10}}, wantErr: false},
 
-		// {name: "tc wrong cli", fields: tcFailed, args: args{&pbecs.ListDetailReq{PageNumber: 1, PageSize: 1}}, wantErr: true},
-		// {name: "tc wrong page number", fields: tc, args: args{&pbecs.ListDetailReq{PageNumber: 0, PageSize: 1}}, wantErr: true},
-		// {name: "tc wrong page size", fields: tc, args: args{&pbecs.ListDetailReq{PageNumber: 1, PageSize: 0}}, wantErr: true},
-		// {name: "tc right cli", fields: tc, args: args{&pbecs.ListDetailReq{PageNumber: 1, PageSize: 10}}, wantErr: false},
+		{name: "tc wrong cli", fields: tcFailed, args: args{&pbrds.ListDetailReq{PageNumber: 1, PageSize: 1}}, wantErr: true},
+		{name: "tc wrong page number", fields: tc, args: args{&pbrds.ListDetailReq{PageNumber: 0, PageSize: 1}}, wantErr: true},
+		{name: "tc wrong page size", fields: tc, args: args{&pbrds.ListDetailReq{PageNumber: 1, PageSize: 0}}, wantErr: true},
+		{name: "tc right cli", fields: tc, args: args{&pbrds.ListDetailReq{PageNumber: 1, PageSize: 10}}, wantErr: false},
 
 		// {name: "hw wrong cli", fields: hwFailed, args: args{pageNumber: 1, pageSize: 1}, wantErr: true},
 		// {name: "hw right cli", fields: hw, args: args{&pbecs.ListDetailReq{PageNumber: 1, PageSize: 10}}, wantErr: false},
