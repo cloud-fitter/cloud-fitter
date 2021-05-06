@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "idl/pbecs/ecs.proto",
+    "title": "idl/pbrds/rds.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "ECSService"
+      "name": "RDSService"
     }
   ],
   "consumes": [
@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/ecs": {
+    "/rds": {
       "post": {
-        "operationId": "ECSService_ListECS",
+        "operationId": "RDSService_ListRDS",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbecsListResp"
+              "$ref": "#/definitions/pbrdsListResp"
             }
           },
           "default": {
@@ -39,23 +39,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbecsListReq"
+              "$ref": "#/definitions/pbrdsListReq"
             }
           }
         ],
         "tags": [
-          "ECSService"
+          "RDSService"
         ]
       }
     },
-    "/ecs/detail": {
+    "/rds/detail": {
       "post": {
-        "operationId": "ECSService_ListECSDetail",
+        "operationId": "RDSService_ListRDSDetail",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbecsListDetailResp"
+              "$ref": "#/definitions/pbrdsListDetailResp"
             }
           },
           "default": {
@@ -71,80 +71,18 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbecsListDetailReq"
+              "$ref": "#/definitions/pbrdsListDetailReq"
             }
           }
         ],
         "tags": [
-          "ECSService"
+          "RDSService"
         ]
       }
     }
   },
   "definitions": {
-    "pbecsECSInstance": {
-      "type": "object",
-      "properties": {
-        "provider": {
-          "$ref": "#/definitions/pbtenantCloudProvider",
-          "title": "云类型"
-        },
-        "accoutName": {
-          "type": "string",
-          "title": "账号名称"
-        },
-        "instanceId": {
-          "type": "string",
-          "title": "实例id"
-        },
-        "instanceName": {
-          "type": "string",
-          "title": "实例名称"
-        },
-        "regionName": {
-          "type": "string",
-          "title": "地域，数据中心"
-        },
-        "publicIps": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "公网ip"
-        },
-        "instanceType": {
-          "type": "string",
-          "title": "实例类型"
-        },
-        "cpu": {
-          "type": "integer",
-          "format": "int32",
-          "title": "vcpu数"
-        },
-        "memory": {
-          "type": "integer",
-          "format": "int32",
-          "title": "内存MB"
-        },
-        "description": {
-          "type": "string",
-          "title": "实例描述"
-        },
-        "status": {
-          "type": "string",
-          "title": "状态"
-        },
-        "creationTime": {
-          "type": "string",
-          "title": "创建时间，ISO8601"
-        },
-        "expireTime": {
-          "type": "string",
-          "title": "过期时间"
-        }
-      }
-    },
-    "pbecsListDetailReq": {
+    "pbrdsListDetailReq": {
       "type": "object",
       "properties": {
         "provider": {
@@ -176,15 +114,15 @@
         }
       }
     },
-    "pbecsListDetailResp": {
+    "pbrdsListDetailResp": {
       "type": "object",
       "properties": {
-        "ecses": {
+        "rdses": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/pbecsECSInstance"
+            "$ref": "#/definitions/pbrdsRDSInstance"
           },
-          "title": "ECS 机器集合"
+          "title": "RDS 机器集合"
         },
         "finished": {
           "type": "boolean",
@@ -210,7 +148,7 @@
         }
       }
     },
-    "pbecsListReq": {
+    "pbrdsListReq": {
       "type": "object",
       "properties": {
         "provider": {
@@ -219,15 +157,68 @@
         }
       }
     },
-    "pbecsListResp": {
+    "pbrdsListResp": {
       "type": "object",
       "properties": {
-        "ecses": {
+        "rdses": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/pbecsECSInstance"
+            "$ref": "#/definitions/pbrdsRDSInstance"
           },
-          "title": "ECS 机器集合"
+          "title": "RDS 机器集合"
+        }
+      }
+    },
+    "pbrdsRDSInstance": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "$ref": "#/definitions/pbtenantCloudProvider",
+          "title": "云类型"
+        },
+        "accoutName": {
+          "type": "string",
+          "title": "账号名称"
+        },
+        "instanceId": {
+          "type": "string",
+          "title": "实例id"
+        },
+        "instanceName": {
+          "type": "string",
+          "title": "实例名称"
+        },
+        "regionName": {
+          "type": "string",
+          "title": "地域，数据中心"
+        },
+        "instanceType": {
+          "type": "string",
+          "title": "实例类型"
+        },
+        "engine": {
+          "type": "string",
+          "title": "数据库类型"
+        },
+        "engineVersion": {
+          "type": "string",
+          "title": "数据库类型的版本"
+        },
+        "instanceClass": {
+          "type": "string",
+          "title": "数据库实例规格"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "creationTime": {
+          "type": "string",
+          "title": "创建时间，ISO8601"
+        },
+        "expireTime": {
+          "type": "string",
+          "title": "过期时间"
         }
       }
     },

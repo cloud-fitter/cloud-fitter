@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 )
@@ -16,7 +15,6 @@ func TestListDetail(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    []*pbcfg.StatisticRespList
 		wantErr bool
 	}{
 		{name: "ali", args: args{req: &pbecs.ListDetailReq{Provider: pbtenant.CloudProvider_ali_cloud, RegionId: int32(pbtenant.AliRegionId_ali_cn_hangzhou), PageNumber: 1, PageSize: 10}}, wantErr: false},
@@ -42,7 +40,6 @@ func TestList(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    []*pbcfg.StatisticRespList
 		wantErr bool
 	}{
 		{name: "ali", args: args{req: &pbecs.ListReq{Provider: pbtenant.CloudProvider_ali_cloud}}, wantErr: false},

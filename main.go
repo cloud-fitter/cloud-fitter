@@ -9,6 +9,7 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds"
 	"github.com/cloud-fitter/cloud-fitter/internal/server"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/golang/glog"
@@ -32,6 +33,7 @@ func run() error {
 	// Note: Make sure the gRPC server is running properly and accessible
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
+
 	if err := demo.RegisterYourServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterYourServiceHandlerFromEndpoint error")
 	}
@@ -42,6 +44,10 @@ func run() error {
 
 	if err := pbcfg.RegisterStatisticServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterStatisticServiceHandlerFromEndpoint error")
+	}
+
+	if err := pbrds.RegisterRDSServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+		return errors.Wrap(err, "RegisterRDSServiceHandlerFromEndpoint error")
 	}
 
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
@@ -73,6 +79,7 @@ func main() {
 		demo.RegisterYourServiceServer(s, &server.Server{})
 		pbecs.RegisterECSServiceServer(s, &server.Server{})
 		pbcfg.RegisterStatisticServiceServer(s, &server.Server{})
+		pbrds.RegisterRDSServiceServer(s, &server.Server{})
 
 		if err = s.Serve(lis); err != nil {
 			glog.Fatalf("failed to serve: %v", err)

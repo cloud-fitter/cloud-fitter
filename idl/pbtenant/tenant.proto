@@ -67,7 +67,7 @@ enum AliRegionId {
   ali_me_east_1 = 23;      // 中东东部1-迪拜
 }
 
-// 阿里云区域，需要将对应的 _ 转化为 -
+// 腾讯云区域，需要将对应的 _ 转化为 -
 enum TencentRegionId {
   tc_all = 0;
   tc_ap_bangkok = 1;        // 曼谷

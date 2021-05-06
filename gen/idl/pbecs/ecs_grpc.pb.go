@@ -18,8 +18,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ECSServiceClient interface {
-	ListDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
-	List(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
+	ListECSDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
+	ListECS(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
 }
 
 type eCSServiceClient struct {
@@ -30,18 +30,18 @@ func NewECSServiceClient(cc grpc.ClientConnInterface) ECSServiceClient {
 	return &eCSServiceClient{cc}
 }
 
-func (c *eCSServiceClient) ListDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error) {
+func (c *eCSServiceClient) ListECSDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error) {
 	out := new(ListDetailResp)
-	err := c.cc.Invoke(ctx, "/pbecs.ECSService/ListDetail", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pbecs.ECSService/ListECSDetail", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *eCSServiceClient) List(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error) {
+func (c *eCSServiceClient) ListECS(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error) {
 	out := new(ListResp)
-	err := c.cc.Invoke(ctx, "/pbecs.ECSService/List", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pbecs.ECSService/ListECS", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -52,8 +52,8 @@ func (c *eCSServiceClient) List(ctx context.Context, in *ListReq, opts ...grpc.C
 // All implementations must embed UnimplementedECSServiceServer
 // for forward compatibility
 type ECSServiceServer interface {
-	ListDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
-	List(context.Context, *ListReq) (*ListResp, error)
+	ListECSDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
+	ListECS(context.Context, *ListReq) (*ListResp, error)
 	mustEmbedUnimplementedECSServiceServer()
 }
 
@@ -61,11 +61,11 @@ type ECSServiceServer interface {
 type UnimplementedECSServiceServer struct {
 }
 
-func (UnimplementedECSServiceServer) ListDetail(context.Context, *ListDetailReq) (*ListDetailResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListDetail not implemented")
+func (UnimplementedECSServiceServer) ListECSDetail(context.Context, *ListDetailReq) (*ListDetailResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListECSDetail not implemented")
 }
-func (UnimplementedECSServiceServer) List(context.Context, *ListReq) (*ListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
+func (UnimplementedECSServiceServer) ListECS(context.Context, *ListReq) (*ListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListECS not implemented")
 }
 func (UnimplementedECSServiceServer) mustEmbedUnimplementedECSServiceServer() {}
 
@@ -80,38 +80,38 @@ func RegisterECSServiceServer(s grpc.ServiceRegistrar, srv ECSServiceServer) {
 	s.RegisterService(&ECSService_ServiceDesc, srv)
 }
 
-func _ECSService_ListDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ECSService_ListECSDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListDetailReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ECSServiceServer).ListDetail(ctx, in)
+		return srv.(ECSServiceServer).ListECSDetail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pbecs.ECSService/ListDetail",
+		FullMethod: "/pbecs.ECSService/ListECSDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ECSServiceServer).ListDetail(ctx, req.(*ListDetailReq))
+		return srv.(ECSServiceServer).ListECSDetail(ctx, req.(*ListDetailReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ECSService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ECSService_ListECS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ECSServiceServer).List(ctx, in)
+		return srv.(ECSServiceServer).ListECS(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pbecs.ECSService/List",
+		FullMethod: "/pbecs.ECSService/ListECS",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ECSServiceServer).List(ctx, req.(*ListReq))
+		return srv.(ECSServiceServer).ListECS(ctx, req.(*ListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -124,12 +124,12 @@ var ECSService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ECSServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListDetail",
-			Handler:    _ECSService_ListDetail_Handler,
+			MethodName: "ListECSDetail",
+			Handler:    _ECSService_ListECSDetail_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _ECSService_List_Handler,
+			MethodName: "ListECS",
+			Handler:    _ECSService_ListECS_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
