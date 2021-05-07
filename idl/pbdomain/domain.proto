@@ -1,0 +1,79 @@
+syntax = "proto3";
+package pbdomain;
+
+option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain";
+
+import "idl/pbtenant/tenant.proto";
+import "google/api/annotations.proto";
+
+message DomainInstance {
+  // 云类型
+  pbtenant.CloudProvider provider = 1;
+  // 账号名称
+  string accout_name = 2;
+  // 域名
+  string domain_name = 3;
+  // 域名状态
+  string domain_status = 4;
+  // 域名类型
+  string domain_type = 5;
+  // 域名到期日期
+  string expiration_date = 6;
+  // 注册时间
+  string registration_date = 7;
+}
+
+message ListDetailReq {
+  // 云名称
+  pbtenant.CloudProvider provider = 1;
+  // 账户名称，根据统计接口返回值，或直接根据config.yaml中的配置
+  string account_name = 2;
+  // 分页相关参数，页码
+  int32 page_number = 3;
+  // 分页相关参数，每页数量
+  int32 page_size = 4;
+  // 分页相关参数，下一页的token
+  string next_token = 5;
+}
+
+message ListDetailResp {
+  // Domain 机器集合
+  repeated DomainInstance domains = 1;
+  // 查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询
+  bool finished = 2;
+  // 分页相关参数，页码
+  int32 page_number = 3;
+  // 分页相关参数，每页数量
+  int32 page_size = 4;
+  // 分页相关参数，下一页的token
+  string next_token = 5;
+  // 请求id，出现问题后提供给云厂商，排查问题
+  string request_id = 6;
+}
+
+message ListReq {
+  // 云名称
+  pbtenant.CloudProvider provider = 1;
+}
+
+message ListResp {
+  // Domain 机器集合
+  repeated DomainInstance domains = 1;
+}
+
+
+service DomainService {
+  rpc ListDomainDetail(ListDetailReq) returns (ListDetailResp) {
+    option (google.api.http) = {
+      post : "/domain/detail"
+      body : "*"
+    };
+  }
+
+  rpc ListDomain(ListReq) returns (ListResp) {
+    option (google.api.http) = {
+      post : "/domain"
+      body : "*"
+    };
+  }
+}
