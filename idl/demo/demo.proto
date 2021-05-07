@@ -11,6 +11,8 @@ enum OurTeam {
   junedayday = 0;
   // github: cloud-users
   cloud_users = 1;
+  // github: qilingping
+  qilingping = 2;
 }
 
 message StringMessage { string value = 1; }
