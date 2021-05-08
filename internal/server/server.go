@@ -7,6 +7,7 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pboss"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds"
 )
 
@@ -17,6 +18,7 @@ type Server struct {
 	pbcfg.StatisticServiceServer
 	pbrds.RDSServiceServer
 	pbdomain.DomainServiceServer
+	pboss.OssServiceServer
 }
 
 func (s *Server) Echo(ctx context.Context, req *demo.StringMessage) (*demo.StringMessage, error) {

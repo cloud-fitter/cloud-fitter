@@ -10,7 +10,7 @@ message DomainInstance {
   // 云类型
   pbtenant.CloudProvider provider = 1;
   // 账号名称
-  string accout_name = 2;
+  string account_name = 2;
   // 域名
   string domain_name = 3;
   // 域名状态

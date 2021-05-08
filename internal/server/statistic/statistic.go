@@ -6,7 +6,7 @@ import (
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
-	"github.com/cloud-fitter/cloud-fitter/internal/configger"
+	"github.com/cloud-fitter/cloud-fitter/internal/service/configger"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 )
 

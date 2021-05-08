@@ -62,7 +62,7 @@ func (domain *AliDomain) ListDetail(ctx context.Context, req *pbdomain.ListDetai
 	for k, v := range resp.Data.Domain {
 		domains[k] = &pbdomain.DomainInstance{
 			Provider:         pbtenant.CloudProvider_ali_cloud,
-			AccoutName:       domain.tenanter.AccountName(),
+			AccountName:      domain.tenanter.AccountName(),
 			DomainName:       v.DomainName,
 			DomainStatus:     v.DomainStatus,
 			DomainType:       v.DomainType,

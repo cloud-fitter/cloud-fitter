@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds"
-	"github.com/cloud-fitter/cloud-fitter/internal/rdser"
+	"github.com/cloud-fitter/cloud-fitter/internal/service/rdser"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
