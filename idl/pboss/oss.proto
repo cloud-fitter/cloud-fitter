@@ -1,38 +1,20 @@
 syntax = "proto3";
-package pbecs;
+package pboss;
 
-option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs";
+option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pboss";
 
 import "idl/pbtenant/tenant.proto";
 import "google/api/annotations.proto";
 
-message ECSInstance {
+message OssInstance {
   // 云类型
   pbtenant.CloudProvider provider = 1;
   // 账号名称
   string account_name = 2;
-  // 实例id
-  string instance_id = 3;
-  // 实例名称
-  string instance_name = 4;
-  // 地域，数据中心
-  string region_name = 5;
-  // 公网ip
-  repeated string public_ips = 6;
-  // 实例类型
-  string instance_type = 7;
-  // vcpu数
-  int32 cpu = 8;
-  // 内存MB
-  int32 memory = 9;
-  // 实例描述
-  string description = 10;
-  // 状态
-  string status = 11;
-  // 创建时间，ISO8601
-  string creation_time = 12;
-  // 过期时间
-  string expire_time = 13;
+  // bucket名称
+  string bucket_name = 3;
+  // 区域
+  string location = 4;
 }
 
 message ListDetailReq {
@@ -40,19 +22,17 @@ message ListDetailReq {
   pbtenant.CloudProvider provider = 1;
   // 账户名称，根据统计接口返回值，或直接根据config.yaml中的配置
   string account_name = 2;
-  // 区域Id，参考 tenant.proto 中的各个云的区域
-  int32 region_id = 3;
   // 分页相关参数，页码
-  int32 page_number = 4;
+  int32 page_number = 3;
   // 分页相关参数，每页数量
-  int32 page_size = 5;
+  int32 page_size = 4;
   // 分页相关参数，下一页的token
-  string next_token = 6;
+  string next_token = 5;
 }
 
 message ListDetailResp {
-  // ECS 机器集合
-  repeated ECSInstance ecses = 1;
+  // Oss 机器集合
+  repeated OssInstance osses = 1;
   // 查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询
   bool finished = 2;
   // 分页相关参数，页码
@@ -71,22 +51,22 @@ message ListReq {
 }
 
 message ListResp {
-  // ECS 机器集合
-  repeated ECSInstance ecses = 1;
+  // Oss 机器集合
+  repeated OssInstance osses = 1;
 }
 
 
-service ECSService {
-  rpc ListECSDetail(ListDetailReq) returns (ListDetailResp) {
+service OssService {
+  rpc ListOssDetail(ListDetailReq) returns (ListDetailResp) {
     option (google.api.http) = {
-      post : "/ecs/detail"
+      post : "/oss/detail"
       body : "*"
     };
   }
 
-  rpc ListECS(ListReq) returns (ListResp) {
+  rpc ListOss(ListReq) returns (ListResp) {
     option (google.api.http) = {
-      post : "/ecs"
+      post : "/oss"
       body : "*"
     };
   }

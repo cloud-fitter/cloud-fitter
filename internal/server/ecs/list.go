@@ -6,7 +6,7 @@ import (
 	"github.com/golang/glog"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
-	"github.com/cloud-fitter/cloud-fitter/internal/ecser"
+	"github.com/cloud-fitter/cloud-fitter/internal/service/ecser"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 
 	"context"

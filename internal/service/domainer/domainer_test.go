@@ -8,7 +8,7 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 )
 
-func TestEcser_ListDetail(t *testing.T) {
+func TestDomainer_ListDetail(t *testing.T) {
 	ali, _ := NewAliDomainClient(aliTenant[0])
 	aliFailed, _ := NewAliDomainClient(tenanter.NewTenantWithAccessKey("empty", "", ""))
 

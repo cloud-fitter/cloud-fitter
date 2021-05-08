@@ -10,6 +10,7 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pboss"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds"
 	"github.com/cloud-fitter/cloud-fitter/internal/server"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
@@ -37,14 +38,16 @@ func run() error {
 
 	if err := demo.RegisterYourServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterYourServiceHandlerFromEndpoint error")
-	} else if err := pbecs.RegisterECSServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+	} else if err = pbecs.RegisterECSServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterECSServiceHandlerFromEndpoint error")
-	} else if err := pbcfg.RegisterStatisticServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+	} else if err = pbcfg.RegisterStatisticServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterStatisticServiceHandlerFromEndpoint error")
-	} else if err := pbrds.RegisterRDSServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+	} else if err = pbrds.RegisterRDSServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterRDSServiceHandlerFromEndpoint error")
-	} else if err := pbdomain.RegisterDomainServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+	} else if err = pbdomain.RegisterDomainServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterDomainServiceHandlerFromEndpoint error")
+	} else if err = pboss.RegisterOssServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+		return errors.Wrap(err, "RegisterOssServiceHandlerFromEndpoint error")
 	}
 
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
@@ -78,6 +81,7 @@ func main() {
 		pbcfg.RegisterStatisticServiceServer(s, &server.Server{})
 		pbrds.RegisterRDSServiceServer(s, &server.Server{})
 		pbdomain.RegisterDomainServiceServer(s, &server.Server{})
+		pboss.RegisterOssServiceServer(s, &server.Server{})
 
 		if err = s.Serve(lis); err != nil {
 			glog.Fatalf("failed to serve: %v", err)

@@ -89,7 +89,7 @@
           "$ref": "#/definitions/pbtenantCloudProvider",
           "title": "云类型"
         },
-        "accoutName": {
+        "accountName": {
           "type": "string",
           "title": "账号名称"
         },

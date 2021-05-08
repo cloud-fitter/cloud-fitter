@@ -1,4 +1,4 @@
-package rdser
+package ecser
 
 import (
 	"os"
@@ -13,7 +13,7 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	err := tenanter.LoadCloudConfigs("../../config.yaml")
+	err := tenanter.LoadCloudConfigs("../../../config.yaml")
 	if err != nil {
 		panic(err)
 	}

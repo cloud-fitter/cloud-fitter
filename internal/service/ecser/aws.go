@@ -63,7 +63,7 @@ func (ecs *AwsEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*p
 		for _, v2 := range v.Instances {
 			ecses = append(ecses, &pbecs.ECSInstance{
 				Provider:     pbtenant.CloudProvider_aws_cloud,
-				AccoutName:   ecs.tenanter.AccountName(),
+				AccountName:  ecs.tenanter.AccountName(),
 				InstanceId:   *v2.InstanceId,
 				InstanceName: "",
 				RegionName:   ecs.region.GetName(),

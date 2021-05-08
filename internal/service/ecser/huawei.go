@@ -76,7 +76,7 @@ func (ecs *HuaweiEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) 
 	for k, v := range servers {
 		ecses[k] = &pbecs.ECSInstance{
 			Provider:     pbtenant.CloudProvider_huawei_cloud,
-			AccoutName:   ecs.tenanter.AccountName(),
+			AccountName:  ecs.tenanter.AccountName(),
 			InstanceId:   v.Id,
 			InstanceName: v.Name,
 			RegionName:   ecs.region.GetName(),

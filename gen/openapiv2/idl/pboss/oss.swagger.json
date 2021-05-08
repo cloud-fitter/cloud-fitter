@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "idl/pbdomain/domain.proto",
+    "title": "idl/pboss/oss.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "DomainService"
+      "name": "OssService"
     }
   ],
   "consumes": [
@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/domain": {
+    "/oss": {
       "post": {
-        "operationId": "DomainService_ListDomain",
+        "operationId": "OssService_ListOss",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbdomainListResp"
+              "$ref": "#/definitions/pbossListResp"
             }
           },
           "default": {
@@ -39,23 +39,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbdomainListReq"
+              "$ref": "#/definitions/pbossListReq"
             }
           }
         ],
         "tags": [
-          "DomainService"
+          "OssService"
         ]
       }
     },
-    "/domain/detail": {
+    "/oss/detail": {
       "post": {
-        "operationId": "DomainService_ListDomainDetail",
+        "operationId": "OssService_ListOssDetail",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbdomainListDetailResp"
+              "$ref": "#/definitions/pbossListDetailResp"
             }
           },
           "default": {
@@ -71,51 +71,18 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbdomainListDetailReq"
+              "$ref": "#/definitions/pbossListDetailReq"
             }
           }
         ],
         "tags": [
-          "DomainService"
+          "OssService"
         ]
       }
     }
   },
   "definitions": {
-    "pbdomainDomainInstance": {
-      "type": "object",
-      "properties": {
-        "provider": {
-          "$ref": "#/definitions/pbtenantCloudProvider",
-          "title": "云类型"
-        },
-        "accountName": {
-          "type": "string",
-          "title": "账号名称"
-        },
-        "domainName": {
-          "type": "string",
-          "title": "域名"
-        },
-        "domainStatus": {
-          "type": "string",
-          "title": "域名状态"
-        },
-        "domainType": {
-          "type": "string",
-          "title": "域名类型"
-        },
-        "expirationDate": {
-          "type": "string",
-          "title": "域名到期日期"
-        },
-        "registrationDate": {
-          "type": "string",
-          "title": "注册时间"
-        }
-      }
-    },
-    "pbdomainListDetailReq": {
+    "pbossListDetailReq": {
       "type": "object",
       "properties": {
         "provider": {
@@ -142,15 +109,15 @@
         }
       }
     },
-    "pbdomainListDetailResp": {
+    "pbossListDetailResp": {
       "type": "object",
       "properties": {
-        "domains": {
+        "osses": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/pbdomainDomainInstance"
+            "$ref": "#/definitions/pbossOssInstance"
           },
-          "title": "Domain 机器集合"
+          "title": "Oss 机器集合"
         },
         "finished": {
           "type": "boolean",
@@ -176,7 +143,7 @@
         }
       }
     },
-    "pbdomainListReq": {
+    "pbossListReq": {
       "type": "object",
       "properties": {
         "provider": {
@@ -185,15 +152,36 @@
         }
       }
     },
-    "pbdomainListResp": {
+    "pbossListResp": {
       "type": "object",
       "properties": {
-        "domains": {
+        "osses": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/pbdomainDomainInstance"
+            "$ref": "#/definitions/pbossOssInstance"
           },
-          "title": "Domain 机器集合"
+          "title": "Oss 机器集合"
+        }
+      }
+    },
+    "pbossOssInstance": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "$ref": "#/definitions/pbtenantCloudProvider",
+          "title": "云类型"
+        },
+        "accountName": {
+          "type": "string",
+          "title": "账号名称"
+        },
+        "bucketName": {
+          "type": "string",
+          "title": "bucket名称"
+        },
+        "location": {
+          "type": "string",
+          "title": "区域"
         }
       }
     },

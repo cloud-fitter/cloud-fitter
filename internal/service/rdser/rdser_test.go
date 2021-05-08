@@ -9,7 +9,7 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 )
 
-func TestEcser_ListDetail(t *testing.T) {
+func TestRdser_ListDetail(t *testing.T) {
 	region, _ := tenanter.NewRegion(pbtenant.CloudProvider_ali_cloud, int32(pbtenant.AliRegionId_ali_cn_hangzhou))
 	ali, _ := NewAliRdsClient(region, aliTenant[0])
 	aliFailed, _ := NewAliRdsClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))

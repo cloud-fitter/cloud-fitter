@@ -61,7 +61,7 @@ func (ecs *AliEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*p
 	for k, v := range resp.Instances.Instance {
 		ecses[k] = &pbecs.ECSInstance{
 			Provider:     pbtenant.CloudProvider_ali_cloud,
-			AccoutName:   ecs.tenanter.AccountName(),
+			AccountName:  ecs.tenanter.AccountName(),
 			InstanceId:   v.InstanceId,
 			InstanceName: v.InstanceName,
 			RegionName:   ecs.region.GetName(),
