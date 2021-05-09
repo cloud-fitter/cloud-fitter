@@ -6,7 +6,7 @@ option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs";
 import "idl/pbtenant/tenant.proto";
 import "google/api/annotations.proto";
 
-message ECSInstance {
+message EcsInstance {
   // 云类型
   pbtenant.CloudProvider provider = 1;
   // 账号名称
@@ -51,8 +51,8 @@ message ListDetailReq {
 }
 
 message ListDetailResp {
-  // ECS 机器集合
-  repeated ECSInstance ecses = 1;
+  // Ecs 机器集合
+  repeated EcsInstance ecses = 1;
   // 查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询
   bool finished = 2;
   // 分页相关参数，页码
@@ -71,20 +71,28 @@ message ListReq {
 }
 
 message ListResp {
-  // ECS 机器集合
-  repeated ECSInstance ecses = 1;
+  // Ecs 机器集合
+  repeated EcsInstance ecses = 1;
 }
 
 
-service ECSService {
-  rpc ListECSDetail(ListDetailReq) returns (ListDetailResp) {
+// ECS类产品接口
+// 阿里云 - ECS
+// 腾讯云 - CVM
+// 华为云 - ECS
+// 亚马逊云 - EC2
+service EcsService {
+
+  // 查询ECS明细 - 支持云类型、区域、账户、分页等过滤条件
+  rpc ListEcsDetail(ListDetailReq) returns (ListDetailResp) {
     option (google.api.http) = {
       post : "/ecs/detail"
       body : "*"
     };
   }
 
-  rpc ListECS(ListReq) returns (ListResp) {
+  // 全量查询ECS - 根据云类型
+  rpc ListEcs(ListReq) returns (ListResp) {
     option (google.api.http) = {
       post : "/ecs"
       body : "*"

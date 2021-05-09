@@ -14,10 +14,10 @@ func TestGetAllRegionIds(t *testing.T) {
 		name string
 		args args
 	}{
-		{name: "ali", args: args{provider: pbtenant.CloudProvider_ali_cloud}},
-		{name: "tencent", args: args{provider: pbtenant.CloudProvider_tencent_cloud}},
-		{name: "huawei", args: args{provider: pbtenant.CloudProvider_huawei_cloud}},
-		{name: "aws", args: args{provider: pbtenant.CloudProvider_aws_cloud}},
+		{name: "ali", args: args{provider: pbtenant.CloudProvider_ali}},
+		{name: "tencent", args: args{provider: pbtenant.CloudProvider_tencent}},
+		{name: "huawei", args: args{provider: pbtenant.CloudProvider_huawei}},
+		{name: "aws", args: args{provider: pbtenant.CloudProvider_aws}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

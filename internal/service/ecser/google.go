@@ -86,10 +86,10 @@ package ecser
 // 	zone := "asia-east2-a" // TODO: Update placeholder value.
 //
 // 	req := ecs.cli.Instances.ListDetail(project, zone)
-// 	var ecses []*pbecs.ECSInstance
+// 	var ecses []*pbecs.EcsInstance
 // 	if err := req.Pages(context.Background(), func(page *compute.InstanceList) error {
 // 		for _, instance := range page.Items {
-// 			ecses = append(ecses, &pbecs.ECSInstance{
+// 			ecses = append(ecses, &pbecs.EcsInstance{
 // 				InstanceId:   fmt.Sprint(instance.Id),
 // 				InstanceName: instance.AccountName,
 // 				RegionId:     "",

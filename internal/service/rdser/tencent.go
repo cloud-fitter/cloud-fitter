@@ -51,10 +51,10 @@ func (rds *TencentCdb) ListDetail(ctx context.Context, req *pbrds.ListDetailReq)
 		return nil, errors.Wrap(err, "Tencent ListDetail error")
 	}
 
-	var rdses = make([]*pbrds.RDSInstance, len(resp.Response.Items))
+	var rdses = make([]*pbrds.RdsInstance, len(resp.Response.Items))
 	for k, v := range resp.Response.Items {
-		rdses[k] = &pbrds.RDSInstance{
-			Provider:      pbtenant.CloudProvider_tencent_cloud,
+		rdses[k] = &pbrds.RdsInstance{
+			Provider:      pbtenant.CloudProvider_tencent,
 			AccoutName:    rds.tenanter.AccountName(),
 			InstanceId:    *v.InstanceId,
 			InstanceName:  *v.InstanceName,

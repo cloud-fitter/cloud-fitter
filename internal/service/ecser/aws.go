@@ -58,11 +58,11 @@ func (ecs *AwsEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*p
 		return nil, errors.Wrap(err, "Aws ListDetail error")
 	}
 
-	var ecses []*pbecs.ECSInstance
+	var ecses []*pbecs.EcsInstance
 	for _, v := range resp.Reservations {
 		for _, v2 := range v.Instances {
-			ecses = append(ecses, &pbecs.ECSInstance{
-				Provider:     pbtenant.CloudProvider_aws_cloud,
+			ecses = append(ecses, &pbecs.EcsInstance{
+				Provider:     pbtenant.CloudProvider_aws,
 				AccountName:  ecs.tenanter.AccountName(),
 				InstanceId:   *v2.InstanceId,
 				InstanceName: "",

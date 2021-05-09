@@ -6,7 +6,7 @@ option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds";
 import "idl/pbtenant/tenant.proto";
 import "google/api/annotations.proto";
 
-message RDSInstance {
+message RdsInstance {
   // 云类型
   pbtenant.CloudProvider provider = 1;
   // 账号名称
@@ -49,8 +49,8 @@ message ListDetailReq {
 }
 
 message ListDetailResp {
-  // RDS 机器集合
-  repeated RDSInstance rdses = 1;
+  // Rds 机器集合
+  repeated RdsInstance rdses = 1;
   // 查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询
   bool finished = 2;
   // 分页相关参数，页码
@@ -69,20 +69,26 @@ message ListReq {
 }
 
 message ListResp {
-  // RDS 机器集合
-  repeated RDSInstance rdses = 1;
+  // Rds 机器集合
+  repeated RdsInstance rdses = 1;
 }
 
 
-service RDSService {
-  rpc ListRDSDetail(ListDetailReq) returns (ListDetailResp) {
+// RDS类产品接口
+// 阿里云 - RDS
+// 腾讯云 - CDB
+service RdsService {
+
+  // 查询RDS明细 - 支持云类型、区域、账户、分页等过滤条件
+  rpc ListRdsDetail(ListDetailReq) returns (ListDetailResp) {
     option (google.api.http) = {
       post : "/rds/detail"
       body : "*"
     };
   }
 
-  rpc ListRDS(ListReq) returns (ListResp) {
+  // 全量查询RDS - 根据云类型
+  rpc ListRds(ListReq) returns (ListResp) {
     option (google.api.http) = {
       post : "/rds"
       body : "*"

@@ -1,0 +1,51 @@
+syntax = "proto3";
+package pbstatistic;
+
+option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic";
+
+import "idl/pbtenant/tenant.proto";
+import "google/api/annotations.proto";
+
+message StatisticReq {
+  pbtenant.CloudProvider provider = 1;
+}
+
+message StatisticInfo {
+  // 云提供商
+  pbtenant.CloudProvider provider = 1;
+  // 账户名称，在config.yaml里配置的name
+  string account_name = 2;
+  // 资源类型，参考 tenant.proto 中的 CloudProduct
+  pbtenant.CloudProduct product = 3;
+  // 区域Id，参考 tenant.proto 中的各个云的区域
+  int32 region_id = 4;
+  // 区域名称，方便可读，参考 tenant.proto 中的各个云的区域
+  string region_name = 5;
+  // 数量
+  int32 count = 6;
+}
+
+message StatisticResp {
+  repeated StatisticInfo cfgs = 1;
+}
+
+message StatisticAllReq {}
+
+service StatisticService {
+
+  // 按云统计云产品数量
+  rpc Statistic(StatisticReq) returns (StatisticResp) {
+    option (google.api.http) = {
+      post : "/statistic"
+      body : "*"
+    };
+  }
+
+  // 全量统计云产品数量
+  rpc StatisticAll(StatisticAllReq) returns (StatisticResp) {
+    option (google.api.http) = {
+      post : "/statistic/all"
+      body : "*"
+    };
+  }
+}

@@ -17,8 +17,10 @@ enum OurTeam {
 
 message StringMessage { string value = 1; }
 
-service YourService {
-  // Echo 样例服务
+// 样例服务
+service DemoService {
+
+  // Echo 样例接口
   rpc Echo(StringMessage) returns (StringMessage) {
     option (google.api.http) = {
       post : "/v1/demo"

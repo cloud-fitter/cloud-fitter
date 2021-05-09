@@ -6,20 +6,30 @@ option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant";
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
+// 云提供商
 enum CloudProvider {
-  ali_cloud = 0;
-  tencent_cloud = 1;
-  huawei_cloud = 2;
-  aws_cloud = 3;
-  // 暂不支持
-//  google_cloud = 4;
+  // 0 - 阿里云
+  ali = 0;
+  // 1 - 腾讯云
+  tencent = 1;
+  // 2 - 华为云
+  huawei = 2;
+  // 3 - 亚马逊云
+  aws = 3;
 }
 
+// 云产品
 enum CloudProduct {
-  // 所有产品
+  // 0 - 所有产品
   product_all = 0;
-  // ECS类产品：阿里云ECS,腾讯云CVM，华为云ECS，亚马逊EC2
+  // 1 - ECS类产品：阿里云ECS,腾讯云CVM，华为云ECS，亚马逊EC2
   product_ecs = 1;
+  // 2 - RDS类产品：阿里云RDS,腾讯云CDB
+  product_rds = 2;
+  // 3 - Domain类产品：阿里云Domain
+  product_domain = 3;
+  // 4 - OSS类产品：阿里云OSS
+  product_oss = 4;
 }
 
 // 云配置信息

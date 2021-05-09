@@ -20,16 +20,16 @@ func TestMain(m *testing.M) {
 		panic(err)
 	}
 
-	if aliTenant, err = GetTenanters(pbtenant.CloudProvider_ali_cloud); err != nil {
+	if aliTenant, err = GetTenanters(pbtenant.CloudProvider_ali); err != nil {
 		panic("get aliTenant failed")
 	}
-	if tcTenant, err = GetTenanters(pbtenant.CloudProvider_tencent_cloud); err != nil {
+	if tcTenant, err = GetTenanters(pbtenant.CloudProvider_tencent); err != nil {
 		panic("get tcTenantr failed")
 	}
-	if hwTenant, err = GetTenanters(pbtenant.CloudProvider_huawei_cloud); err != nil {
+	if hwTenant, err = GetTenanters(pbtenant.CloudProvider_huawei); err != nil {
 		panic("get hwTenant failed")
 	}
-	if awsTenant, err = GetTenanters(pbtenant.CloudProvider_aws_cloud); err != nil {
+	if awsTenant, err = GetTenanters(pbtenant.CloudProvider_aws); err != nil {
 		panic("get awsTenant failed")
 	}
 	os.Exit(m.Run())

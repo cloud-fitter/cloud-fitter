@@ -30,7 +30,7 @@ func NewOssClient(provider pbtenant.CloudProvider, tenant tenanter.Tenanter) (os
 	}()
 
 	switch provider {
-	case pbtenant.CloudProvider_ali_cloud:
+	case pbtenant.CloudProvider_ali:
 		return NewAliOssClient(tenant)
 	}
 

@@ -1,7 +1,7 @@
 package configger
 
 import (
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 
@@ -41,7 +41,7 @@ func NewTencentCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Conf
 	}, nil
 }
 
-func (cfg *TencentCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, error) {
+func (cfg *TencentCfg) Statistic(ctx context.Context) (*pbstatistic.StatisticInfo, error) {
 	req := cvm.NewDescribeInstancesRequest()
 	req.Offset = common.Int64Ptr(1)
 	req.Limit = common.Int64Ptr(1)
@@ -50,12 +50,12 @@ func (cfg *TencentCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList,
 		return nil, errors.Wrap(err, "Tencent ListDetail error")
 	}
 
-	return &pbcfg.StatisticRespList{
-		Provider:    pbtenant.CloudProvider_tencent_cloud,
+	return &pbstatistic.StatisticInfo{
+		Provider:    pbtenant.CloudProvider_tencent,
 		AccountName: cfg.AccountName(),
 		Product:     pbtenant.CloudProduct_product_ecs,
 		RegionId:    int32(cfg.regionId),
 		RegionName:  cfg.regionName,
-		Count:       *(resp.Response.TotalCount),
+		Count:       int32(*(resp.Response.TotalCount)),
 	}, nil
 }

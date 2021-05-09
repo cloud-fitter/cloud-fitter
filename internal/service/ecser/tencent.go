@@ -50,10 +50,10 @@ func (ecs *TencentCvm) ListDetail(ctx context.Context, req *pbecs.ListDetailReq)
 		return nil, errors.Wrap(err, "Tencent ListDetail error")
 	}
 
-	var ecses = make([]*pbecs.ECSInstance, len(resp.Response.InstanceSet))
+	var ecses = make([]*pbecs.EcsInstance, len(resp.Response.InstanceSet))
 	for k, v := range resp.Response.InstanceSet {
-		ecses[k] = &pbecs.ECSInstance{
-			Provider:     pbtenant.CloudProvider_tencent_cloud,
+		ecses[k] = &pbecs.EcsInstance{
+			Provider:     pbtenant.CloudProvider_tencent,
 			AccountName:  ecs.tenanter.AccountName(),
 			InstanceId:   *v.InstanceId,
 			InstanceName: *v.InstanceName,

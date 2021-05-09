@@ -30,9 +30,9 @@ func NewRdsClient(provider pbtenant.CloudProvider, region tenanter.Region, tenan
 	}()
 
 	switch provider {
-	case pbtenant.CloudProvider_ali_cloud:
+	case pbtenant.CloudProvider_ali:
 		return NewAliRdsClient(region, tenant)
-	case pbtenant.CloudProvider_tencent_cloud:
+	case pbtenant.CloudProvider_tencent:
 		return NewTencentCdbClient(region, tenant)
 	}
 

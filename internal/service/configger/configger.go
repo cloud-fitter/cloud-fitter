@@ -6,7 +6,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
 
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 )
@@ -18,7 +18,7 @@ var (
 
 type Configger interface {
 	// 统计接口
-	Statistic(ctx context.Context) (*pbcfg.StatisticRespList, error)
+	Statistic(ctx context.Context) (*pbstatistic.StatisticInfo, error)
 }
 
 func NewConfigClient(provider pbtenant.CloudProvider, region tenanter.Region, tenant tenanter.Tenanter) (cfg Configger, err error) {
@@ -31,13 +31,13 @@ func NewConfigClient(provider pbtenant.CloudProvider, region tenanter.Region, te
 	}()
 
 	switch provider {
-	case pbtenant.CloudProvider_ali_cloud:
+	case pbtenant.CloudProvider_ali:
 		return NewAliCfgClient(region, tenant)
-	case pbtenant.CloudProvider_tencent_cloud:
+	case pbtenant.CloudProvider_tencent:
 		return NewTencentCfgClient(region, tenant)
-	case pbtenant.CloudProvider_huawei_cloud:
+	case pbtenant.CloudProvider_huawei:
 		return NewHuaweiCfgClient(region, tenant)
-	case pbtenant.CloudProvider_aws_cloud:
+	case pbtenant.CloudProvider_aws:
 		return NewHuaweiCfgClient(region, tenant)
 	}
 

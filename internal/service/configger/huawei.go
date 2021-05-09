@@ -1,7 +1,7 @@
 package configger
 
 import (
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 
@@ -64,7 +64,7 @@ func NewHuaweiCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (cfg C
 	}, err
 }
 
-func (cfg *HuaweiCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, error) {
+func (cfg *HuaweiCfg) Statistic(ctx context.Context) (*pbstatistic.StatisticInfo, error) {
 	req := new(model.ListServersDetailsRequest)
 	var offset int32 = 0
 	var limit int32 = 1
@@ -76,12 +76,12 @@ func (cfg *HuaweiCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, 
 		return nil, errors.Wrap(err, "Huawei ListServersDetails error")
 	}
 
-	return &pbcfg.StatisticRespList{
-		Provider:    pbtenant.CloudProvider_huawei_cloud,
+	return &pbstatistic.StatisticInfo{
+		Provider:    pbtenant.CloudProvider_huawei,
 		AccountName: cfg.AccountName(),
 		Product:     pbtenant.CloudProduct_product_ecs,
 		RegionId:    int32(cfg.regionId),
 		RegionName:  cfg.regionName,
-		Count:       int64(*resp.Count),
+		Count:       *resp.Count,
 	}, nil
 }

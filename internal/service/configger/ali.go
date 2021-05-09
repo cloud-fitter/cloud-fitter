@@ -6,10 +6,11 @@ import (
 
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests"
 	alicfg "github.com/aliyun/alibaba-cloud-sdk-go/services/config"
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
+	"github.com/pkg/errors"
+
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
-	"github.com/pkg/errors"
 )
 
 var aliClientMutex sync.Mutex
@@ -48,7 +49,7 @@ func NewAliCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configge
 	}, nil
 }
 
-func (cfg *AliCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, error) {
+func (cfg *AliCfg) Statistic(ctx context.Context) (*pbstatistic.StatisticInfo, error) {
 	req := alicfg.CreateListDiscoveredResourcesRequest()
 	req.PageNumber = requests.NewInteger(1)
 	req.PageSize = requests.NewInteger(1)
@@ -60,12 +61,12 @@ func (cfg *AliCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, err
 		return nil, errors.Wrap(err, "Aliyun ListDiscoveredResources error")
 	}
 
-	return &pbcfg.StatisticRespList{
-		Provider:    pbtenant.CloudProvider_ali_cloud,
+	return &pbstatistic.StatisticInfo{
+		Provider:    pbtenant.CloudProvider_ali,
 		AccountName: cfg.AccountName(),
 		Product:     pbtenant.CloudProduct_product_ecs,
 		RegionId:    int32(cfg.regionId),
 		RegionName:  cfg.regionName,
-		Count:       int64(resp.DiscoveredResourceProfiles.TotalCount),
+		Count:       int32(resp.DiscoveredResourceProfiles.TotalCount),
 	}, nil
 }

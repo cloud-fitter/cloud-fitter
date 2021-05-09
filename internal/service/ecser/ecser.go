@@ -30,13 +30,13 @@ func NewEcsClient(provider pbtenant.CloudProvider, region tenanter.Region, tenan
 	}()
 
 	switch provider {
-	case pbtenant.CloudProvider_ali_cloud:
+	case pbtenant.CloudProvider_ali:
 		return NewAliEcsClient(region, tenant)
-	case pbtenant.CloudProvider_tencent_cloud:
+	case pbtenant.CloudProvider_tencent:
 		return NewTencentCvmClient(region, tenant)
-	case pbtenant.CloudProvider_huawei_cloud:
+	case pbtenant.CloudProvider_huawei:
 		return NewHuaweiEcsClient(region, tenant)
-	case pbtenant.CloudProvider_aws_cloud:
+	case pbtenant.CloudProvider_aws:
 		return NewAwsEcsClient(region, tenant)
 	}
 

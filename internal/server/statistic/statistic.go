@@ -4,15 +4,15 @@ import (
 	"context"
 	"sync"
 
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/service/configger"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 )
 
-func Statistic(ctx context.Context, provider pbtenant.CloudProvider, tenanters []tenanter.Tenanter) ([]*pbcfg.StatisticRespList, error) {
+func Statistic(ctx context.Context, provider pbtenant.CloudProvider, tenanters []tenanter.Tenanter) ([]*pbstatistic.StatisticInfo, error) {
 	var (
-		results []*pbcfg.StatisticRespList
+		results []*pbstatistic.StatisticInfo
 		mutex   sync.Mutex
 	)
 

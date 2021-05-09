@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_ECSService_ListECSDetail_0(ctx context.Context, marshaler runtime.Marshaler, client ECSServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_EcsService_ListEcsDetail_0(ctx context.Context, marshaler runtime.Marshaler, client EcsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListDetailReq
 	var metadata runtime.ServerMetadata
 
@@ -43,12 +43,12 @@ func request_ECSService_ListECSDetail_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListECSDetail(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListEcsDetail(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ECSService_ListECSDetail_0(ctx context.Context, marshaler runtime.Marshaler, server ECSServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_EcsService_ListEcsDetail_0(ctx context.Context, marshaler runtime.Marshaler, server EcsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListDetailReq
 	var metadata runtime.ServerMetadata
 
@@ -60,12 +60,12 @@ func local_request_ECSService_ListECSDetail_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListECSDetail(ctx, &protoReq)
+	msg, err := server.ListEcsDetail(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_ECSService_ListECS_0(ctx context.Context, marshaler runtime.Marshaler, client ECSServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_EcsService_ListEcs_0(ctx context.Context, marshaler runtime.Marshaler, client EcsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListReq
 	var metadata runtime.ServerMetadata
 
@@ -77,12 +77,12 @@ func request_ECSService_ListECS_0(ctx context.Context, marshaler runtime.Marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListECS(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListEcs(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ECSService_ListECS_0(ctx context.Context, marshaler runtime.Marshaler, server ECSServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_EcsService_ListEcs_0(ctx context.Context, marshaler runtime.Marshaler, server EcsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListReq
 	var metadata runtime.ServerMetadata
 
@@ -94,29 +94,29 @@ func local_request_ECSService_ListECS_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListECS(ctx, &protoReq)
+	msg, err := server.ListEcs(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-// RegisterECSServiceHandlerServer registers the http handlers for service ECSService to "mux".
-// UnaryRPC     :call ECSServiceServer directly.
+// RegisterEcsServiceHandlerServer registers the http handlers for service EcsService to "mux".
+// UnaryRPC     :call EcsServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterECSServiceHandlerFromEndpoint instead.
-func RegisterECSServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server ECSServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterEcsServiceHandlerFromEndpoint instead.
+func RegisterEcsServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server EcsServiceServer) error {
 
-	mux.Handle("POST", pattern_ECSService_ListECSDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_EcsService_ListEcsDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pbecs.ECSService/ListECSDetail")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pbecs.EcsService/ListEcsDetail")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ECSService_ListECSDetail_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_EcsService_ListEcsDetail_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -124,22 +124,22 @@ func RegisterECSServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			return
 		}
 
-		forward_ECSService_ListECSDetail_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_EcsService_ListEcsDetail_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ECSService_ListECS_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_EcsService_ListEcs_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pbecs.ECSService/ListECS")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pbecs.EcsService/ListEcs")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ECSService_ListECS_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_EcsService_ListEcs_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -147,16 +147,16 @@ func RegisterECSServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			return
 		}
 
-		forward_ECSService_ListECS_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_EcsService_ListEcs_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterECSServiceHandlerFromEndpoint is same as RegisterECSServiceHandler but
+// RegisterEcsServiceHandlerFromEndpoint is same as RegisterEcsServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterECSServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterEcsServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -176,59 +176,59 @@ func RegisterECSServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.Ser
 		}()
 	}()
 
-	return RegisterECSServiceHandler(ctx, mux, conn)
+	return RegisterEcsServiceHandler(ctx, mux, conn)
 }
 
-// RegisterECSServiceHandler registers the http handlers for service ECSService to "mux".
+// RegisterEcsServiceHandler registers the http handlers for service EcsService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterECSServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterECSServiceHandlerClient(ctx, mux, NewECSServiceClient(conn))
+func RegisterEcsServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterEcsServiceHandlerClient(ctx, mux, NewEcsServiceClient(conn))
 }
 
-// RegisterECSServiceHandlerClient registers the http handlers for service ECSService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "ECSServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "ECSServiceClient"
+// RegisterEcsServiceHandlerClient registers the http handlers for service EcsService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "EcsServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "EcsServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "ECSServiceClient" to call the correct interceptors.
-func RegisterECSServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client ECSServiceClient) error {
+// "EcsServiceClient" to call the correct interceptors.
+func RegisterEcsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client EcsServiceClient) error {
 
-	mux.Handle("POST", pattern_ECSService_ListECSDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_EcsService_ListEcsDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pbecs.ECSService/ListECSDetail")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pbecs.EcsService/ListEcsDetail")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ECSService_ListECSDetail_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_EcsService_ListEcsDetail_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ECSService_ListECSDetail_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_EcsService_ListEcsDetail_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ECSService_ListECS_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_EcsService_ListEcs_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pbecs.ECSService/ListECS")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pbecs.EcsService/ListEcs")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ECSService_ListECS_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_EcsService_ListEcs_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ECSService_ListECS_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_EcsService_ListEcs_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -236,13 +236,13 @@ func RegisterECSServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_ECSService_ListECSDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"ecs", "detail"}, ""))
+	pattern_EcsService_ListEcsDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"ecs", "detail"}, ""))
 
-	pattern_ECSService_ListECS_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"ecs"}, ""))
+	pattern_EcsService_ListEcs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"ecs"}, ""))
 )
 
 var (
-	forward_ECSService_ListECSDetail_0 = runtime.ForwardResponseMessage
+	forward_EcsService_ListEcsDetail_0 = runtime.ForwardResponseMessage
 
-	forward_ECSService_ListECS_0 = runtime.ForwardResponseMessage
+	forward_EcsService_ListEcs_0 = runtime.ForwardResponseMessage
 )

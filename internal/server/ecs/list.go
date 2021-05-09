@@ -44,7 +44,7 @@ func List(ctx context.Context, req *pbecs.ListReq) (*pbecs.ListResp, error) {
 	var (
 		wg    sync.WaitGroup
 		mutex sync.Mutex
-		ecses []*pbecs.ECSInstance
+		ecses []*pbecs.EcsInstance
 	)
 
 	tenanters, err := tenanter.GetTenanters(req.Provider)

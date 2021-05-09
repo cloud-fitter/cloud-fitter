@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_RDSService_ListRDSDetail_0(ctx context.Context, marshaler runtime.Marshaler, client RDSServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RdsService_ListRdsDetail_0(ctx context.Context, marshaler runtime.Marshaler, client RdsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListDetailReq
 	var metadata runtime.ServerMetadata
 
@@ -43,12 +43,12 @@ func request_RDSService_ListRDSDetail_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListRDSDetail(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListRdsDetail(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_RDSService_ListRDSDetail_0(ctx context.Context, marshaler runtime.Marshaler, server RDSServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RdsService_ListRdsDetail_0(ctx context.Context, marshaler runtime.Marshaler, server RdsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListDetailReq
 	var metadata runtime.ServerMetadata
 
@@ -60,12 +60,12 @@ func local_request_RDSService_ListRDSDetail_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListRDSDetail(ctx, &protoReq)
+	msg, err := server.ListRdsDetail(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_RDSService_ListRDS_0(ctx context.Context, marshaler runtime.Marshaler, client RDSServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RdsService_ListRds_0(ctx context.Context, marshaler runtime.Marshaler, client RdsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListReq
 	var metadata runtime.ServerMetadata
 
@@ -77,12 +77,12 @@ func request_RDSService_ListRDS_0(ctx context.Context, marshaler runtime.Marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListRDS(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListRds(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_RDSService_ListRDS_0(ctx context.Context, marshaler runtime.Marshaler, server RDSServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RdsService_ListRds_0(ctx context.Context, marshaler runtime.Marshaler, server RdsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListReq
 	var metadata runtime.ServerMetadata
 
@@ -94,29 +94,29 @@ func local_request_RDSService_ListRDS_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListRDS(ctx, &protoReq)
+	msg, err := server.ListRds(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-// RegisterRDSServiceHandlerServer registers the http handlers for service RDSService to "mux".
-// UnaryRPC     :call RDSServiceServer directly.
+// RegisterRdsServiceHandlerServer registers the http handlers for service RdsService to "mux".
+// UnaryRPC     :call RdsServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterRDSServiceHandlerFromEndpoint instead.
-func RegisterRDSServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server RDSServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterRdsServiceHandlerFromEndpoint instead.
+func RegisterRdsServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server RdsServiceServer) error {
 
-	mux.Handle("POST", pattern_RDSService_ListRDSDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RdsService_ListRdsDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pbrds.RDSService/ListRDSDetail")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pbrds.RdsService/ListRdsDetail")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RDSService_ListRDSDetail_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RdsService_ListRdsDetail_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -124,22 +124,22 @@ func RegisterRDSServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			return
 		}
 
-		forward_RDSService_ListRDSDetail_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RdsService_ListRdsDetail_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RDSService_ListRDS_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RdsService_ListRds_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pbrds.RDSService/ListRDS")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/pbrds.RdsService/ListRds")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RDSService_ListRDS_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RdsService_ListRds_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -147,16 +147,16 @@ func RegisterRDSServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			return
 		}
 
-		forward_RDSService_ListRDS_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RdsService_ListRds_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterRDSServiceHandlerFromEndpoint is same as RegisterRDSServiceHandler but
+// RegisterRdsServiceHandlerFromEndpoint is same as RegisterRdsServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterRDSServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterRdsServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -176,59 +176,59 @@ func RegisterRDSServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.Ser
 		}()
 	}()
 
-	return RegisterRDSServiceHandler(ctx, mux, conn)
+	return RegisterRdsServiceHandler(ctx, mux, conn)
 }
 
-// RegisterRDSServiceHandler registers the http handlers for service RDSService to "mux".
+// RegisterRdsServiceHandler registers the http handlers for service RdsService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterRDSServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterRDSServiceHandlerClient(ctx, mux, NewRDSServiceClient(conn))
+func RegisterRdsServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterRdsServiceHandlerClient(ctx, mux, NewRdsServiceClient(conn))
 }
 
-// RegisterRDSServiceHandlerClient registers the http handlers for service RDSService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "RDSServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "RDSServiceClient"
+// RegisterRdsServiceHandlerClient registers the http handlers for service RdsService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "RdsServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "RdsServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "RDSServiceClient" to call the correct interceptors.
-func RegisterRDSServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client RDSServiceClient) error {
+// "RdsServiceClient" to call the correct interceptors.
+func RegisterRdsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client RdsServiceClient) error {
 
-	mux.Handle("POST", pattern_RDSService_ListRDSDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RdsService_ListRdsDetail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pbrds.RDSService/ListRDSDetail")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pbrds.RdsService/ListRdsDetail")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RDSService_ListRDSDetail_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RdsService_ListRdsDetail_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RDSService_ListRDSDetail_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RdsService_ListRdsDetail_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RDSService_ListRDS_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RdsService_ListRds_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pbrds.RDSService/ListRDS")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/pbrds.RdsService/ListRds")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RDSService_ListRDS_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RdsService_ListRds_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RDSService_ListRDS_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RdsService_ListRds_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -236,13 +236,13 @@ func RegisterRDSServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_RDSService_ListRDSDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"rds", "detail"}, ""))
+	pattern_RdsService_ListRdsDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"rds", "detail"}, ""))
 
-	pattern_RDSService_ListRDS_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"rds"}, ""))
+	pattern_RdsService_ListRds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"rds"}, ""))
 )
 
 var (
-	forward_RDSService_ListRDSDetail_0 = runtime.ForwardResponseMessage
+	forward_RdsService_ListRdsDetail_0 = runtime.ForwardResponseMessage
 
-	forward_RDSService_ListRDS_0 = runtime.ForwardResponseMessage
+	forward_RdsService_ListRds_0 = runtime.ForwardResponseMessage
 )

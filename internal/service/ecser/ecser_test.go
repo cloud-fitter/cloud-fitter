@@ -10,19 +10,19 @@ import (
 )
 
 func TestEcser_ListDetail(t *testing.T) {
-	region, _ := tenanter.NewRegion(pbtenant.CloudProvider_ali_cloud, int32(pbtenant.AliRegionId_ali_cn_hangzhou))
+	region, _ := tenanter.NewRegion(pbtenant.CloudProvider_ali, int32(pbtenant.AliRegionId_ali_cn_hangzhou))
 	ali, _ := NewAliEcsClient(region, aliTenant[0])
 	aliFailed, _ := NewAliEcsClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
-	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_tencent_cloud, int32(pbtenant.TencentRegionId_tc_ap_beijing))
+	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_tencent, int32(pbtenant.TencentRegionId_tc_ap_beijing))
 	tc, _ := NewTencentCvmClient(region, tcTenant[0])
 	tcFailed, _ := NewTencentCvmClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
-	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_huawei_cloud, int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2))
+	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_huawei, int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2))
 	hw, _ := NewHuaweiEcsClient(region, hwTenant[0])
 	// hwFailed, _ := NewHuaweiEcsClient(int32(pbtenant.HuaweiRegionId_hw_cn_north_1), tenanter.NewTenantWithAccessKey("empty", "", "", ""))
 
-	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_aws_cloud, int32(pbtenant.AwsRegionId_aws_us_east_2))
+	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_aws, int32(pbtenant.AwsRegionId_aws_us_east_2))
 	aws, _ := NewAwsEcsClient(region, awsTenant[0])
 
 	// google, _ := NewGoogleEcsClient(tenanter.NewTenantWithAccessKey("", ""))

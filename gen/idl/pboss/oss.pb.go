@@ -73,7 +73,7 @@ func (x *OssInstance) GetProvider() pbtenant.CloudProvider {
 	if x != nil {
 		return x.Provider
 	}
-	return pbtenant.CloudProvider_ali_cloud
+	return pbtenant.CloudProvider_ali
 }
 
 func (x *OssInstance) GetAccountName() string {
@@ -150,7 +150,7 @@ func (x *ListDetailReq) GetProvider() pbtenant.CloudProvider {
 	if x != nil {
 		return x.Provider
 	}
-	return pbtenant.CloudProvider_ali_cloud
+	return pbtenant.CloudProvider_ali
 }
 
 func (x *ListDetailReq) GetAccountName() string {
@@ -319,7 +319,7 @@ func (x *ListReq) GetProvider() pbtenant.CloudProvider {
 	if x != nil {
 		return x.Provider
 	}
-	return pbtenant.CloudProvider_ali_cloud
+	return pbtenant.CloudProvider_ali
 }
 
 type ListResp struct {

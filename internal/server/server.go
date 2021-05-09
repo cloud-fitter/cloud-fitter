@@ -4,21 +4,21 @@ import (
 	"context"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo"
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pboss"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 )
 
 type Server struct {
-	// pb.go中自动生成的，是个空结构体
-	demo.YourServiceServer
-	pbecs.ECSServiceServer
-	pbcfg.StatisticServiceServer
-	pbrds.RDSServiceServer
-	pbdomain.DomainServiceServer
-	pboss.OssServiceServer
+	// 使用unsafe可以强制让编译器检查是否实现了相关方法
+	demo.UnsafeDemoServiceServer
+	pbecs.UnsafeEcsServiceServer
+	pbstatistic.UnsafeStatisticServiceServer
+	pbrds.UnsafeRdsServiceServer
+	pbdomain.UnsafeDomainServiceServer
+	pboss.UnsafeOssServiceServer
 }
 
 func (s *Server) Echo(ctx context.Context, req *demo.StringMessage) (*demo.StringMessage, error) {
