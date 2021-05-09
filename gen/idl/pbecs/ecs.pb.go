@@ -22,7 +22,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ECSInstance struct {
+type EcsInstance struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -55,8 +55,8 @@ type ECSInstance struct {
 	ExpireTime string `protobuf:"bytes,13,opt,name=expire_time,json=expireTime,proto3" json:"expire_time,omitempty"`
 }
 
-func (x *ECSInstance) Reset() {
-	*x = ECSInstance{}
+func (x *EcsInstance) Reset() {
+	*x = EcsInstance{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_idl_pbecs_ecs_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -64,13 +64,13 @@ func (x *ECSInstance) Reset() {
 	}
 }
 
-func (x *ECSInstance) String() string {
+func (x *EcsInstance) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ECSInstance) ProtoMessage() {}
+func (*EcsInstance) ProtoMessage() {}
 
-func (x *ECSInstance) ProtoReflect() protoreflect.Message {
+func (x *EcsInstance) ProtoReflect() protoreflect.Message {
 	mi := &file_idl_pbecs_ecs_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -82,96 +82,96 @@ func (x *ECSInstance) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ECSInstance.ProtoReflect.Descriptor instead.
-func (*ECSInstance) Descriptor() ([]byte, []int) {
+// Deprecated: Use EcsInstance.ProtoReflect.Descriptor instead.
+func (*EcsInstance) Descriptor() ([]byte, []int) {
 	return file_idl_pbecs_ecs_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ECSInstance) GetProvider() pbtenant.CloudProvider {
+func (x *EcsInstance) GetProvider() pbtenant.CloudProvider {
 	if x != nil {
 		return x.Provider
 	}
-	return pbtenant.CloudProvider_ali_cloud
+	return pbtenant.CloudProvider_ali
 }
 
-func (x *ECSInstance) GetAccountName() string {
+func (x *EcsInstance) GetAccountName() string {
 	if x != nil {
 		return x.AccountName
 	}
 	return ""
 }
 
-func (x *ECSInstance) GetInstanceId() string {
+func (x *EcsInstance) GetInstanceId() string {
 	if x != nil {
 		return x.InstanceId
 	}
 	return ""
 }
 
-func (x *ECSInstance) GetInstanceName() string {
+func (x *EcsInstance) GetInstanceName() string {
 	if x != nil {
 		return x.InstanceName
 	}
 	return ""
 }
 
-func (x *ECSInstance) GetRegionName() string {
+func (x *EcsInstance) GetRegionName() string {
 	if x != nil {
 		return x.RegionName
 	}
 	return ""
 }
 
-func (x *ECSInstance) GetPublicIps() []string {
+func (x *EcsInstance) GetPublicIps() []string {
 	if x != nil {
 		return x.PublicIps
 	}
 	return nil
 }
 
-func (x *ECSInstance) GetInstanceType() string {
+func (x *EcsInstance) GetInstanceType() string {
 	if x != nil {
 		return x.InstanceType
 	}
 	return ""
 }
 
-func (x *ECSInstance) GetCpu() int32 {
+func (x *EcsInstance) GetCpu() int32 {
 	if x != nil {
 		return x.Cpu
 	}
 	return 0
 }
 
-func (x *ECSInstance) GetMemory() int32 {
+func (x *EcsInstance) GetMemory() int32 {
 	if x != nil {
 		return x.Memory
 	}
 	return 0
 }
 
-func (x *ECSInstance) GetDescription() string {
+func (x *EcsInstance) GetDescription() string {
 	if x != nil {
 		return x.Description
 	}
 	return ""
 }
 
-func (x *ECSInstance) GetStatus() string {
+func (x *EcsInstance) GetStatus() string {
 	if x != nil {
 		return x.Status
 	}
 	return ""
 }
 
-func (x *ECSInstance) GetCreationTime() string {
+func (x *EcsInstance) GetCreationTime() string {
 	if x != nil {
 		return x.CreationTime
 	}
 	return ""
 }
 
-func (x *ECSInstance) GetExpireTime() string {
+func (x *EcsInstance) GetExpireTime() string {
 	if x != nil {
 		return x.ExpireTime
 	}
@@ -233,7 +233,7 @@ func (x *ListDetailReq) GetProvider() pbtenant.CloudProvider {
 	if x != nil {
 		return x.Provider
 	}
-	return pbtenant.CloudProvider_ali_cloud
+	return pbtenant.CloudProvider_ali
 }
 
 func (x *ListDetailReq) GetAccountName() string {
@@ -276,8 +276,8 @@ type ListDetailResp struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ECS 机器集合
-	Ecses []*ECSInstance `protobuf:"bytes,1,rep,name=ecses,proto3" json:"ecses,omitempty"`
+	// Ecs 机器集合
+	Ecses []*EcsInstance `protobuf:"bytes,1,rep,name=ecses,proto3" json:"ecses,omitempty"`
 	// 查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询
 	Finished bool `protobuf:"varint,2,opt,name=finished,proto3" json:"finished,omitempty"`
 	// 分页相关参数，页码
@@ -322,7 +322,7 @@ func (*ListDetailResp) Descriptor() ([]byte, []int) {
 	return file_idl_pbecs_ecs_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ListDetailResp) GetEcses() []*ECSInstance {
+func (x *ListDetailResp) GetEcses() []*EcsInstance {
 	if x != nil {
 		return x.Ecses
 	}
@@ -409,7 +409,7 @@ func (x *ListReq) GetProvider() pbtenant.CloudProvider {
 	if x != nil {
 		return x.Provider
 	}
-	return pbtenant.CloudProvider_ali_cloud
+	return pbtenant.CloudProvider_ali
 }
 
 type ListResp struct {
@@ -417,8 +417,8 @@ type ListResp struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ECS 机器集合
-	Ecses []*ECSInstance `protobuf:"bytes,1,rep,name=ecses,proto3" json:"ecses,omitempty"`
+	// Ecs 机器集合
+	Ecses []*EcsInstance `protobuf:"bytes,1,rep,name=ecses,proto3" json:"ecses,omitempty"`
 }
 
 func (x *ListResp) Reset() {
@@ -453,7 +453,7 @@ func (*ListResp) Descriptor() ([]byte, []int) {
 	return file_idl_pbecs_ecs_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ListResp) GetEcses() []*ECSInstance {
+func (x *ListResp) GetEcses() []*EcsInstance {
 	if x != nil {
 		return x.Ecses
 	}
@@ -468,7 +468,7 @@ var file_idl_pbecs_ecs_proto_rawDesc = []byte{
 	0x6c, 0x2f, 0x70, 0x62, 0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x2f, 0x74, 0x65, 0x6e, 0x61, 0x6e,
 	0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f,
 	0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xba, 0x03, 0x0a, 0x0b, 0x45, 0x43, 0x53, 0x49, 0x6e, 0x73,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xba, 0x03, 0x0a, 0x0b, 0x45, 0x63, 0x73, 0x49, 0x6e, 0x73,
 	0x74, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x33, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65,
 	0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x17, 0x2e, 0x70, 0x62, 0x74, 0x65, 0x6e, 0x61,
 	0x6e, 0x74, 0x2e, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x50, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72,
@@ -513,7 +513,7 @@ var file_idl_pbecs_ecs_proto_rawDesc = []byte{
 	0x74, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0xd2, 0x01, 0x0a, 0x0e, 0x4c, 0x69, 0x73, 0x74, 0x44,
 	0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x12, 0x28, 0x0a, 0x05, 0x65, 0x63, 0x73,
 	0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x70, 0x62, 0x65, 0x63, 0x73,
-	0x2e, 0x45, 0x43, 0x53, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x05, 0x65, 0x63,
+	0x2e, 0x45, 0x63, 0x73, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x05, 0x65, 0x63,
 	0x73, 0x65, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x18,
 	0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x12,
 	0x1f, 0x0a, 0x0b, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x03,
@@ -530,15 +530,15 @@ var file_idl_pbecs_ecs_proto_rawDesc = []byte{
 	0x72, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x22, 0x34, 0x0a, 0x08, 0x4c,
 	0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x12, 0x28, 0x0a, 0x05, 0x65, 0x63, 0x73, 0x65, 0x73,
 	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x70, 0x62, 0x65, 0x63, 0x73, 0x2e, 0x45,
-	0x43, 0x53, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x05, 0x65, 0x63, 0x73, 0x65,
-	0x73, 0x32, 0x9f, 0x01, 0x0a, 0x0a, 0x45, 0x43, 0x53, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x12, 0x54, 0x0a, 0x0d, 0x4c, 0x69, 0x73, 0x74, 0x45, 0x43, 0x53, 0x44, 0x65, 0x74, 0x61, 0x69,
+	0x63, 0x73, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x05, 0x65, 0x63, 0x73, 0x65,
+	0x73, 0x32, 0x9f, 0x01, 0x0a, 0x0a, 0x45, 0x63, 0x73, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x12, 0x54, 0x0a, 0x0d, 0x4c, 0x69, 0x73, 0x74, 0x45, 0x63, 0x73, 0x44, 0x65, 0x74, 0x61, 0x69,
 	0x6c, 0x12, 0x14, 0x2e, 0x70, 0x62, 0x65, 0x63, 0x73, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x44, 0x65,
 	0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x1a, 0x15, 0x2e, 0x70, 0x62, 0x65, 0x63, 0x73, 0x2e,
 	0x4c, 0x69, 0x73, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x16,
 	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x10, 0x22, 0x0b, 0x2f, 0x65, 0x63, 0x73, 0x2f, 0x64, 0x65, 0x74,
-	0x61, 0x69, 0x6c, 0x3a, 0x01, 0x2a, 0x12, 0x3b, 0x0a, 0x07, 0x4c, 0x69, 0x73, 0x74, 0x45, 0x43,
-	0x53, 0x12, 0x0e, 0x2e, 0x70, 0x62, 0x65, 0x63, 0x73, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65,
+	0x61, 0x69, 0x6c, 0x3a, 0x01, 0x2a, 0x12, 0x3b, 0x0a, 0x07, 0x4c, 0x69, 0x73, 0x74, 0x45, 0x63,
+	0x73, 0x12, 0x0e, 0x2e, 0x70, 0x62, 0x65, 0x63, 0x73, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65,
 	0x71, 0x1a, 0x0f, 0x2e, 0x70, 0x62, 0x65, 0x63, 0x73, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65,
 	0x73, 0x70, 0x22, 0x0f, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x09, 0x22, 0x04, 0x2f, 0x65, 0x63, 0x73,
 	0x3a, 0x01, 0x2a, 0x42, 0x34, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
@@ -562,7 +562,7 @@ func file_idl_pbecs_ecs_proto_rawDescGZIP() []byte {
 
 var file_idl_pbecs_ecs_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_idl_pbecs_ecs_proto_goTypes = []interface{}{
-	(*ECSInstance)(nil),         // 0: pbecs.ECSInstance
+	(*EcsInstance)(nil),         // 0: pbecs.EcsInstance
 	(*ListDetailReq)(nil),       // 1: pbecs.ListDetailReq
 	(*ListDetailResp)(nil),      // 2: pbecs.ListDetailResp
 	(*ListReq)(nil),             // 3: pbecs.ListReq
@@ -570,15 +570,15 @@ var file_idl_pbecs_ecs_proto_goTypes = []interface{}{
 	(pbtenant.CloudProvider)(0), // 5: pbtenant.CloudProvider
 }
 var file_idl_pbecs_ecs_proto_depIdxs = []int32{
-	5, // 0: pbecs.ECSInstance.provider:type_name -> pbtenant.CloudProvider
+	5, // 0: pbecs.EcsInstance.provider:type_name -> pbtenant.CloudProvider
 	5, // 1: pbecs.ListDetailReq.provider:type_name -> pbtenant.CloudProvider
-	0, // 2: pbecs.ListDetailResp.ecses:type_name -> pbecs.ECSInstance
+	0, // 2: pbecs.ListDetailResp.ecses:type_name -> pbecs.EcsInstance
 	5, // 3: pbecs.ListReq.provider:type_name -> pbtenant.CloudProvider
-	0, // 4: pbecs.ListResp.ecses:type_name -> pbecs.ECSInstance
-	1, // 5: pbecs.ECSService.ListECSDetail:input_type -> pbecs.ListDetailReq
-	3, // 6: pbecs.ECSService.ListECS:input_type -> pbecs.ListReq
-	2, // 7: pbecs.ECSService.ListECSDetail:output_type -> pbecs.ListDetailResp
-	4, // 8: pbecs.ECSService.ListECS:output_type -> pbecs.ListResp
+	0, // 4: pbecs.ListResp.ecses:type_name -> pbecs.EcsInstance
+	1, // 5: pbecs.EcsService.ListEcsDetail:input_type -> pbecs.ListDetailReq
+	3, // 6: pbecs.EcsService.ListEcs:input_type -> pbecs.ListReq
+	2, // 7: pbecs.EcsService.ListEcsDetail:output_type -> pbecs.ListDetailResp
+	4, // 8: pbecs.EcsService.ListEcs:output_type -> pbecs.ListResp
 	7, // [7:9] is the sub-list for method output_type
 	5, // [5:7] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name
@@ -593,7 +593,7 @@ func file_idl_pbecs_ecs_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_idl_pbecs_ecs_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ECSInstance); i {
+			switch v := v.(*EcsInstance); i {
 			case 0:
 				return &v.state
 			case 1:

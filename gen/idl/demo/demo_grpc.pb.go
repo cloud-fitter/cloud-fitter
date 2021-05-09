@@ -14,88 +14,88 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// YourServiceClient is the client API for YourService service.
+// DemoServiceClient is the client API for DemoService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type YourServiceClient interface {
+type DemoServiceClient interface {
 	// Echo 样例服务
 	Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error)
 }
 
-type yourServiceClient struct {
+type demoServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewYourServiceClient(cc grpc.ClientConnInterface) YourServiceClient {
-	return &yourServiceClient{cc}
+func NewDemoServiceClient(cc grpc.ClientConnInterface) DemoServiceClient {
+	return &demoServiceClient{cc}
 }
 
-func (c *yourServiceClient) Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error) {
+func (c *demoServiceClient) Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error) {
 	out := new(StringMessage)
-	err := c.cc.Invoke(ctx, "/demo.YourService/Echo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/demo.DemoService/Echo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// YourServiceServer is the server API for YourService service.
-// All implementations must embed UnimplementedYourServiceServer
+// DemoServiceServer is the server API for DemoService service.
+// All implementations must embed UnimplementedDemoServiceServer
 // for forward compatibility
-type YourServiceServer interface {
+type DemoServiceServer interface {
 	// Echo 样例服务
 	Echo(context.Context, *StringMessage) (*StringMessage, error)
-	mustEmbedUnimplementedYourServiceServer()
+	mustEmbedUnimplementedDemoServiceServer()
 }
 
-// UnimplementedYourServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedYourServiceServer struct {
+// UnimplementedDemoServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedDemoServiceServer struct {
 }
 
-func (UnimplementedYourServiceServer) Echo(context.Context, *StringMessage) (*StringMessage, error) {
+func (UnimplementedDemoServiceServer) Echo(context.Context, *StringMessage) (*StringMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
 }
-func (UnimplementedYourServiceServer) mustEmbedUnimplementedYourServiceServer() {}
+func (UnimplementedDemoServiceServer) mustEmbedUnimplementedDemoServiceServer() {}
 
-// UnsafeYourServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to YourServiceServer will
+// UnsafeDemoServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DemoServiceServer will
 // result in compilation errors.
-type UnsafeYourServiceServer interface {
-	mustEmbedUnimplementedYourServiceServer()
+type UnsafeDemoServiceServer interface {
+	mustEmbedUnimplementedDemoServiceServer()
 }
 
-func RegisterYourServiceServer(s grpc.ServiceRegistrar, srv YourServiceServer) {
-	s.RegisterService(&YourService_ServiceDesc, srv)
+func RegisterDemoServiceServer(s grpc.ServiceRegistrar, srv DemoServiceServer) {
+	s.RegisterService(&DemoService_ServiceDesc, srv)
 }
 
-func _YourService_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DemoService_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StringMessage)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(YourServiceServer).Echo(ctx, in)
+		return srv.(DemoServiceServer).Echo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/demo.YourService/Echo",
+		FullMethod: "/demo.DemoService/Echo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YourServiceServer).Echo(ctx, req.(*StringMessage))
+		return srv.(DemoServiceServer).Echo(ctx, req.(*StringMessage))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// YourService_ServiceDesc is the grpc.ServiceDesc for YourService service.
+// DemoService_ServiceDesc is the grpc.ServiceDesc for DemoService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var YourService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "demo.YourService",
-	HandlerType: (*YourServiceServer)(nil),
+var DemoService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "demo.DemoService",
+	HandlerType: (*DemoServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Echo",
-			Handler:    _YourService_Echo_Handler,
+			Handler:    _DemoService_Echo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

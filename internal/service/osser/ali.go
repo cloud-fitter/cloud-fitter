@@ -54,7 +54,7 @@ func (oss *AliOss) ListDetail(ctx context.Context, req *pboss.ListDetailReq) (*p
 	var osses = make([]*pboss.OssInstance, len(resp.Buckets))
 	for k, v := range resp.Buckets {
 		osses[k] = &pboss.OssInstance{
-			Provider:    pbtenant.CloudProvider_ali_cloud,
+			Provider:    pbtenant.CloudProvider_ali,
 			AccountName: oss.tenanter.AccountName(),
 			BucketName:  v.Name,
 			Location:    v.Location,

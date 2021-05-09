@@ -7,7 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	awscs "github.com/aws/aws-sdk-go-v2/service/configservice"
 	"github.com/aws/aws-sdk-go-v2/service/configservice/types"
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/pkg/errors"
@@ -48,7 +48,7 @@ func NewAwsCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configge
 	}, nil
 }
 
-func (cfg *AwsCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, error) {
+func (cfg *AwsCfg) Statistic(ctx context.Context) (*pbstatistic.StatisticInfo, error) {
 	req := new(awscs.GetDiscoveredResourceCountsInput)
 	req.ResourceTypes = []string{}
 
@@ -57,8 +57,8 @@ func (cfg *AwsCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, err
 		return nil, errors.Wrap(err, "Aws Statistic error")
 	}
 
-	result := &pbcfg.StatisticRespList{
-		Provider:    pbtenant.CloudProvider_aws_cloud,
+	result := &pbstatistic.StatisticInfo{
+		Provider:    pbtenant.CloudProvider_aws,
 		AccountName: cfg.AccountName(),
 		Product:     pbtenant.CloudProduct_product_ecs,
 		RegionId:    int32(cfg.regionId),
@@ -68,7 +68,7 @@ func (cfg *AwsCfg) Statistic(ctx context.Context) (*pbcfg.StatisticRespList, err
 
 	for _, v := range resp.ResourceCounts {
 		if v.ResourceType == types.ResourceTypeInstance {
-			result.Count += v.Count
+			result.Count += int32(v.Count)
 		}
 	}
 	return result, nil

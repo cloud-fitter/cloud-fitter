@@ -18,7 +18,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DomainServiceClient interface {
+	// 查询域名明细，支持云类型、账户、分页等过滤条件
 	ListDomainDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
+	// 根据云类型全量查询域名
 	ListDomain(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
 }
 
@@ -52,7 +54,9 @@ func (c *domainServiceClient) ListDomain(ctx context.Context, in *ListReq, opts 
 // All implementations must embed UnimplementedDomainServiceServer
 // for forward compatibility
 type DomainServiceServer interface {
+	// 查询域名明细，支持云类型、账户、分页等过滤条件
 	ListDomainDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
+	// 根据云类型全量查询域名
 	ListDomain(context.Context, *ListReq) (*ListResp, error)
 	mustEmbedUnimplementedDomainServiceServer()
 }

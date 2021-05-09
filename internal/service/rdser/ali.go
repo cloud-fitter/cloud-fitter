@@ -56,10 +56,10 @@ func (rds *AliRds) ListDetail(ctx context.Context, req *pbrds.ListDetailReq) (*p
 		return nil, errors.Wrap(err, "Aliyun ListDetail error")
 	}
 
-	var rdses = make([]*pbrds.RDSInstance, len(resp.Items.DBInstance))
+	var rdses = make([]*pbrds.RdsInstance, len(resp.Items.DBInstance))
 	for k, v := range resp.Items.DBInstance {
-		rdses[k] = &pbrds.RDSInstance{
-			Provider:      pbtenant.CloudProvider_ali_cloud,
+		rdses[k] = &pbrds.RdsInstance{
+			Provider:      pbtenant.CloudProvider_ali,
 			AccoutName:    rds.tenanter.AccountName(),
 			InstanceId:    v.DBInstanceId,
 			InstanceName:  v.DBInstanceDescription,

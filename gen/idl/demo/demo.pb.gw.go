@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_YourService_Echo_0(ctx context.Context, marshaler runtime.Marshaler, client YourServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_DemoService_Echo_0(ctx context.Context, marshaler runtime.Marshaler, client DemoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq StringMessage
 	var metadata runtime.ServerMetadata
 
@@ -48,7 +48,7 @@ func request_YourService_Echo_0(ctx context.Context, marshaler runtime.Marshaler
 
 }
 
-func local_request_YourService_Echo_0(ctx context.Context, marshaler runtime.Marshaler, server YourServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_DemoService_Echo_0(ctx context.Context, marshaler runtime.Marshaler, server DemoServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq StringMessage
 	var metadata runtime.ServerMetadata
 
@@ -65,24 +65,24 @@ func local_request_YourService_Echo_0(ctx context.Context, marshaler runtime.Mar
 
 }
 
-// RegisterYourServiceHandlerServer registers the http handlers for service YourService to "mux".
-// UnaryRPC     :call YourServiceServer directly.
+// RegisterDemoServiceHandlerServer registers the http handlers for service DemoService to "mux".
+// UnaryRPC     :call DemoServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterYourServiceHandlerFromEndpoint instead.
-func RegisterYourServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server YourServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterDemoServiceHandlerFromEndpoint instead.
+func RegisterDemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server DemoServiceServer) error {
 
-	mux.Handle("POST", pattern_YourService_Echo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_DemoService_Echo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/demo.YourService/Echo")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/demo.DemoService/Echo")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_YourService_Echo_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_DemoService_Echo_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -90,16 +90,16 @@ func RegisterYourServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 			return
 		}
 
-		forward_YourService_Echo_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DemoService_Echo_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterYourServiceHandlerFromEndpoint is same as RegisterYourServiceHandler but
+// RegisterDemoServiceHandlerFromEndpoint is same as RegisterDemoServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterYourServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterDemoServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -119,39 +119,39 @@ func RegisterYourServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.Se
 		}()
 	}()
 
-	return RegisterYourServiceHandler(ctx, mux, conn)
+	return RegisterDemoServiceHandler(ctx, mux, conn)
 }
 
-// RegisterYourServiceHandler registers the http handlers for service YourService to "mux".
+// RegisterDemoServiceHandler registers the http handlers for service DemoService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterYourServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterYourServiceHandlerClient(ctx, mux, NewYourServiceClient(conn))
+func RegisterDemoServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterDemoServiceHandlerClient(ctx, mux, NewDemoServiceClient(conn))
 }
 
-// RegisterYourServiceHandlerClient registers the http handlers for service YourService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "YourServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "YourServiceClient"
+// RegisterDemoServiceHandlerClient registers the http handlers for service DemoService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "DemoServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "DemoServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "YourServiceClient" to call the correct interceptors.
-func RegisterYourServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client YourServiceClient) error {
+// "DemoServiceClient" to call the correct interceptors.
+func RegisterDemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client DemoServiceClient) error {
 
-	mux.Handle("POST", pattern_YourService_Echo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_DemoService_Echo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/demo.YourService/Echo")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/demo.DemoService/Echo")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_YourService_Echo_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_DemoService_Echo_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_YourService_Echo_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DemoService_Echo_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -159,9 +159,9 @@ func RegisterYourServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_YourService_Echo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "demo"}, ""))
+	pattern_DemoService_Echo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "demo"}, ""))
 )
 
 var (
-	forward_YourService_Echo_0 = runtime.ForwardResponseMessage
+	forward_DemoService_Echo_0 = runtime.ForwardResponseMessage
 )

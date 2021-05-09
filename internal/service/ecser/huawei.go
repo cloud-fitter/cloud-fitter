@@ -72,10 +72,10 @@ func (ecs *HuaweiEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) 
 	}
 
 	servers := *resp.Servers
-	var ecses = make([]*pbecs.ECSInstance, len(servers))
+	var ecses = make([]*pbecs.EcsInstance, len(servers))
 	for k, v := range servers {
-		ecses[k] = &pbecs.ECSInstance{
-			Provider:     pbtenant.CloudProvider_huawei_cloud,
+		ecses[k] = &pbecs.EcsInstance{
+			Provider:     pbtenant.CloudProvider_huawei,
 			AccountName:  ecs.tenanter.AccountName(),
 			InstanceId:   v.Id,
 			InstanceName: v.Name,

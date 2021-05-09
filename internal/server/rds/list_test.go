@@ -17,9 +17,9 @@ func TestListDetail(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		{name: "ali", args: args{req: &pbrds.ListDetailReq{Provider: pbtenant.CloudProvider_ali_cloud, RegionId: int32(pbtenant.AliRegionId_ali_cn_hangzhou), PageNumber: 1, PageSize: 10}}, wantErr: false},
-		{name: "tencent", args: args{req: &pbrds.ListDetailReq{Provider: pbtenant.CloudProvider_tencent_cloud, RegionId: int32(pbtenant.TencentRegionId_tc_ap_beijing), PageNumber: 1, PageSize: 10}}, wantErr: false},
-		// {name: "aws", args: args{req: &pbrds.ListDetailReq{Provider: pbtenant.CloudProvider_aws_cloud, RegionId: int32(pbtenant.AwsRegionId_aws_us_east_2), PageNumber: 1, PageSize: 10}}, wantErr: false},
+		{name: "ali", args: args{req: &pbrds.ListDetailReq{Provider: pbtenant.CloudProvider_ali, RegionId: int32(pbtenant.AliRegionId_ali_cn_hangzhou), PageNumber: 1, PageSize: 10}}, wantErr: false},
+		{name: "tencent", args: args{req: &pbrds.ListDetailReq{Provider: pbtenant.CloudProvider_tencent, RegionId: int32(pbtenant.TencentRegionId_tc_ap_beijing), PageNumber: 1, PageSize: 10}}, wantErr: false},
+		// {name: "aws", args: args{req: &pbrds.ListDetailReq{Provider: pbtenant.CloudProvider_aws, RegionId: int32(pbtenant.AwsRegionId_aws_us_east_2), PageNumber: 1, PageSize: 10}}, wantErr: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -42,10 +42,10 @@ func TestList(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		{name: "ali", args: args{req: &pbrds.ListReq{Provider: pbtenant.CloudProvider_ali_cloud}}, wantErr: false},
-		{name: "tencent", args: args{req: &pbrds.ListReq{Provider: pbtenant.CloudProvider_tencent_cloud}}, wantErr: false},
-		// {name: "huawei", args: args{req: &pbrds.ListReq{Provider: pbtenant.CloudProvider_huawei_cloud}}, wantErr: false},
-		// {name: "aws", args: args{req: &pbrds.ListReq{Provider: pbtenant.CloudProvider_aws_cloud}}, wantErr: false},
+		{name: "ali", args: args{req: &pbrds.ListReq{Provider: pbtenant.CloudProvider_ali}}, wantErr: false},
+		{name: "tencent", args: args{req: &pbrds.ListReq{Provider: pbtenant.CloudProvider_tencent}}, wantErr: false},
+		// {name: "huawei", args: args{req: &pbrds.ListReq{Provider: pbtenant.CloudProvider_huawei}}, wantErr: false},
+		// {name: "aws", args: args{req: &pbrds.ListReq{Provider: pbtenant.CloudProvider_aws}}, wantErr: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

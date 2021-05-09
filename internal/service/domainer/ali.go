@@ -27,7 +27,7 @@ func NewAliDomainClient(tenant tenanter.Tenanter) (Rdser, error) {
 		err    error
 	)
 
-	hzRegion, _ := tenanter.NewRegion(pbtenant.CloudProvider_ali_cloud, int32(pbtenant.AliRegionId_ali_cn_hangzhou))
+	hzRegion, _ := tenanter.NewRegion(pbtenant.CloudProvider_ali, int32(pbtenant.AliRegionId_ali_cn_hangzhou))
 
 	switch t := tenant.(type) {
 	case *tenanter.AccessKeyTenant:
@@ -61,7 +61,7 @@ func (domain *AliDomain) ListDetail(ctx context.Context, req *pbdomain.ListDetai
 	var domains = make([]*pbdomain.DomainInstance, len(resp.Data.Domain))
 	for k, v := range resp.Data.Domain {
 		domains[k] = &pbdomain.DomainInstance{
-			Provider:         pbtenant.CloudProvider_ali_cloud,
+			Provider:         pbtenant.CloudProvider_ali,
 			AccountName:      domain.tenanter.AccountName(),
 			DomainName:       v.DomainName,
 			DomainStatus:     v.DomainStatus,

@@ -1,0 +1,1028 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "title": "idl/demo/demo.proto",
+    "version": "version not set"
+  },
+  "paths": {
+    "/domain": {
+      "post": {
+        "tags": [
+          "DomainService"
+        ],
+        "summary": "根据云类型全量查询域名",
+        "operationId": "DomainService_ListDomain",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbdomainListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbdomainListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/domain/detail": {
+      "post": {
+        "tags": [
+          "DomainService"
+        ],
+        "summary": "查询域名明细，支持云类型、账户、分页等过滤条件",
+        "operationId": "DomainService_ListDomainDetail",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbdomainListDetailReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbdomainListDetailResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/ecs": {
+      "post": {
+        "tags": [
+          "EcsService"
+        ],
+        "summary": "根据云类型全量查询ECS",
+        "operationId": "EcsService_ListEcs",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbecsListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbecsListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/ecs/detail": {
+      "post": {
+        "tags": [
+          "EcsService"
+        ],
+        "summary": "查询ECS明细，支持云类型、区域、账户、分页等过滤条件",
+        "operationId": "EcsService_ListEcsDetail",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbecsListDetailReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbecsListDetailResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/oss": {
+      "post": {
+        "tags": [
+          "OssService"
+        ],
+        "summary": "根据云类型全量查询OSS",
+        "operationId": "OssService_ListOss",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbossListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbossListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/oss/detail": {
+      "post": {
+        "tags": [
+          "OssService"
+        ],
+        "summary": "查询OSS明细，支持云类型、账户、分页等过滤条件",
+        "operationId": "OssService_ListOssDetail",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbossListDetailReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbossListDetailResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/rds": {
+      "post": {
+        "tags": [
+          "RdsService"
+        ],
+        "summary": "根据云类型全量查询RDS",
+        "operationId": "RdsService_ListRds",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbrdsListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbrdsListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/rds/detail": {
+      "post": {
+        "tags": [
+          "RdsService"
+        ],
+        "summary": "查询RDS明细，支持云类型、区域、账户、分页等过滤条件",
+        "operationId": "RdsService_ListRdsDetail",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbrdsListDetailReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbrdsListDetailResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/statistic": {
+      "post": {
+        "tags": [
+          "StatisticService"
+        ],
+        "summary": "按云统计",
+        "operationId": "StatisticService_Statistic",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbstatisticStatisticReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbstatisticStatisticResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/statistic/all": {
+      "post": {
+        "tags": [
+          "StatisticService"
+        ],
+        "summary": "全量统计",
+        "operationId": "StatisticService_StatisticAll",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbstatisticStatisticAllReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbstatisticStatisticResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/v1/demo": {
+      "post": {
+        "security": [],
+        "tags": [
+          "DemoService"
+        ],
+        "summary": "Echo 样例服务",
+        "externalDocs": {
+          "description": "Find out more about the interface",
+          "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+        },
+        "operationId": "DemoService_Echo",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/demoStringMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/demoStringMessage"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "demoStringMessage": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "pbdomainDomainInstance": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账号名称"
+        },
+        "domainName": {
+          "type": "string",
+          "title": "域名"
+        },
+        "domainStatus": {
+          "type": "string",
+          "title": "域名状态"
+        },
+        "domainType": {
+          "type": "string",
+          "title": "域名类型"
+        },
+        "expirationDate": {
+          "type": "string",
+          "title": "域名到期日期"
+        },
+        "provider": {
+          "title": "云类型",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "registrationDate": {
+          "type": "string",
+          "title": "注册时间"
+        }
+      }
+    },
+    "pbdomainListDetailReq": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbdomainListDetailResp": {
+      "type": "object",
+      "properties": {
+        "domains": {
+          "type": "array",
+          "title": "Domain 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbdomainDomainInstance"
+          }
+        },
+        "finished": {
+          "type": "boolean",
+          "title": "查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求id，出现问题后提供给云厂商，排查问题"
+        }
+      }
+    },
+    "pbdomainListReq": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbdomainListResp": {
+      "type": "object",
+      "properties": {
+        "domains": {
+          "type": "array",
+          "title": "Domain 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbdomainDomainInstance"
+          }
+        }
+      }
+    },
+    "pbecsEcsInstance": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账号名称"
+        },
+        "cpu": {
+          "type": "integer",
+          "format": "int32",
+          "title": "vcpu数"
+        },
+        "creationTime": {
+          "type": "string",
+          "title": "创建时间，ISO8601"
+        },
+        "description": {
+          "type": "string",
+          "title": "实例描述"
+        },
+        "expireTime": {
+          "type": "string",
+          "title": "过期时间"
+        },
+        "instanceId": {
+          "type": "string",
+          "title": "实例id"
+        },
+        "instanceName": {
+          "type": "string",
+          "title": "实例名称"
+        },
+        "instanceType": {
+          "type": "string",
+          "title": "实例类型"
+        },
+        "memory": {
+          "type": "integer",
+          "format": "int32",
+          "title": "内存MB"
+        },
+        "provider": {
+          "title": "云类型",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "publicIps": {
+          "type": "array",
+          "title": "公网ip",
+          "items": {
+            "type": "string"
+          }
+        },
+        "regionName": {
+          "type": "string",
+          "title": "地域，数据中心"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        }
+      }
+    },
+    "pbecsListDetailReq": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "regionId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "区域Id，参考 tenant.proto 中的各个云的区域"
+        }
+      }
+    },
+    "pbecsListDetailResp": {
+      "type": "object",
+      "properties": {
+        "ecses": {
+          "type": "array",
+          "title": "Ecs 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbecsEcsInstance"
+          }
+        },
+        "finished": {
+          "type": "boolean",
+          "title": "查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求id，出现问题后提供给云厂商，排查问题"
+        }
+      }
+    },
+    "pbecsListReq": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbecsListResp": {
+      "type": "object",
+      "properties": {
+        "ecses": {
+          "type": "array",
+          "title": "Ecs 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbecsEcsInstance"
+          }
+        }
+      }
+    },
+    "pbossListDetailReq": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbossListDetailResp": {
+      "type": "object",
+      "properties": {
+        "finished": {
+          "type": "boolean",
+          "title": "查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "osses": {
+          "type": "array",
+          "title": "Oss 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbossOssInstance"
+          }
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求id，出现问题后提供给云厂商，排查问题"
+        }
+      }
+    },
+    "pbossListReq": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbossListResp": {
+      "type": "object",
+      "properties": {
+        "osses": {
+          "type": "array",
+          "title": "Oss 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbossOssInstance"
+          }
+        }
+      }
+    },
+    "pbossOssInstance": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账号名称"
+        },
+        "bucketName": {
+          "type": "string",
+          "title": "bucket名称"
+        },
+        "location": {
+          "type": "string",
+          "title": "区域"
+        },
+        "provider": {
+          "title": "云类型",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbrdsListDetailReq": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "regionId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "区域Id，参考 tenant.proto 中的各个云的区域"
+        }
+      }
+    },
+    "pbrdsListDetailResp": {
+      "type": "object",
+      "properties": {
+        "finished": {
+          "type": "boolean",
+          "title": "查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "rdses": {
+          "type": "array",
+          "title": "Rds 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbrdsRdsInstance"
+          }
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求id，出现问题后提供给云厂商，排查问题"
+        }
+      }
+    },
+    "pbrdsListReq": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbrdsListResp": {
+      "type": "object",
+      "properties": {
+        "rdses": {
+          "type": "array",
+          "title": "Rds 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbrdsRdsInstance"
+          }
+        }
+      }
+    },
+    "pbrdsRdsInstance": {
+      "type": "object",
+      "properties": {
+        "accoutName": {
+          "type": "string",
+          "title": "账号名称"
+        },
+        "creationTime": {
+          "type": "string",
+          "title": "创建时间，ISO8601"
+        },
+        "engine": {
+          "type": "string",
+          "title": "数据库类型"
+        },
+        "engineVersion": {
+          "type": "string",
+          "title": "数据库类型的版本"
+        },
+        "expireTime": {
+          "type": "string",
+          "title": "过期时间"
+        },
+        "instanceClass": {
+          "type": "string",
+          "title": "数据库实例规格"
+        },
+        "instanceId": {
+          "type": "string",
+          "title": "实例id"
+        },
+        "instanceName": {
+          "type": "string",
+          "title": "实例名称"
+        },
+        "instanceType": {
+          "type": "string",
+          "title": "实例类型"
+        },
+        "provider": {
+          "title": "云类型",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "regionName": {
+          "type": "string",
+          "title": "地域，数据中心"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        }
+      }
+    },
+    "pbstatisticStatisticAllReq": {
+      "type": "object"
+    },
+    "pbstatisticStatisticInfo": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账户名称，在config.yaml里配置的name"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "数量"
+        },
+        "product": {
+          "title": "资源类型，参考 tenant.proto 中的 CloudProduct",
+          "$ref": "#/definitions/pbtenantCloudProduct"
+        },
+        "provider": {
+          "title": "云提供商",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "regionId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "区域Id，参考 tenant.proto 中的各个云的区域"
+        },
+        "regionName": {
+          "type": "string",
+          "title": "区域名称，方便可读，参考 tenant.proto 中的各个云的区域"
+        }
+      }
+    },
+    "pbstatisticStatisticReq": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbstatisticStatisticResp": {
+      "type": "object",
+      "properties": {
+        "cfgs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/pbstatisticStatisticInfo"
+          }
+        }
+      }
+    },
+    "pbtenantCloudProduct": {
+      "type": "string",
+      "title": "- product_all: 所有产品\n - product_ecs: ECS类产品：阿里云ECS,腾讯云CVM，华为云ECS，亚马逊EC2\n - product_rds: RDS类产品：阿里云RDS,腾讯云CDB\n - product_domain: Domain类产品：阿里云Domain\n - product_oss: OSS类产品：阿里云OSS",
+      "default": "product_all",
+      "enum": [
+        "product_all",
+        "product_ecs",
+        "product_rds",
+        "product_domain",
+        "product_oss"
+      ]
+    },
+    "pbtenantCloudProvider": {
+      "description": "- ali: 阿里云\n - tencent: 腾讯云\n - huawei: 华为云\n - aws: 亚马逊云",
+      "type": "string",
+      "title": "云提供商",
+      "default": "ali",
+      "enum": [
+        "ali",
+        "tencent",
+        "huawei",
+        "aws"
+      ]
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "DemoService"
+    },
+    {
+      "name": "DomainService"
+    },
+    {
+      "name": "EcsService"
+    },
+    {
+      "name": "OssService"
+    },
+    {
+      "name": "RdsService"
+    },
+    {
+      "name": "StatisticService"
+    }
+  ]
+}

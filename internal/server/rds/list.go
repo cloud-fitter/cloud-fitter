@@ -42,7 +42,7 @@ func List(ctx context.Context, req *pbrds.ListReq) (*pbrds.ListResp, error) {
 	var (
 		wg    sync.WaitGroup
 		mutex sync.Mutex
-		rdses []*pbrds.RDSInstance
+		rdses []*pbrds.RdsInstance
 	)
 
 	tenanters, err := tenanter.GetTenanters(req.Provider)

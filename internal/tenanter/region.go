@@ -34,13 +34,13 @@ func NewRegion(provider pbtenant.CloudProvider, regionId int32) (Region, error) 
 	var err error
 
 	switch provider {
-	case pbtenant.CloudProvider_ali_cloud:
+	case pbtenant.CloudProvider_ali:
 		r.regionName, err = getAliRegionName(regionId)
-	case pbtenant.CloudProvider_tencent_cloud:
+	case pbtenant.CloudProvider_tencent:
 		r.regionName, err = getTencentRegionName(regionId)
-	case pbtenant.CloudProvider_huawei_cloud:
+	case pbtenant.CloudProvider_huawei:
 		r.regionName, err = getHuaweiRegionName(regionId)
-	case pbtenant.CloudProvider_aws_cloud:
+	case pbtenant.CloudProvider_aws:
 		r.regionName, err = getAwsRegionName(regionId)
 	}
 
@@ -57,28 +57,28 @@ func (r *region) GetId() int32 {
 
 func GetAllRegionIds(provider pbtenant.CloudProvider) (regions []Region) {
 	switch provider {
-	case pbtenant.CloudProvider_ali_cloud:
+	case pbtenant.CloudProvider_ali:
 		for rId := range pbtenant.AliRegionId_name {
 			if rId != int32(pbtenant.AliRegionId_ali_all) {
 				region, _ := NewRegion(provider, rId)
 				regions = append(regions, region)
 			}
 		}
-	case pbtenant.CloudProvider_tencent_cloud:
+	case pbtenant.CloudProvider_tencent:
 		for rId := range pbtenant.TencentRegionId_name {
 			if rId != int32(pbtenant.TencentRegionId_tc_all) {
 				region, _ := NewRegion(provider, rId)
 				regions = append(regions, region)
 			}
 		}
-	case pbtenant.CloudProvider_huawei_cloud:
+	case pbtenant.CloudProvider_huawei:
 		for rId := range pbtenant.HuaweiRegionId_name {
 			if rId != int32(pbtenant.HuaweiRegionId_hw_all) {
 				region, _ := NewRegion(provider, rId)
 				regions = append(regions, region)
 			}
 		}
-	case pbtenant.CloudProvider_aws_cloud:
+	case pbtenant.CloudProvider_aws:
 		for rId := range pbtenant.AwsRegionId_name {
 			if rId != int32(pbtenant.AwsRegionId_aws_all) {
 				region, _ := NewRegion(provider, rId)

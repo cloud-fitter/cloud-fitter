@@ -57,10 +57,10 @@ func (ecs *AliEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*p
 		return nil, errors.Wrap(err, "Aliyun ListDetail error")
 	}
 
-	var ecses = make([]*pbecs.ECSInstance, len(resp.Instances.Instance))
+	var ecses = make([]*pbecs.EcsInstance, len(resp.Instances.Instance))
 	for k, v := range resp.Instances.Instance {
-		ecses[k] = &pbecs.ECSInstance{
-			Provider:     pbtenant.CloudProvider_ali_cloud,
+		ecses[k] = &pbecs.EcsInstance{
+			Provider:     pbtenant.CloudProvider_ali,
 			AccountName:  ecs.tenanter.AccountName(),
 			InstanceId:   v.InstanceId,
 			InstanceName: v.InstanceName,

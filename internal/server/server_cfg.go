@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/server/statistic"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
@@ -12,20 +12,20 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (s *Server) Statistic(ctx context.Context, req *pbcfg.StatisticReq) (*pbcfg.StatisticResp, error) {
+func (s *Server) Statistic(ctx context.Context, req *pbstatistic.StatisticReq) (*pbstatistic.StatisticResp, error) {
 	tenanters, err := tenanter.GetTenanters(req.Provider)
 	if err != nil {
 		return nil, errors.WithMessage(err, "getTenanters error")
 	}
 	cfgs, err := statistic.Statistic(ctx, req.Provider, tenanters)
-	return &pbcfg.StatisticResp{Cfgs: cfgs}, err
+	return &pbstatistic.StatisticResp{Cfgs: cfgs}, err
 }
 
-func (s *Server) StatisticAll(ctx context.Context, req *pbcfg.StatisticAllReq) (*pbcfg.StatisticResp, error) {
+func (s *Server) StatisticAll(ctx context.Context, req *pbstatistic.StatisticAllReq) (*pbstatistic.StatisticResp, error) {
 	var (
 		wg     sync.WaitGroup
 		mutex  sync.Mutex
-		result []*pbcfg.StatisticRespList
+		result []*pbstatistic.StatisticInfo
 	)
 	wg.Add(len(pbtenant.CloudProvider_name))
 
@@ -45,5 +45,5 @@ func (s *Server) StatisticAll(ctx context.Context, req *pbcfg.StatisticAllReq) (
 	}
 
 	wg.Wait()
-	return &pbcfg.StatisticResp{Cfgs: result}, nil
+	return &pbstatistic.StatisticResp{Cfgs: result}, nil
 }

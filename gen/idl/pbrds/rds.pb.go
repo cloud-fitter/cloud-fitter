@@ -22,7 +22,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type RDSInstance struct {
+type RdsInstance struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -53,8 +53,8 @@ type RDSInstance struct {
 	ExpireTime string `protobuf:"bytes,12,opt,name=expire_time,json=expireTime,proto3" json:"expire_time,omitempty"`
 }
 
-func (x *RDSInstance) Reset() {
-	*x = RDSInstance{}
+func (x *RdsInstance) Reset() {
+	*x = RdsInstance{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_idl_pbrds_rds_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -62,13 +62,13 @@ func (x *RDSInstance) Reset() {
 	}
 }
 
-func (x *RDSInstance) String() string {
+func (x *RdsInstance) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RDSInstance) ProtoMessage() {}
+func (*RdsInstance) ProtoMessage() {}
 
-func (x *RDSInstance) ProtoReflect() protoreflect.Message {
+func (x *RdsInstance) ProtoReflect() protoreflect.Message {
 	mi := &file_idl_pbrds_rds_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -80,89 +80,89 @@ func (x *RDSInstance) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RDSInstance.ProtoReflect.Descriptor instead.
-func (*RDSInstance) Descriptor() ([]byte, []int) {
+// Deprecated: Use RdsInstance.ProtoReflect.Descriptor instead.
+func (*RdsInstance) Descriptor() ([]byte, []int) {
 	return file_idl_pbrds_rds_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *RDSInstance) GetProvider() pbtenant.CloudProvider {
+func (x *RdsInstance) GetProvider() pbtenant.CloudProvider {
 	if x != nil {
 		return x.Provider
 	}
-	return pbtenant.CloudProvider_ali_cloud
+	return pbtenant.CloudProvider_ali
 }
 
-func (x *RDSInstance) GetAccoutName() string {
+func (x *RdsInstance) GetAccoutName() string {
 	if x != nil {
 		return x.AccoutName
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetInstanceId() string {
+func (x *RdsInstance) GetInstanceId() string {
 	if x != nil {
 		return x.InstanceId
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetInstanceName() string {
+func (x *RdsInstance) GetInstanceName() string {
 	if x != nil {
 		return x.InstanceName
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetRegionName() string {
+func (x *RdsInstance) GetRegionName() string {
 	if x != nil {
 		return x.RegionName
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetInstanceType() string {
+func (x *RdsInstance) GetInstanceType() string {
 	if x != nil {
 		return x.InstanceType
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetEngine() string {
+func (x *RdsInstance) GetEngine() string {
 	if x != nil {
 		return x.Engine
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetEngineVersion() string {
+func (x *RdsInstance) GetEngineVersion() string {
 	if x != nil {
 		return x.EngineVersion
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetInstanceClass() string {
+func (x *RdsInstance) GetInstanceClass() string {
 	if x != nil {
 		return x.InstanceClass
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetStatus() string {
+func (x *RdsInstance) GetStatus() string {
 	if x != nil {
 		return x.Status
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetCreationTime() string {
+func (x *RdsInstance) GetCreationTime() string {
 	if x != nil {
 		return x.CreationTime
 	}
 	return ""
 }
 
-func (x *RDSInstance) GetExpireTime() string {
+func (x *RdsInstance) GetExpireTime() string {
 	if x != nil {
 		return x.ExpireTime
 	}
@@ -224,7 +224,7 @@ func (x *ListDetailReq) GetProvider() pbtenant.CloudProvider {
 	if x != nil {
 		return x.Provider
 	}
-	return pbtenant.CloudProvider_ali_cloud
+	return pbtenant.CloudProvider_ali
 }
 
 func (x *ListDetailReq) GetAccountName() string {
@@ -267,8 +267,8 @@ type ListDetailResp struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// RDS 机器集合
-	Rdses []*RDSInstance `protobuf:"bytes,1,rep,name=rdses,proto3" json:"rdses,omitempty"`
+	// Rds 机器集合
+	Rdses []*RdsInstance `protobuf:"bytes,1,rep,name=rdses,proto3" json:"rdses,omitempty"`
 	// 查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询
 	Finished bool `protobuf:"varint,2,opt,name=finished,proto3" json:"finished,omitempty"`
 	// 分页相关参数，页码
@@ -313,7 +313,7 @@ func (*ListDetailResp) Descriptor() ([]byte, []int) {
 	return file_idl_pbrds_rds_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ListDetailResp) GetRdses() []*RDSInstance {
+func (x *ListDetailResp) GetRdses() []*RdsInstance {
 	if x != nil {
 		return x.Rdses
 	}
@@ -400,7 +400,7 @@ func (x *ListReq) GetProvider() pbtenant.CloudProvider {
 	if x != nil {
 		return x.Provider
 	}
-	return pbtenant.CloudProvider_ali_cloud
+	return pbtenant.CloudProvider_ali
 }
 
 type ListResp struct {
@@ -408,8 +408,8 @@ type ListResp struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// RDS 机器集合
-	Rdses []*RDSInstance `protobuf:"bytes,1,rep,name=rdses,proto3" json:"rdses,omitempty"`
+	// Rds 机器集合
+	Rdses []*RdsInstance `protobuf:"bytes,1,rep,name=rdses,proto3" json:"rdses,omitempty"`
 }
 
 func (x *ListResp) Reset() {
@@ -444,7 +444,7 @@ func (*ListResp) Descriptor() ([]byte, []int) {
 	return file_idl_pbrds_rds_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ListResp) GetRdses() []*RDSInstance {
+func (x *ListResp) GetRdses() []*RdsInstance {
 	if x != nil {
 		return x.Rdses
 	}
@@ -459,7 +459,7 @@ var file_idl_pbrds_rds_proto_rawDesc = []byte{
 	0x6c, 0x2f, 0x70, 0x62, 0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x2f, 0x74, 0x65, 0x6e, 0x61, 0x6e,
 	0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f,
 	0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xb3, 0x03, 0x0a, 0x0b, 0x52, 0x44, 0x53, 0x49, 0x6e, 0x73,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xb3, 0x03, 0x0a, 0x0b, 0x52, 0x64, 0x73, 0x49, 0x6e, 0x73,
 	0x74, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x33, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65,
 	0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x17, 0x2e, 0x70, 0x62, 0x74, 0x65, 0x6e, 0x61,
 	0x6e, 0x74, 0x2e, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x50, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72,
@@ -503,7 +503,7 @@ var file_idl_pbrds_rds_proto_rawDesc = []byte{
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6e, 0x65, 0x78, 0x74, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22,
 	0xd2, 0x01, 0x0a, 0x0e, 0x4c, 0x69, 0x73, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65,
 	0x73, 0x70, 0x12, 0x28, 0x0a, 0x05, 0x72, 0x64, 0x73, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
-	0x0b, 0x32, 0x12, 0x2e, 0x70, 0x62, 0x72, 0x64, 0x73, 0x2e, 0x52, 0x44, 0x53, 0x49, 0x6e, 0x73,
+	0x0b, 0x32, 0x12, 0x2e, 0x70, 0x62, 0x72, 0x64, 0x73, 0x2e, 0x52, 0x64, 0x73, 0x49, 0x6e, 0x73,
 	0x74, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x05, 0x72, 0x64, 0x73, 0x65, 0x73, 0x12, 0x1a, 0x0a, 0x08,
 	0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08,
 	0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x61, 0x67, 0x65,
@@ -520,15 +520,15 @@ var file_idl_pbrds_rds_proto_rawDesc = []byte{
 	0x75, 0x64, 0x50, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x76,
 	0x69, 0x64, 0x65, 0x72, 0x22, 0x34, 0x0a, 0x08, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70,
 	0x12, 0x28, 0x0a, 0x05, 0x72, 0x64, 0x73, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
-	0x12, 0x2e, 0x70, 0x62, 0x72, 0x64, 0x73, 0x2e, 0x52, 0x44, 0x53, 0x49, 0x6e, 0x73, 0x74, 0x61,
+	0x12, 0x2e, 0x70, 0x62, 0x72, 0x64, 0x73, 0x2e, 0x52, 0x64, 0x73, 0x49, 0x6e, 0x73, 0x74, 0x61,
 	0x6e, 0x63, 0x65, 0x52, 0x05, 0x72, 0x64, 0x73, 0x65, 0x73, 0x32, 0x9f, 0x01, 0x0a, 0x0a, 0x52,
-	0x44, 0x53, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x54, 0x0a, 0x0d, 0x4c, 0x69, 0x73,
-	0x74, 0x52, 0x44, 0x53, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x14, 0x2e, 0x70, 0x62, 0x72,
+	0x64, 0x73, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x54, 0x0a, 0x0d, 0x4c, 0x69, 0x73,
+	0x74, 0x52, 0x64, 0x73, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x14, 0x2e, 0x70, 0x62, 0x72,
 	0x64, 0x73, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71,
 	0x1a, 0x15, 0x2e, 0x70, 0x62, 0x72, 0x64, 0x73, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x44, 0x65, 0x74,
 	0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x16, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x10, 0x22,
 	0x0b, 0x2f, 0x72, 0x64, 0x73, 0x2f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x3a, 0x01, 0x2a, 0x12,
-	0x3b, 0x0a, 0x07, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x44, 0x53, 0x12, 0x0e, 0x2e, 0x70, 0x62, 0x72,
+	0x3b, 0x0a, 0x07, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x64, 0x73, 0x12, 0x0e, 0x2e, 0x70, 0x62, 0x72,
 	0x64, 0x73, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x0f, 0x2e, 0x70, 0x62, 0x72,
 	0x64, 0x73, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x0f, 0x82, 0xd3, 0xe4,
 	0x93, 0x02, 0x09, 0x22, 0x04, 0x2f, 0x72, 0x64, 0x73, 0x3a, 0x01, 0x2a, 0x42, 0x34, 0x5a, 0x32,
@@ -552,7 +552,7 @@ func file_idl_pbrds_rds_proto_rawDescGZIP() []byte {
 
 var file_idl_pbrds_rds_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_idl_pbrds_rds_proto_goTypes = []interface{}{
-	(*RDSInstance)(nil),         // 0: pbrds.RDSInstance
+	(*RdsInstance)(nil),         // 0: pbrds.RdsInstance
 	(*ListDetailReq)(nil),       // 1: pbrds.ListDetailReq
 	(*ListDetailResp)(nil),      // 2: pbrds.ListDetailResp
 	(*ListReq)(nil),             // 3: pbrds.ListReq
@@ -560,15 +560,15 @@ var file_idl_pbrds_rds_proto_goTypes = []interface{}{
 	(pbtenant.CloudProvider)(0), // 5: pbtenant.CloudProvider
 }
 var file_idl_pbrds_rds_proto_depIdxs = []int32{
-	5, // 0: pbrds.RDSInstance.provider:type_name -> pbtenant.CloudProvider
+	5, // 0: pbrds.RdsInstance.provider:type_name -> pbtenant.CloudProvider
 	5, // 1: pbrds.ListDetailReq.provider:type_name -> pbtenant.CloudProvider
-	0, // 2: pbrds.ListDetailResp.rdses:type_name -> pbrds.RDSInstance
+	0, // 2: pbrds.ListDetailResp.rdses:type_name -> pbrds.RdsInstance
 	5, // 3: pbrds.ListReq.provider:type_name -> pbtenant.CloudProvider
-	0, // 4: pbrds.ListResp.rdses:type_name -> pbrds.RDSInstance
-	1, // 5: pbrds.RDSService.ListRDSDetail:input_type -> pbrds.ListDetailReq
-	3, // 6: pbrds.RDSService.ListRDS:input_type -> pbrds.ListReq
-	2, // 7: pbrds.RDSService.ListRDSDetail:output_type -> pbrds.ListDetailResp
-	4, // 8: pbrds.RDSService.ListRDS:output_type -> pbrds.ListResp
+	0, // 4: pbrds.ListResp.rdses:type_name -> pbrds.RdsInstance
+	1, // 5: pbrds.RdsService.ListRdsDetail:input_type -> pbrds.ListDetailReq
+	3, // 6: pbrds.RdsService.ListRds:input_type -> pbrds.ListReq
+	2, // 7: pbrds.RdsService.ListRdsDetail:output_type -> pbrds.ListDetailResp
+	4, // 8: pbrds.RdsService.ListRds:output_type -> pbrds.ListResp
 	7, // [7:9] is the sub-list for method output_type
 	5, // [5:7] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name
@@ -583,7 +583,7 @@ func file_idl_pbrds_rds_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_idl_pbrds_rds_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RDSInstance); i {
+			switch v := v.(*RdsInstance); i {
 			case 0:
 				return &v.state
 			case 1:

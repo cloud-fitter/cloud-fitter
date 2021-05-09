@@ -14,122 +14,126 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// RDSServiceClient is the client API for RDSService service.
+// RdsServiceClient is the client API for RdsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RDSServiceClient interface {
-	ListRDSDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
-	ListRDS(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
+type RdsServiceClient interface {
+	// 查询RDS明细，支持云类型、区域、账户、分页等过滤条件
+	ListRdsDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
+	// 根据云类型全量查询RDS
+	ListRds(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
 }
 
-type rDSServiceClient struct {
+type rdsServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRDSServiceClient(cc grpc.ClientConnInterface) RDSServiceClient {
-	return &rDSServiceClient{cc}
+func NewRdsServiceClient(cc grpc.ClientConnInterface) RdsServiceClient {
+	return &rdsServiceClient{cc}
 }
 
-func (c *rDSServiceClient) ListRDSDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error) {
+func (c *rdsServiceClient) ListRdsDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error) {
 	out := new(ListDetailResp)
-	err := c.cc.Invoke(ctx, "/pbrds.RDSService/ListRDSDetail", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pbrds.RdsService/ListRdsDetail", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *rDSServiceClient) ListRDS(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error) {
+func (c *rdsServiceClient) ListRds(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error) {
 	out := new(ListResp)
-	err := c.cc.Invoke(ctx, "/pbrds.RDSService/ListRDS", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pbrds.RdsService/ListRds", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// RDSServiceServer is the server API for RDSService service.
-// All implementations must embed UnimplementedRDSServiceServer
+// RdsServiceServer is the server API for RdsService service.
+// All implementations must embed UnimplementedRdsServiceServer
 // for forward compatibility
-type RDSServiceServer interface {
-	ListRDSDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
-	ListRDS(context.Context, *ListReq) (*ListResp, error)
-	mustEmbedUnimplementedRDSServiceServer()
+type RdsServiceServer interface {
+	// 查询RDS明细，支持云类型、区域、账户、分页等过滤条件
+	ListRdsDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
+	// 根据云类型全量查询RDS
+	ListRds(context.Context, *ListReq) (*ListResp, error)
+	mustEmbedUnimplementedRdsServiceServer()
 }
 
-// UnimplementedRDSServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedRDSServiceServer struct {
+// UnimplementedRdsServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedRdsServiceServer struct {
 }
 
-func (UnimplementedRDSServiceServer) ListRDSDetail(context.Context, *ListDetailReq) (*ListDetailResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListRDSDetail not implemented")
+func (UnimplementedRdsServiceServer) ListRdsDetail(context.Context, *ListDetailReq) (*ListDetailResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRdsDetail not implemented")
 }
-func (UnimplementedRDSServiceServer) ListRDS(context.Context, *ListReq) (*ListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListRDS not implemented")
+func (UnimplementedRdsServiceServer) ListRds(context.Context, *ListReq) (*ListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRds not implemented")
 }
-func (UnimplementedRDSServiceServer) mustEmbedUnimplementedRDSServiceServer() {}
+func (UnimplementedRdsServiceServer) mustEmbedUnimplementedRdsServiceServer() {}
 
-// UnsafeRDSServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RDSServiceServer will
+// UnsafeRdsServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RdsServiceServer will
 // result in compilation errors.
-type UnsafeRDSServiceServer interface {
-	mustEmbedUnimplementedRDSServiceServer()
+type UnsafeRdsServiceServer interface {
+	mustEmbedUnimplementedRdsServiceServer()
 }
 
-func RegisterRDSServiceServer(s grpc.ServiceRegistrar, srv RDSServiceServer) {
-	s.RegisterService(&RDSService_ServiceDesc, srv)
+func RegisterRdsServiceServer(s grpc.ServiceRegistrar, srv RdsServiceServer) {
+	s.RegisterService(&RdsService_ServiceDesc, srv)
 }
 
-func _RDSService_ListRDSDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RdsService_ListRdsDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListDetailReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RDSServiceServer).ListRDSDetail(ctx, in)
+		return srv.(RdsServiceServer).ListRdsDetail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pbrds.RDSService/ListRDSDetail",
+		FullMethod: "/pbrds.RdsService/ListRdsDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RDSServiceServer).ListRDSDetail(ctx, req.(*ListDetailReq))
+		return srv.(RdsServiceServer).ListRdsDetail(ctx, req.(*ListDetailReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RDSService_ListRDS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RdsService_ListRds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RDSServiceServer).ListRDS(ctx, in)
+		return srv.(RdsServiceServer).ListRds(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pbrds.RDSService/ListRDS",
+		FullMethod: "/pbrds.RdsService/ListRds",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RDSServiceServer).ListRDS(ctx, req.(*ListReq))
+		return srv.(RdsServiceServer).ListRds(ctx, req.(*ListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// RDSService_ServiceDesc is the grpc.ServiceDesc for RDSService service.
+// RdsService_ServiceDesc is the grpc.ServiceDesc for RdsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var RDSService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pbrds.RDSService",
-	HandlerType: (*RDSServiceServer)(nil),
+var RdsService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pbrds.RdsService",
+	HandlerType: (*RdsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListRDSDetail",
-			Handler:    _RDSService_ListRDSDetail_Handler,
+			MethodName: "ListRdsDetail",
+			Handler:    _RdsService_ListRdsDetail_Handler,
 		},
 		{
-			MethodName: "ListRDS",
-			Handler:    _RDSService_ListRDS_Handler,
+			MethodName: "ListRds",
+			Handler:    _RdsService_ListRds_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -7,11 +7,11 @@ import (
 	"net/http"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbcfg"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pboss"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 	"github.com/cloud-fitter/cloud-fitter/internal/server"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 	"github.com/golang/glog"
@@ -36,14 +36,14 @@ func run() error {
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 
-	if err := demo.RegisterYourServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
-		return errors.Wrap(err, "RegisterYourServiceHandlerFromEndpoint error")
-	} else if err = pbecs.RegisterECSServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
-		return errors.Wrap(err, "RegisterECSServiceHandlerFromEndpoint error")
-	} else if err = pbcfg.RegisterStatisticServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+	if err := demo.RegisterDemoServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+		return errors.Wrap(err, "RegisterDemoServiceHandlerFromEndpoint error")
+	} else if err = pbecs.RegisterEcsServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+		return errors.Wrap(err, "RegisterEcsServiceHandlerFromEndpoint error")
+	} else if err = pbstatistic.RegisterStatisticServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterStatisticServiceHandlerFromEndpoint error")
-	} else if err = pbrds.RegisterRDSServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
-		return errors.Wrap(err, "RegisterRDSServiceHandlerFromEndpoint error")
+	} else if err = pbrds.RegisterRdsServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+		return errors.Wrap(err, "RegisterRdsServiceHandlerFromEndpoint error")
 	} else if err = pbdomain.RegisterDomainServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterDomainServiceHandlerFromEndpoint error")
 	} else if err = pboss.RegisterOssServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
@@ -76,10 +76,10 @@ func main() {
 		}
 
 		s := grpc.NewServer()
-		demo.RegisterYourServiceServer(s, &server.Server{})
-		pbecs.RegisterECSServiceServer(s, &server.Server{})
-		pbcfg.RegisterStatisticServiceServer(s, &server.Server{})
-		pbrds.RegisterRDSServiceServer(s, &server.Server{})
+		demo.RegisterDemoServiceServer(s, &server.Server{})
+		pbecs.RegisterEcsServiceServer(s, &server.Server{})
+		pbstatistic.RegisterStatisticServiceServer(s, &server.Server{})
+		pbrds.RegisterRdsServiceServer(s, &server.Server{})
 		pbdomain.RegisterDomainServiceServer(s, &server.Server{})
 		pboss.RegisterOssServiceServer(s, &server.Server{})
 
