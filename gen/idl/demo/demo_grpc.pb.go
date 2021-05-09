@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DemoServiceClient interface {
-	// Echo 样例服务
+	// Echo 样例接口
 	Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error)
 }
 
@@ -43,7 +43,7 @@ func (c *demoServiceClient) Echo(ctx context.Context, in *StringMessage, opts ..
 // All implementations must embed UnimplementedDemoServiceServer
 // for forward compatibility
 type DemoServiceServer interface {
-	// Echo 样例服务
+	// Echo 样例接口
 	Echo(context.Context, *StringMessage) (*StringMessage, error)
 	mustEmbedUnimplementedDemoServiceServer()
 }

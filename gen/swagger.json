@@ -16,7 +16,7 @@
         "tags": [
           "DomainService"
         ],
-        "summary": "根据云类型全量查询域名",
+        "summary": "全量查询域名 - 根据云类型",
         "operationId": "DomainService_ListDomain",
         "parameters": [
           {
@@ -49,7 +49,7 @@
         "tags": [
           "DomainService"
         ],
-        "summary": "查询域名明细，支持云类型、账户、分页等过滤条件",
+        "summary": "查询域名明细 - 支持云类型、账户、分页等过滤条件",
         "operationId": "DomainService_ListDomainDetail",
         "parameters": [
           {
@@ -82,7 +82,7 @@
         "tags": [
           "EcsService"
         ],
-        "summary": "根据云类型全量查询ECS",
+        "summary": "全量查询ECS - 根据云类型",
         "operationId": "EcsService_ListEcs",
         "parameters": [
           {
@@ -115,7 +115,7 @@
         "tags": [
           "EcsService"
         ],
-        "summary": "查询ECS明细，支持云类型、区域、账户、分页等过滤条件",
+        "summary": "查询ECS明细 - 支持云类型、区域、账户、分页等过滤条件",
         "operationId": "EcsService_ListEcsDetail",
         "parameters": [
           {
@@ -148,7 +148,7 @@
         "tags": [
           "OssService"
         ],
-        "summary": "根据云类型全量查询OSS",
+        "summary": "全量查询OSS - 根据云类型",
         "operationId": "OssService_ListOss",
         "parameters": [
           {
@@ -181,7 +181,7 @@
         "tags": [
           "OssService"
         ],
-        "summary": "查询OSS明细，支持云类型、账户、分页等过滤条件",
+        "summary": "查询OSS明细  - 支持云类型、账户、分页等过滤条件",
         "operationId": "OssService_ListOssDetail",
         "parameters": [
           {
@@ -214,7 +214,7 @@
         "tags": [
           "RdsService"
         ],
-        "summary": "根据云类型全量查询RDS",
+        "summary": "全量查询RDS - 根据云类型",
         "operationId": "RdsService_ListRds",
         "parameters": [
           {
@@ -247,7 +247,7 @@
         "tags": [
           "RdsService"
         ],
-        "summary": "查询RDS明细，支持云类型、区域、账户、分页等过滤条件",
+        "summary": "查询RDS明细 - 支持云类型、区域、账户、分页等过滤条件",
         "operationId": "RdsService_ListRdsDetail",
         "parameters": [
           {
@@ -280,7 +280,7 @@
         "tags": [
           "StatisticService"
         ],
-        "summary": "按云统计",
+        "summary": "按云统计云产品数量",
         "operationId": "StatisticService_Statistic",
         "parameters": [
           {
@@ -313,7 +313,7 @@
         "tags": [
           "StatisticService"
         ],
-        "summary": "全量统计",
+        "summary": "全量统计云产品数量",
         "operationId": "StatisticService_StatisticAll",
         "parameters": [
           {
@@ -347,7 +347,7 @@
         "tags": [
           "DemoService"
         ],
-        "summary": "Echo 样例服务",
+        "summary": "Echo 样例接口",
         "externalDocs": {
           "description": "Find out more about the interface",
           "url": "https://github.com/grpc-ecosystem/grpc-gateway"
@@ -951,8 +951,9 @@
       }
     },
     "pbtenantCloudProduct": {
+      "description": "- product_all: 0 - 所有产品\n - product_ecs: 1 - ECS类产品：阿里云ECS,腾讯云CVM，华为云ECS，亚马逊EC2\n - product_rds: 2 - RDS类产品：阿里云RDS,腾讯云CDB\n - product_domain: 3 - Domain类产品：阿里云Domain\n - product_oss: 4 - OSS类产品：阿里云OSS",
       "type": "string",
-      "title": "- product_all: 所有产品\n - product_ecs: ECS类产品：阿里云ECS,腾讯云CVM，华为云ECS，亚马逊EC2\n - product_rds: RDS类产品：阿里云RDS,腾讯云CDB\n - product_domain: Domain类产品：阿里云Domain\n - product_oss: OSS类产品：阿里云OSS",
+      "title": "云产品",
       "default": "product_all",
       "enum": [
         "product_all",
@@ -963,7 +964,7 @@
       ]
     },
     "pbtenantCloudProvider": {
-      "description": "- ali: 阿里云\n - tencent: 腾讯云\n - huawei: 华为云\n - aws: 亚马逊云",
+      "description": "- ali: 0 - 阿里云\n - tencent: 1 - 腾讯云\n - huawei: 2 - 华为云\n - aws: 3 - 亚马逊云",
       "type": "string",
       "title": "云提供商",
       "default": "ali",

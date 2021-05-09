@@ -26,14 +26,14 @@ const (
 type CloudProvider int32
 
 const (
-	// 阿里云
+	// 0 - 阿里云
 	CloudProvider_ali CloudProvider = 0
-	// 腾讯云
+	// 1 - 腾讯云
 	CloudProvider_tencent CloudProvider = 1
-	// 华为云
+	// 2 - 华为云
 	CloudProvider_huawei CloudProvider = 2
-	// 亚马逊云
-	CloudProvider_aws CloudProvider = 3 // google_cloud = 4;
+	// 3 - 亚马逊云
+	CloudProvider_aws CloudProvider = 3
 )
 
 // Enum value maps for CloudProvider.
@@ -79,18 +79,19 @@ func (CloudProvider) EnumDescriptor() ([]byte, []int) {
 	return file_idl_pbtenant_tenant_proto_rawDescGZIP(), []int{0}
 }
 
+// 云产品
 type CloudProduct int32
 
 const (
-	// 所有产品
+	// 0 - 所有产品
 	CloudProduct_product_all CloudProduct = 0
-	// ECS类产品：阿里云ECS,腾讯云CVM，华为云ECS，亚马逊EC2
+	// 1 - ECS类产品：阿里云ECS,腾讯云CVM，华为云ECS，亚马逊EC2
 	CloudProduct_product_ecs CloudProduct = 1
-	// RDS类产品：阿里云RDS,腾讯云CDB
+	// 2 - RDS类产品：阿里云RDS,腾讯云CDB
 	CloudProduct_product_rds CloudProduct = 2
-	// Domain类产品：阿里云Domain
+	// 3 - Domain类产品：阿里云Domain
 	CloudProduct_product_domain CloudProduct = 3
-	// OSS类产品：阿里云OSS
+	// 4 - OSS类产品：阿里云OSS
 	CloudProduct_product_oss CloudProduct = 4
 )
 

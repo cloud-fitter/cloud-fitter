@@ -18,9 +18,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StatisticServiceClient interface {
-	// 按云统计
+	// 按云统计云产品数量
 	Statistic(ctx context.Context, in *StatisticReq, opts ...grpc.CallOption) (*StatisticResp, error)
-	// 全量统计
+	// 全量统计云产品数量
 	StatisticAll(ctx context.Context, in *StatisticAllReq, opts ...grpc.CallOption) (*StatisticResp, error)
 }
 
@@ -54,9 +54,9 @@ func (c *statisticServiceClient) StatisticAll(ctx context.Context, in *Statistic
 // All implementations must embed UnimplementedStatisticServiceServer
 // for forward compatibility
 type StatisticServiceServer interface {
-	// 按云统计
+	// 按云统计云产品数量
 	Statistic(context.Context, *StatisticReq) (*StatisticResp, error)
-	// 全量统计
+	// 全量统计云产品数量
 	StatisticAll(context.Context, *StatisticAllReq) (*StatisticResp, error)
 	mustEmbedUnimplementedStatisticServiceServer()
 }

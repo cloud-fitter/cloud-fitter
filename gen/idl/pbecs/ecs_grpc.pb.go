@@ -18,9 +18,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EcsServiceClient interface {
-	// 查询ECS明细，支持云类型、区域、账户、分页等过滤条件
+	// 查询ECS明细 - 支持云类型、区域、账户、分页等过滤条件
 	ListEcsDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
-	// 根据云类型全量查询ECS
+	// 全量查询ECS - 根据云类型
 	ListEcs(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
 }
 
@@ -54,9 +54,9 @@ func (c *ecsServiceClient) ListEcs(ctx context.Context, in *ListReq, opts ...grp
 // All implementations must embed UnimplementedEcsServiceServer
 // for forward compatibility
 type EcsServiceServer interface {
-	// 查询ECS明细，支持云类型、区域、账户、分页等过滤条件
+	// 查询ECS明细 - 支持云类型、区域、账户、分页等过滤条件
 	ListEcsDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
-	// 根据云类型全量查询ECS
+	// 全量查询ECS - 根据云类型
 	ListEcs(context.Context, *ListReq) (*ListResp, error)
 	mustEmbedUnimplementedEcsServiceServer()
 }

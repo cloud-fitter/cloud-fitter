@@ -83,7 +83,7 @@ message ListResp {
 // 亚马逊云 - EC2
 service EcsService {
 
-  // 查询ECS明细，支持云类型、区域、账户、分页等过滤条件
+  // 查询ECS明细 - 支持云类型、区域、账户、分页等过滤条件
   rpc ListEcsDetail(ListDetailReq) returns (ListDetailResp) {
     option (google.api.http) = {
       post : "/ecs/detail"
@@ -91,7 +91,7 @@ service EcsService {
     };
   }
 
-  // 根据云类型全量查询ECS
+  // 全量查询ECS - 根据云类型
   rpc ListEcs(ListReq) returns (ListResp) {
     option (google.api.http) = {
       post : "/ecs"
