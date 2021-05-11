@@ -28,3 +28,12 @@ func (s *Server) ListEcs(ctx context.Context, req *pbecs.ListReq) (*pbecs.ListRe
 	}
 	return resp, nil
 }
+
+func (s *Server) ListEcsAll(ctx context.Context, req *pbecs.ListAllReq) (*pbecs.ListResp, error) {
+	resp, err := ecs.ListAll(ctx)
+	if err != nil {
+		glog.Errorf("ListAll error %+v", err)
+		return nil, status.Errorf(codes.Internal, err.Error())
+	}
+	return resp, nil
+}

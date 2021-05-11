@@ -75,6 +75,8 @@ message ListResp {
   repeated EcsInstance ecses = 1;
 }
 
+message ListAllReq{}
+
 
 // ECS类产品接口
 // 阿里云 - ECS
@@ -95,6 +97,14 @@ service EcsService {
   rpc ListEcs(ListReq) returns (ListResp) {
     option (google.api.http) = {
       post : "/ecs"
+      body : "*"
+    };
+  }
+
+  // 全量查询所有云的ECS
+  rpc ListEcsAll(ListAllReq) returns (ListResp) {
+    option (google.api.http) = {
+      post : "/ecs/all"
       body : "*"
     };
   }

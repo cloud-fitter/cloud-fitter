@@ -110,6 +110,39 @@
         }
       }
     },
+    "/ecs/all": {
+      "post": {
+        "tags": [
+          "EcsService"
+        ],
+        "summary": "全量查询所有云的ECS",
+        "operationId": "EcsService_ListEcsAll",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbecsListAllReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbecsListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/ecs/detail": {
       "post": {
         "tags": [
@@ -566,6 +599,9 @@
           "title": "状态"
         }
       }
+    },
+    "pbecsListAllReq": {
+      "type": "object"
     },
     "pbecsListDetailReq": {
       "type": "object",
