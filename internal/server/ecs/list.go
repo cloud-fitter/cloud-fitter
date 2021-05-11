@@ -3,6 +3,7 @@ package ecs
 import (
 	"sync"
 
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/golang/glog"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
@@ -91,6 +92,35 @@ func List(ctx context.Context, req *pbecs.ListReq) (*pbecs.ListResp, error) {
 
 		}
 	}
+	wg.Wait()
+
+	return &pbecs.ListResp{Ecses: ecses}, nil
+}
+
+func ListAll(ctx context.Context) (*pbecs.ListResp, error) {
+	var (
+		wg    sync.WaitGroup
+		mutex sync.Mutex
+		ecses []*pbecs.EcsInstance
+	)
+
+	wg.Add(len(pbtenant.CloudProvider_name))
+	for k := range pbtenant.CloudProvider_name {
+		go func(provider int32) {
+			defer wg.Done()
+
+			resp, err := List(ctx, &pbecs.ListReq{Provider: pbtenant.CloudProvider(provider)})
+			if err != nil {
+				glog.Errorf("List error %v", err)
+				return
+			}
+
+			mutex.Lock()
+			ecses = append(ecses, resp.Ecses...)
+			mutex.Unlock()
+		}(k)
+	}
+
 	wg.Wait()
 
 	return &pbecs.ListResp{Ecses: ecses}, nil

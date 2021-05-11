@@ -58,3 +58,26 @@ func TestList(t *testing.T) {
 		})
 	}
 }
+
+func TestListAll(t *testing.T) {
+	type args struct {
+		req *pbecs.ListAllReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{name: "all", args: args{req: &pbecs.ListAllReq{}}, wantErr: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := ListAll(context.Background())
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ListAll() error = %+v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			t.Log(got)
+		})
+	}
+}
