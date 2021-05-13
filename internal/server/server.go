@@ -6,6 +6,7 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbkafka"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pboss"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
@@ -19,6 +20,7 @@ type Server struct {
 	pbrds.UnsafeRdsServiceServer
 	pbdomain.UnsafeDomainServiceServer
 	pboss.UnsafeOssServiceServer
+	pbkafka.UnsafeKafkaServiceServer
 }
 
 func (s *Server) Echo(ctx context.Context, req *demo.StringMessage) (*demo.StringMessage, error) {

@@ -9,6 +9,7 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbkafka"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pboss"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbrds"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
@@ -48,6 +49,8 @@ func run() error {
 		return errors.Wrap(err, "RegisterDomainServiceHandlerFromEndpoint error")
 	} else if err = pboss.RegisterOssServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterOssServiceHandlerFromEndpoint error")
+	} else if err = pbkafka.RegisterKafkaServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+		return errors.Wrap(err, "RegisterKafkaServiceHandlerFromEndpoint error")
 	}
 
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
@@ -82,6 +85,7 @@ func main() {
 		pbrds.RegisterRdsServiceServer(s, &server.Server{})
 		pbdomain.RegisterDomainServiceServer(s, &server.Server{})
 		pboss.RegisterOssServiceServer(s, &server.Server{})
+		pbkafka.RegisterKafkaServiceServer(s, &server.Server{})
 
 		if err = s.Serve(lis); err != nil {
 			glog.Fatalf("failed to serve: %v", err)

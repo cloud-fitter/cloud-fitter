@@ -176,6 +176,72 @@
         }
       }
     },
+    "/kafka": {
+      "post": {
+        "tags": [
+          "KafkaService"
+        ],
+        "summary": "全量查询Kafka - 根据云类型",
+        "operationId": "KafkaService_ListKafka",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbkafkaListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbkafkaListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/kafka/detail": {
+      "post": {
+        "tags": [
+          "KafkaService"
+        ],
+        "summary": "查询Kafka明细 - 支持云类型、区域、账户、分页等过滤条件",
+        "operationId": "KafkaService_ListKafkaDetail",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbkafkaListDetailReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbkafkaListDetailResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/oss": {
       "post": {
         "tags": [
@@ -690,6 +756,144 @@
         }
       }
     },
+    "pbkafkaKafkaInstance": {
+      "type": "object",
+      "properties": {
+        "accoutName": {
+          "type": "string",
+          "title": "账号名称"
+        },
+        "createTime": {
+          "type": "string",
+          "title": "创建时间，ISO8601"
+        },
+        "distSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "磁盘容量"
+        },
+        "endPoint": {
+          "type": "string",
+          "title": "默认接入点"
+        },
+        "expiredTime": {
+          "type": "string",
+          "title": "过期时间"
+        },
+        "instanceId": {
+          "type": "string",
+          "title": "实例id"
+        },
+        "instanceName": {
+          "type": "string",
+          "title": "实例名称"
+        },
+        "provider": {
+          "title": "云类型",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "regionName": {
+          "type": "string",
+          "title": "地域，数据中心"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "topicNumLimit": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Topic最大数量"
+        }
+      }
+    },
+    "pbkafkaListDetailReq": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "regionId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "区域Id，参考 tenant.proto 中的各个云的区域"
+        }
+      }
+    },
+    "pbkafkaListDetailResp": {
+      "type": "object",
+      "properties": {
+        "finished": {
+          "type": "boolean",
+          "title": "查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询"
+        },
+        "kafkas": {
+          "type": "array",
+          "title": "kafka 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbkafkaKafkaInstance"
+          }
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求id，出现问题后提供给云厂商，排查问题"
+        }
+      }
+    },
+    "pbkafkaListReq": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbkafkaListResp": {
+      "type": "object",
+      "properties": {
+        "kafkas": {
+          "type": "array",
+          "title": "Kafka 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbkafkaKafkaInstance"
+          }
+        }
+      }
+    },
     "pbossListDetailReq": {
       "type": "object",
       "properties": {
@@ -1051,6 +1255,9 @@
     },
     {
       "name": "EcsService"
+    },
+    {
+      "name": "KafkaService"
     },
     {
       "name": "OssService"
