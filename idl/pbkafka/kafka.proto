@@ -1,0 +1,95 @@
+syntax = "proto3";
+package pbkafka;
+
+option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbkafka";
+
+import "idl/pbtenant/tenant.proto";
+import "google/api/annotations.proto";
+
+message KafkaInstance {
+  // 云类型
+  pbtenant.CloudProvider provider = 1;
+  // 账号名称
+  string accout_name = 2;
+  // 实例id
+  string instance_id = 3;
+  // 实例名称
+  string instance_name = 4;
+  // 地域，数据中心
+  string region_name = 5;
+  // 默认接入点
+  string end_point = 6;
+  // Topic最大数量
+  int32 topic_num_limit = 7;
+  // 磁盘容量
+  int32 dist_size = 8;
+  // 状态
+  string status = 9;
+  // 创建时间，ISO8601
+  string create_time = 10;
+  // 过期时间
+  string expired_time = 11;
+}
+
+message ListDetailReq {
+  // 云名称
+  pbtenant.CloudProvider provider = 1;
+  // 账户名称，根据统计接口返回值，或直接根据config.yaml中的配置
+  string account_name = 2;
+  // 区域Id，参考 tenant.proto 中的各个云的区域
+  int32 region_id = 3;
+  // 分页相关参数，页码
+  int32 page_number = 4;
+  // 分页相关参数，每页数量
+  int32 page_size = 5;
+  // 分页相关参数，下一页的token
+  string next_token = 6;
+}
+
+message ListDetailResp {
+  // kafka 机器集合
+  repeated KafkaInstance kafkas = 1;
+  // 查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询
+  bool finished = 2;
+  // 分页相关参数，页码
+  int32 page_number = 3;
+  // 分页相关参数，每页数量
+  int32 page_size = 4;
+  // 分页相关参数，下一页的token
+  string next_token = 5;
+  // 请求id，出现问题后提供给云厂商，排查问题
+  string request_id = 6;
+}
+
+message ListReq {
+  // 云名称
+  pbtenant.CloudProvider provider = 1;
+}
+
+message ListResp {
+  // Kafka 机器集合
+  repeated KafkaInstance kafkas = 1;
+}
+
+
+// Kafka类产品接口
+// 阿里云 - Kafka
+// 腾讯云 - Ckafka
+service KafkaService {
+
+  // 查询Kafka明细 - 支持云类型、区域、账户、分页等过滤条件
+  rpc ListKafkaDetail(ListDetailReq) returns (ListDetailResp) {
+    option (google.api.http) = {
+      post : "/kafka/detail"
+      body : "*"
+    };
+  }
+
+  // 全量查询Kafka - 根据云类型
+  rpc ListKafka(ListReq) returns (ListResp) {
+    option (google.api.http) = {
+      post : "/kafka"
+      body : "*"
+    };
+  }
+}
