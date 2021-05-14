@@ -11,8 +11,14 @@ Communicate with public and private clouds conveniently by a set of apis.
 
 ## 对接计划
 
-内部筹备中，后续开放，有需求欢迎联系。
+[对接进度](https://shimo.im/sheets/5bqnr9jnopfbOOqy)
+
+更多内容正在内部筹备中，后续开放，有需求欢迎联系。
 
 ## 开发者社区
 
 [开发者社区文档](doc/develop.md)
+
+## 联系我们
+
+[沟通群](https://shimo.im/docs/KrkEVnB7NRcwpmAJ)
