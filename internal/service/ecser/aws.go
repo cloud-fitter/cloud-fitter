@@ -79,7 +79,7 @@ func (ecs *AwsEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*p
 		}
 
 	}
-	nextToken := ""
+
 	if resp.NextToken != nil {
 		return &pbecs.ListDetailResp{
 			Ecses:     ecses,
@@ -90,6 +90,6 @@ func (ecs *AwsEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*p
 	return &pbecs.ListDetailResp{
 		Ecses:     ecses,
 		Finished:  true,
-		NextToken: nextToken,
+		NextToken: "",
 	}, nil
 }
