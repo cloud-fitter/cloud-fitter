@@ -11,6 +11,72 @@
     "version": "version not set"
   },
   "paths": {
+    "/billing": {
+      "post": {
+        "tags": [
+          "BillingService"
+        ],
+        "summary": "全量查询OSS - 根据云类型",
+        "operationId": "BillingService_ListBilling",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbbillingListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbbillingListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/billing/detail": {
+      "post": {
+        "tags": [
+          "BillingService"
+        ],
+        "summary": "查询费用明细  - 支持云类型、账户、分页等过滤条件",
+        "operationId": "BillingService_ListBillingDetail",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbbillingListDetailReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbbillingListDetailResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/domain": {
       "post": {
         "tags": [
@@ -486,6 +552,94 @@
       "properties": {
         "value": {
           "type": "string"
+        }
+      }
+    },
+    "pbbillingBillingInstance": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账号名称"
+        },
+        "billingCycle": {
+          "type": "string",
+          "title": "计费周期"
+        },
+        "fee": {
+          "type": "number",
+          "format": "double",
+          "title": "产品费用"
+        },
+        "instanceId": {
+          "type": "string",
+          "title": "产品ID"
+        },
+        "productCode": {
+          "type": "string",
+          "title": "产品类型"
+        },
+        "productType": {
+          "type": "string",
+          "title": "产品类型"
+        },
+        "provider": {
+          "title": "云类型",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "regionName": {
+          "type": "string",
+          "title": "区域名称"
+        }
+      }
+    },
+    "pbbillingListDetailReq": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+        },
+        "billingCycle": {
+          "type": "string",
+          "title": "计费周期"
+        },
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbbillingListDetailResp": {
+      "type": "object",
+      "properties": {
+        "billings": {
+          "type": "array",
+          "title": "Billing 集合",
+          "items": {
+            "$ref": "#/definitions/pbbillingBillingInstance"
+          }
+        }
+      }
+    },
+    "pbbillingListReq": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbbillingListResp": {
+      "type": "object",
+      "properties": {
+        "billings": {
+          "type": "array",
+          "title": "Billing 集合",
+          "items": {
+            "$ref": "#/definitions/pbbillingBillingInstance"
+          }
         }
       }
     },
@@ -1249,6 +1403,9 @@
   "tags": [
     {
       "name": "DemoService"
+    },
+    {
+      "name": "BillingService"
     },
     {
       "name": "DomainService"

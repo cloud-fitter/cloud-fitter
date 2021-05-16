@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbbilling"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbkafka"
@@ -86,6 +87,7 @@ func main() {
 		pbdomain.RegisterDomainServiceServer(s, &server.Server{})
 		pboss.RegisterOssServiceServer(s, &server.Server{})
 		pbkafka.RegisterKafkaServiceServer(s, &server.Server{})
+		pbbilling.RegisterBillingServiceServer(s, &server.Server{})
 
 		if err = s.Serve(lis); err != nil {
 			glog.Fatalf("failed to serve: %v", err)
