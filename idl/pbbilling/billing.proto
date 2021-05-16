@@ -1,0 +1,83 @@
+syntax = "proto3";
+package pbbilling;
+
+option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbbilling";
+
+import "idl/pbtenant/tenant.proto";
+import "google/api/annotations.proto";
+
+message BillingInstance {
+  // 云类型
+  pbtenant.CloudProvider provider = 1;
+  // 计费周期
+  string billing_cycle = 2;
+  // 账号名称
+  string account_name = 3;
+  // 区域名称
+  string region_name = 4;
+  // 产品类型
+  string product_code = 5;
+  // 产品类型
+  string product_type = 6;
+  // 产品ID
+  string instance_id = 7;
+  // 产品费用
+  double fee = 8;
+}
+
+message AliProductInfo {
+  // 产品代码
+  string product_code = 1;
+  // 产品名称
+  string product_name = 2;
+  // 产品类型
+  string product_type = 3;
+  // 订阅类型。取值：Subscription：预付费 / PayAsYouGo：后付
+  string subscription_type = 4;
+}
+
+message ListDetailReq {
+  // 云名称
+  pbtenant.CloudProvider provider = 1;
+  // 计费周期
+  string billing_cycle = 2;
+  // 账户名称，根据统计接口返回值，或直接根据config.yaml中的配置
+  string account_name = 3;
+}
+
+message ListDetailResp {
+  // Billing 集合
+  repeated BillingInstance billings = 1;
+}
+
+message ListReq {
+  // 云名称
+  pbtenant.CloudProvider provider = 1;
+}
+
+message ListResp {
+  // Billing 集合
+  repeated BillingInstance billings = 1;
+}
+
+
+// 计费接口
+// 阿里云 - bssopenapi
+service BillingService {
+
+  // 查询费用明细  - 支持云类型、账户、分页等过滤条件
+  rpc ListBillingDetail(ListDetailReq) returns (ListDetailResp) {
+    option (google.api.http) = {
+      post : "/billing/detail"
+      body : "*"
+    };
+  }
+
+  // 全量查询OSS - 根据云类型
+  rpc ListBilling(ListReq) returns (ListResp) {
+    option (google.api.http) = {
+      post : "/billing"
+      body : "*"
+    };
+  }
+}

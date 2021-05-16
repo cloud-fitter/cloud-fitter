@@ -35,7 +35,7 @@ func NewAliOssClient(tenant tenanter.Tenanter) (Osser, error) {
 	}
 
 	if err != nil {
-		return nil, errors.Wrap(err, "init ali rds client error")
+		return nil, errors.Wrap(err, "init ali oss client error")
 	}
 
 	return &AliOss{

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbbilling"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbkafka"
@@ -21,6 +22,7 @@ type Server struct {
 	pbdomain.UnsafeDomainServiceServer
 	pboss.UnsafeOssServiceServer
 	pbkafka.UnsafeKafkaServiceServer
+	pbbilling.UnsafeBillingServiceServer
 }
 
 func (s *Server) Echo(ctx context.Context, req *demo.StringMessage) (*demo.StringMessage, error) {

@@ -1,18 +1,16 @@
 package ecs
 
 import (
+	"context"
 	"sync"
 
-	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/golang/glog"
+	"github.com/pkg/errors"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbecs"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/service/ecser"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
-
-	"context"
-
-	"github.com/pkg/errors"
 )
 
 func ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*pbecs.ListDetailResp, error) {
@@ -35,6 +33,7 @@ func ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*pbecs.ListDetai
 			if ecs, err = ecser.NewEcsClient(req.Provider, region, tenanter); err != nil {
 				return nil, errors.WithMessage(err, "NewEcsClient error")
 			}
+			break
 		}
 	}
 
