@@ -31,9 +31,9 @@ func NewDomainClient(provider pbtenant.CloudProvider, tenant tenanter.Tenanter) 
 
 	switch provider {
 	case pbtenant.CloudProvider_ali:
-		return NewAliDomainClient(tenant)
+		return newAliDomainClient(tenant)
 	case pbtenant.CloudProvider_tencent:
-		return NewTencentDomainClient(tenant)
+		return newTencentDomainClient(tenant)
 	}
 
 	err = errors.WithMessagef(ErrDomainListNotSupported, "cloud provider %v ", provider)

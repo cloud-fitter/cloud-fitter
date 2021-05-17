@@ -20,7 +20,7 @@ type TencentCfg struct {
 	tenanter.Tenanter
 }
 
-func NewTencentCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configger, error) {
+func newTencentCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configger, error) {
 	var client *cvm.Client
 	var err error
 

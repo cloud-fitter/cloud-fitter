@@ -20,7 +20,7 @@ type AwsCfg struct {
 	tenanter.Tenanter
 }
 
-func NewAwsCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configger, error) {
+func newAwsCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configger, error) {
 	var client *awscs.Client
 	var err error
 

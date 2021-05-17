@@ -5,12 +5,13 @@ import (
 	"testing"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pboss"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 )
 
 func TestEcser_ListDetail(t *testing.T) {
-	ali, _ := NewAliOssClient(aliTenant[0])
-	aliFailed, _ := NewAliOssClient(tenanter.NewTenantWithAccessKey("empty", "", ""))
+	ali, _ := NewOssClient(pbtenant.CloudProvider_ali, aliTenant[0])
+	aliFailed, _ := NewOssClient(pbtenant.CloudProvider_ali, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
 	// region, _ = tenanter.NewRegion(pbtenant.CloudProvider_tencent_cloud, int32(pbtenant.TencentRegionId_tc_ap_beijing))
 	// tc, _ := NewTencentCdbClient(region, tcTenant[0])

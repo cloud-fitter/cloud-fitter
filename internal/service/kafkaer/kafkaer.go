@@ -31,9 +31,9 @@ func NewKafkaClient(provider pbtenant.CloudProvider, region tenanter.Region, ten
 
 	switch provider {
 	case pbtenant.CloudProvider_ali:
-		return NewAliKafkaerClient(region, tenant)
+		return newAliKafkaerClient(region, tenant)
 	case pbtenant.CloudProvider_tencent:
-		return NewTencentKafkaerClient(region, tenant)
+		return newTencentKafkaerClient(region, tenant)
 	}
 
 	err = errors.WithMessagef(ErrKafkaListNotSupported, "cloud provider %v region %v", provider, region)

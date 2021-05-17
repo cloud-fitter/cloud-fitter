@@ -29,7 +29,7 @@ type AliKafka struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewAliKafkaerClient(region tenanter.Region, tenant tenanter.Tenanter) (Kafkaer, error) {
+func newAliKafkaerClient(region tenanter.Region, tenant tenanter.Tenanter) (Kafkaer, error) {
 	var (
 		client *alikafka.Client
 		err    error

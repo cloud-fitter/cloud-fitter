@@ -19,7 +19,7 @@ type TencentCvm struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewTencentCvmClient(region tenanter.Region, tenant tenanter.Tenanter) (Ecser, error) {
+func newTencentCvmClient(region tenanter.Region, tenant tenanter.Tenanter) (Ecser, error) {
 	var (
 		client *cvm.Client
 		err    error

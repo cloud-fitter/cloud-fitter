@@ -25,7 +25,7 @@ type AliBss struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewAliBillingClient(tenant tenanter.Tenanter) (Billinger, error) {
+func newAliBillingClient(tenant tenanter.Tenanter) (Billinger, error) {
 	var (
 		client *alibss.Client
 		err    error

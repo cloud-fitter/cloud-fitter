@@ -21,7 +21,7 @@ type AliEcs struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewAliEcsClient(region tenanter.Region, tenant tenanter.Tenanter) (Ecser, error) {
+func newAliEcsClient(region tenanter.Region, tenant tenanter.Tenanter) (Ecser, error) {
 	var (
 		client *aliecs.Client
 		err    error

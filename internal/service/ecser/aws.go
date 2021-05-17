@@ -19,7 +19,7 @@ type AwsEcs struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewAwsEcsClient(region tenanter.Region, tenant tenanter.Tenanter) (Ecser, error) {
+func newAwsEcsClient(region tenanter.Region, tenant tenanter.Tenanter) (Ecser, error) {
 	var (
 		client *awsec2.Client
 		err    error

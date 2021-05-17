@@ -10,19 +10,19 @@ import (
 
 func TestConfigger_Statistic(t *testing.T) {
 	region, _ := tenanter.NewRegion(pbtenant.CloudProvider_ali, int32(pbtenant.AliRegionId_ali_cn_hangzhou))
-	ali, _ := NewAliCfgClient(region, aliTenant[0])
-	aliFailed, _ := NewAliCfgClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
+	ali, _ := NewConfigClient(pbtenant.CloudProvider_ali, region, aliTenant[0])
+	aliFailed, _ := NewConfigClient(pbtenant.CloudProvider_ali, region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
 	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_tencent, int32(pbtenant.TencentRegionId_tc_ap_beijing))
-	tc, _ := NewTencentCfgClient(region, tcTenant[0])
-	tcFailed, _ := NewTencentCfgClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
+	tc, _ := NewConfigClient(pbtenant.CloudProvider_tencent, region, tcTenant[0])
+	tcFailed, _ := NewConfigClient(pbtenant.CloudProvider_tencent, region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
 	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_huawei, int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2))
-	hw, _ := NewHuaweiCfgClient(region, hwTenant[0])
+	hw, _ := NewConfigClient(pbtenant.CloudProvider_huawei, region, hwTenant[0])
 
 	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_aws, int32(pbtenant.AwsRegionId_aws_us_east_2))
-	aws, _ := NewAwsCfgClient(region, awsTenant[0])
-	awsFailed, _ := NewAwsCfgClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
+	aws, _ := NewConfigClient(pbtenant.CloudProvider_aws, region, awsTenant[0])
+	awsFailed, _ := NewConfigClient(pbtenant.CloudProvider_aws, region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
 	type args struct {
 	}

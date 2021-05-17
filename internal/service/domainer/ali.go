@@ -21,7 +21,7 @@ type AliDomain struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewAliDomainClient(tenant tenanter.Tenanter) (Rdser, error) {
+func newAliDomainClient(tenant tenanter.Tenanter) (Rdser, error) {
 	var (
 		client *alidomain.Client
 		err    error
