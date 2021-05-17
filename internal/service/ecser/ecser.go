@@ -31,13 +31,13 @@ func NewEcsClient(provider pbtenant.CloudProvider, region tenanter.Region, tenan
 
 	switch provider {
 	case pbtenant.CloudProvider_ali:
-		return NewAliEcsClient(region, tenant)
+		return newAliEcsClient(region, tenant)
 	case pbtenant.CloudProvider_tencent:
-		return NewTencentCvmClient(region, tenant)
+		return newTencentCvmClient(region, tenant)
 	case pbtenant.CloudProvider_huawei:
-		return NewHuaweiEcsClient(region, tenant)
+		return newHuaweiEcsClient(region, tenant)
 	case pbtenant.CloudProvider_aws:
-		return NewAwsEcsClient(region, tenant)
+		return newAwsEcsClient(region, tenant)
 	}
 
 	err = errors.WithMessagef(ErrEcsListNotSupported, "cloud provider %v region %v", provider, region)

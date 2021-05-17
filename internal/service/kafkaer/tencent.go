@@ -27,7 +27,7 @@ type TencentCkafka struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewTencentKafkaerClient(region tenanter.Region, tenant tenanter.Tenanter) (Kafkaer, error) {
+func newTencentKafkaerClient(region tenanter.Region, tenant tenanter.Tenanter) (Kafkaer, error) {
 	var (
 		client *ckafka.Client
 		err    error

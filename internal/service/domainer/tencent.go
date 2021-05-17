@@ -19,7 +19,7 @@ type TencentDomain struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewTencentDomainClient(tenant tenanter.Tenanter) (Rdser, error) {
+func newTencentDomainClient(tenant tenanter.Tenanter) (Rdser, error) {
 	var (
 		client *tcdomain.Client
 		err    error

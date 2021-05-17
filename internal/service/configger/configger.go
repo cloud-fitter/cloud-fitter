@@ -32,13 +32,13 @@ func NewConfigClient(provider pbtenant.CloudProvider, region tenanter.Region, te
 
 	switch provider {
 	case pbtenant.CloudProvider_ali:
-		return NewAliCfgClient(region, tenant)
+		return newAliCfgClient(region, tenant)
 	case pbtenant.CloudProvider_tencent:
-		return NewTencentCfgClient(region, tenant)
+		return newTencentCfgClient(region, tenant)
 	case pbtenant.CloudProvider_huawei:
-		return NewHuaweiCfgClient(region, tenant)
+		return newHuaweiCfgClient(region, tenant)
 	case pbtenant.CloudProvider_aws:
-		return NewHuaweiCfgClient(region, tenant)
+		return newAwsCfgClient(region, tenant)
 	}
 
 	err = errors.WithMessagef(ErrStatisticNotSupported, "cloud provider %v", provider)

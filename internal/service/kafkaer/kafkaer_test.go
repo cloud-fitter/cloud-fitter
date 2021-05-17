@@ -11,12 +11,12 @@ import (
 
 func TestKafkaer_ListDetail(t *testing.T) {
 	region, _ := tenanter.NewRegion(pbtenant.CloudProvider_ali, int32(pbtenant.AliRegionId_ali_cn_hangzhou))
-	ali, _ := NewAliKafkaerClient(region, aliTenant[0])
-	aliFailed, _ := NewAliKafkaerClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
+	ali, _ := NewKafkaClient(pbtenant.CloudProvider_ali, region, aliTenant[0])
+	aliFailed, _ := NewKafkaClient(pbtenant.CloudProvider_ali, region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
 	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_tencent, int32(pbtenant.TencentRegionId_tc_ap_beijing))
-	tc, _ := NewTencentKafkaerClient(region, tcTenant[0])
-	tcFailed, _ := NewTencentKafkaerClient(region, tenanter.NewTenantWithAccessKey("empty", "", ""))
+	tc, _ := NewKafkaClient(pbtenant.CloudProvider_tencent, region, tcTenant[0])
+	tcFailed, _ := NewKafkaClient(pbtenant.CloudProvider_tencent, region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
 	// region, _ = tenanter.NewRegion(pbtenant.CloudProvider_huawei, int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2))
 	// hw, _ := NewHuaweiEcsClient(region, hwTenant[0])

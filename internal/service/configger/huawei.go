@@ -24,12 +24,12 @@ type HuaweiCfg struct {
 	tenanter.Tenanter
 }
 
-func NewHuaweiCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (cfg Configger, err error) {
+func newHuaweiCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (cfg Configger, err error) {
 	var client *hwecs.EcsClient
 
 	defer func() {
 		if e := recover(); e != nil {
-			err = errors.Errorf("NewHuaweiCfgClient panic %v", e)
+			err = errors.Errorf("newHuaweiCfgClient panic %v", e)
 		}
 	}()
 

@@ -5,15 +5,16 @@ import (
 	"testing"
 
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
+	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbtenant"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
 )
 
 func TestDomainer_ListDetail(t *testing.T) {
-	ali, _ := NewAliDomainClient(aliTenant[0])
-	aliFailed, _ := NewAliDomainClient(tenanter.NewTenantWithAccessKey("empty", "", ""))
+	ali, _ := NewDomainClient(pbtenant.CloudProvider_ali, aliTenant[0])
+	aliFailed, _ := NewDomainClient(pbtenant.CloudProvider_ali, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
-	tc, _ := NewTencentDomainClient(tcTenant[0])
-	tcFailed, _ := NewTencentDomainClient(tenanter.NewTenantWithAccessKey("empty", "", ""))
+	tc, _ := NewDomainClient(pbtenant.CloudProvider_tencent, tcTenant[0])
+	tcFailed, _ := NewDomainClient(pbtenant.CloudProvider_tencent, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
 	// region, _ = tenanter.NewRegion(pbtenant.CloudProvider_huawei_cloud, int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2))
 	// hw, _ := NewHuaweiEcsClient(region, hwTenant[0])

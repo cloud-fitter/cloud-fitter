@@ -20,7 +20,7 @@ type AwsRds struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewAwsRdsClient(region tenanter.Region, tenant tenanter.Tenanter) (Rdser, error) {
+func newAwsRdsClient(region tenanter.Region, tenant tenanter.Tenanter) (Rdser, error) {
 	var (
 		client *awsrds.Client
 		err    error

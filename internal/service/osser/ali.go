@@ -19,7 +19,7 @@ type AliOss struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewAliOssClient(tenant tenanter.Tenanter) (Osser, error) {
+func newAliOssClient(tenant tenanter.Tenanter) (Osser, error) {
 	var (
 		client *alioss.Client
 		err    error

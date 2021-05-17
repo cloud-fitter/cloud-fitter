@@ -31,7 +31,9 @@ func NewBillingClient(provider pbtenant.CloudProvider, tenant tenanter.Tenanter)
 
 	switch provider {
 	case pbtenant.CloudProvider_ali:
-		return NewAliBillingClient(tenant)
+		return newAliBillingClient(tenant)
+	case pbtenant.CloudProvider_tencent:
+		return newTencentBillingClient(tenant)
 	}
 
 	err = errors.WithMessagef(ErrBillingListNotSupported, "cloud provider %v ", provider)

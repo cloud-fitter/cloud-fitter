@@ -23,7 +23,7 @@ type HuaweiEcs struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewHuaweiEcsClient(region tenanter.Region, tenant tenanter.Tenanter) (Ecser, error) {
+func newHuaweiEcsClient(region tenanter.Region, tenant tenanter.Tenanter) (Ecser, error) {
 	var (
 		client *hwecs.EcsClient
 		err    error

@@ -21,7 +21,7 @@ type AliRds struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewAliRdsClient(region tenanter.Region, tenant tenanter.Tenanter) (Rdser, error) {
+func newAliRdsClient(region tenanter.Region, tenant tenanter.Tenanter) (Rdser, error) {
 	var (
 		client *alirds.Client
 		err    error

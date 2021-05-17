@@ -31,7 +31,7 @@ func NewOssClient(provider pbtenant.CloudProvider, tenant tenanter.Tenanter) (os
 
 	switch provider {
 	case pbtenant.CloudProvider_ali:
-		return NewAliOssClient(tenant)
+		return newAliOssClient(tenant)
 	}
 
 	err = errors.WithMessagef(ErrOssListNotSupported, "cloud provider %v ", provider)

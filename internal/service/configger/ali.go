@@ -23,7 +23,7 @@ type AliCfg struct {
 	tenanter.Tenanter
 }
 
-func NewAliCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configger, error) {
+func newAliCfgClient(region tenanter.Region, tenant tenanter.Tenanter) (Configger, error) {
 	var client *alicfg.Client
 	var err error
 

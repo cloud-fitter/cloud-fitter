@@ -20,7 +20,7 @@ type TencentCdb struct {
 	tenanter tenanter.Tenanter
 }
 
-func NewTencentCdbClient(region tenanter.Region, tenant tenanter.Tenanter) (Rdser, error) {
+func newTencentCdbClient(region tenanter.Region, tenant tenanter.Tenanter) (Rdser, error) {
 	var (
 		client *cdb.Client
 		err    error
