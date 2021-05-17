@@ -16,7 +16,7 @@
         "tags": [
           "BillingService"
         ],
-        "summary": "全量查询OSS - 根据云类型",
+        "summary": "查询费用全量 - 根据云类型",
         "operationId": "BillingService_ListBilling",
         "parameters": [
           {
@@ -49,7 +49,7 @@
         "tags": [
           "BillingService"
         ],
-        "summary": "查询费用明细  - 支持云类型、账户、分页等过滤条件",
+        "summary": "查询费用明细  - 支持云类型、账户过滤条件",
         "operationId": "BillingService_ListBillingDetail",
         "parameters": [
           {
@@ -82,7 +82,7 @@
         "tags": [
           "DomainService"
         ],
-        "summary": "全量查询域名 - 根据云类型",
+        "summary": "查询域名全量 - 根据云类型",
         "operationId": "DomainService_ListDomain",
         "parameters": [
           {
@@ -148,7 +148,7 @@
         "tags": [
           "EcsService"
         ],
-        "summary": "全量查询ECS - 根据云类型",
+        "summary": "查询ECS全量 - 根据云类型",
         "operationId": "EcsService_ListEcs",
         "parameters": [
           {
@@ -181,7 +181,7 @@
         "tags": [
           "EcsService"
         ],
-        "summary": "全量查询所有云的ECS",
+        "summary": "查询所有云的ECS",
         "operationId": "EcsService_ListEcsAll",
         "parameters": [
           {
@@ -247,7 +247,7 @@
         "tags": [
           "KafkaService"
         ],
-        "summary": "全量查询Kafka - 根据云类型",
+        "summary": "查询Kafka全量 - 根据云类型",
         "operationId": "KafkaService_ListKafka",
         "parameters": [
           {
@@ -313,7 +313,7 @@
         "tags": [
           "OssService"
         ],
-        "summary": "全量查询OSS - 根据云类型",
+        "summary": "查询OSS全量 - 根据云类型",
         "operationId": "OssService_ListOss",
         "parameters": [
           {
@@ -379,7 +379,7 @@
         "tags": [
           "RdsService"
         ],
-        "summary": "全量查询RDS - 根据云类型",
+        "summary": "查询RDS全量 - 根据云类型",
         "operationId": "RdsService_ListRds",
         "parameters": [
           {
@@ -575,6 +575,14 @@
           "type": "string",
           "title": "产品ID"
         },
+        "instanceName": {
+          "type": "string",
+          "title": "实例昵称"
+        },
+        "item": {
+          "type": "string",
+          "title": "账单类型： SubscriptionOrder (预付订单) PayAsYouGoBill (后付账单) Refund (退款) Adjustment (调账)"
+        },
         "productCode": {
           "type": "string",
           "title": "产品类型"
@@ -590,6 +598,10 @@
         "regionName": {
           "type": "string",
           "title": "区域名称"
+        },
+        "subscriptionType": {
+          "type": "string",
+          "title": "订阅类型：Subscription：预付费 PayAsYouGo：后付费"
         }
       }
     },
@@ -598,7 +610,7 @@
       "properties": {
         "accountName": {
           "type": "string",
-          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+          "title": "账户名称，根据config.yaml中的配置，默认为第一个配置的账户"
         },
         "billingCycle": {
           "type": "string",
@@ -625,6 +637,10 @@
     "pbbillingListReq": {
       "type": "object",
       "properties": {
+        "billingCycle": {
+          "type": "string",
+          "title": "计费周期"
+        },
         "provider": {
           "title": "云名称",
           "$ref": "#/definitions/pbtenantCloudProvider"
@@ -681,7 +697,7 @@
       "properties": {
         "accountName": {
           "type": "string",
-          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+          "title": "账户名称，根据config.yaml中的配置，默认为第一个配置的账户"
         },
         "nextToken": {
           "type": "string",
@@ -828,7 +844,7 @@
       "properties": {
         "accountName": {
           "type": "string",
-          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+          "title": "账户名称，根据config.yaml中的配置，默认为第一个配置的账户"
         },
         "nextToken": {
           "type": "string",
@@ -966,7 +982,7 @@
       "properties": {
         "accountName": {
           "type": "string",
-          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+          "title": "账户名称，根据config.yaml中的配置，默认为第一个配置的账户"
         },
         "nextToken": {
           "type": "string",
@@ -1053,7 +1069,7 @@
       "properties": {
         "accountName": {
           "type": "string",
-          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+          "title": "账户名称，根据config.yaml中的配置，默认为第一个配置的账户"
         },
         "nextToken": {
           "type": "string",
@@ -1156,7 +1172,7 @@
       "properties": {
         "accountName": {
           "type": "string",
-          "title": "账户名称，根据统计接口返回值，或直接根据config.yaml中的配置"
+          "title": "账户名称，根据config.yaml中的配置，默认为第一个配置的账户"
         },
         "nextToken": {
           "type": "string",

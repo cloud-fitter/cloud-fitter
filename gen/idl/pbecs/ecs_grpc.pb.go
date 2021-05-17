@@ -20,9 +20,9 @@ const _ = grpc.SupportPackageIsVersion7
 type EcsServiceClient interface {
 	// 查询ECS明细 - 支持云类型、区域、账户、分页等过滤条件
 	ListEcsDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
-	// 全量查询ECS - 根据云类型
+	// 查询ECS全量 - 根据云类型
 	ListEcs(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
-	// 全量查询所有云的ECS
+	// 查询所有云的ECS
 	ListEcsAll(ctx context.Context, in *ListAllReq, opts ...grpc.CallOption) (*ListResp, error)
 }
 
@@ -67,9 +67,9 @@ func (c *ecsServiceClient) ListEcsAll(ctx context.Context, in *ListAllReq, opts 
 type EcsServiceServer interface {
 	// 查询ECS明细 - 支持云类型、区域、账户、分页等过滤条件
 	ListEcsDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
-	// 全量查询ECS - 根据云类型
+	// 查询ECS全量 - 根据云类型
 	ListEcs(context.Context, *ListReq) (*ListResp, error)
-	// 全量查询所有云的ECS
+	// 查询所有云的ECS
 	ListEcsAll(context.Context, *ListAllReq) (*ListResp, error)
 	mustEmbedUnimplementedEcsServiceServer()
 }

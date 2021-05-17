@@ -20,7 +20,7 @@ message OssInstance {
 message ListDetailReq {
   // 云名称
   pbtenant.CloudProvider provider = 1;
-  // 账户名称，根据统计接口返回值，或直接根据config.yaml中的配置
+  // 账户名称，根据config.yaml中的配置，默认为第一个配置的账户
   string account_name = 2;
   // 分页相关参数，页码
   int32 page_number = 3;
@@ -68,7 +68,7 @@ service OssService {
     };
   }
 
-  // 全量查询OSS - 根据云类型
+  // 查询OSS全量 - 根据云类型
   rpc ListOss(ListReq) returns (ListResp) {
     option (google.api.http) = {
       post : "/oss"

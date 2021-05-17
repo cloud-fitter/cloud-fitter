@@ -52,6 +52,8 @@ func run() error {
 		return errors.Wrap(err, "RegisterOssServiceHandlerFromEndpoint error")
 	} else if err = pbkafka.RegisterKafkaServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
 		return errors.Wrap(err, "RegisterKafkaServiceHandlerFromEndpoint error")
+	} else if err = pbbilling.RegisterBillingServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts); err != nil {
+		return errors.Wrap(err, "RegisterBillingServiceHandlerFromEndpoint error")
 	}
 
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
