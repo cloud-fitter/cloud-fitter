@@ -65,14 +65,17 @@ func (bss *AliBss) ListDetail(ctx context.Context, req *pbbilling.ListDetailReq)
 		var billings = make([]*pbbilling.BillingInstance, len(resp.Data.Items))
 		for k, v := range resp.Data.Items {
 			billings[k] = &pbbilling.BillingInstance{
-				Provider:     pbtenant.CloudProvider_ali,
-				BillingCycle: req.BillingCycle,
-				AccountName:  bss.tenanter.AccountName(),
-				RegionName:   v.Region,
-				ProductCode:  v.ProductCode,
-				ProductType:  v.ProductType,
-				InstanceId:   v.InstanceID,
-				Fee:          v.PretaxAmount,
+				Provider:         pbtenant.CloudProvider_ali,
+				BillingCycle:     req.BillingCycle,
+				AccountName:      bss.tenanter.AccountName(),
+				RegionName:       v.Region,
+				ProductCode:      v.ProductCode,
+				ProductType:      v.ProductType,
+				InstanceId:       v.InstanceID,
+				Fee:              v.PretaxAmount,
+				Item:             v.Item,
+				InstanceName:     v.NickName,
+				SubscriptionType: v.SubscriptionType,
 			}
 		}
 

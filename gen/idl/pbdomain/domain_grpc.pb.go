@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type DomainServiceClient interface {
 	// 查询域名明细 - 支持云类型、账户、分页等过滤条件
 	ListDomainDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
-	// 全量查询域名 - 根据云类型
+	// 查询域名全量 - 根据云类型
 	ListDomain(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
 }
 
@@ -56,7 +56,7 @@ func (c *domainServiceClient) ListDomain(ctx context.Context, in *ListReq, opts 
 type DomainServiceServer interface {
 	// 查询域名明细 - 支持云类型、账户、分页等过滤条件
 	ListDomainDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
-	// 全量查询域名 - 根据云类型
+	// 查询域名全量 - 根据云类型
 	ListDomain(context.Context, *ListReq) (*ListResp, error)
 	mustEmbedUnimplementedDomainServiceServer()
 }

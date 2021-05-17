@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type KafkaServiceClient interface {
 	// 查询Kafka明细 - 支持云类型、区域、账户、分页等过滤条件
 	ListKafkaDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
-	// 全量查询Kafka - 根据云类型
+	// 查询Kafka全量 - 根据云类型
 	ListKafka(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
 }
 
@@ -56,7 +56,7 @@ func (c *kafkaServiceClient) ListKafka(ctx context.Context, in *ListReq, opts ..
 type KafkaServiceServer interface {
 	// 查询Kafka明细 - 支持云类型、区域、账户、分页等过滤条件
 	ListKafkaDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
-	// 全量查询Kafka - 根据云类型
+	// 查询Kafka全量 - 根据云类型
 	ListKafka(context.Context, *ListReq) (*ListResp, error)
 	mustEmbedUnimplementedKafkaServiceServer()
 }

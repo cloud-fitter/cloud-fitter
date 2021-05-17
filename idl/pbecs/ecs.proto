@@ -38,7 +38,7 @@ message EcsInstance {
 message ListDetailReq {
   // 云名称
   pbtenant.CloudProvider provider = 1;
-  // 账户名称，根据统计接口返回值，或直接根据config.yaml中的配置
+  // 账户名称，根据config.yaml中的配置，默认为第一个配置的账户
   string account_name = 2;
   // 区域Id，参考 tenant.proto 中的各个云的区域
   int32 region_id = 3;
@@ -93,7 +93,7 @@ service EcsService {
     };
   }
 
-  // 全量查询ECS - 根据云类型
+  // 查询ECS全量 - 根据云类型
   rpc ListEcs(ListReq) returns (ListResp) {
     option (google.api.http) = {
       post : "/ecs"
@@ -101,7 +101,7 @@ service EcsService {
     };
   }
 
-  // 全量查询所有云的ECS
+  // 查询所有云的ECS
   rpc ListEcsAll(ListAllReq) returns (ListResp) {
     option (google.api.http) = {
       post : "/ecs/all"

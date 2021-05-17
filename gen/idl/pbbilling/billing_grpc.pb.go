@@ -18,9 +18,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BillingServiceClient interface {
-	// 查询费用明细  - 支持云类型、账户、分页等过滤条件
+	// 查询费用明细  - 支持云类型、账户过滤条件
 	ListBillingDetail(ctx context.Context, in *ListDetailReq, opts ...grpc.CallOption) (*ListDetailResp, error)
-	// 全量查询OSS - 根据云类型
+	// 查询费用全量 - 根据云类型
 	ListBilling(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
 }
 
@@ -54,9 +54,9 @@ func (c *billingServiceClient) ListBilling(ctx context.Context, in *ListReq, opt
 // All implementations must embed UnimplementedBillingServiceServer
 // for forward compatibility
 type BillingServiceServer interface {
-	// 查询费用明细  - 支持云类型、账户、分页等过滤条件
+	// 查询费用明细  - 支持云类型、账户过滤条件
 	ListBillingDetail(context.Context, *ListDetailReq) (*ListDetailResp, error)
-	// 全量查询OSS - 根据云类型
+	// 查询费用全量 - 根据云类型
 	ListBilling(context.Context, *ListReq) (*ListResp, error)
 	mustEmbedUnimplementedBillingServiceServer()
 }

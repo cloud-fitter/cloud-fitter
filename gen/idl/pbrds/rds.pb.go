@@ -176,7 +176,7 @@ type ListDetailReq struct {
 
 	// 云名称
 	Provider pbtenant.CloudProvider `protobuf:"varint,1,opt,name=provider,proto3,enum=pbtenant.CloudProvider" json:"provider,omitempty"`
-	// 账户名称，根据统计接口返回值，或直接根据config.yaml中的配置
+	// 账户名称，根据config.yaml中的配置，默认为第一个配置的账户
 	AccountName string `protobuf:"bytes,2,opt,name=account_name,json=accountName,proto3" json:"account_name,omitempty"`
 	// 区域Id，参考 tenant.proto 中的各个云的区域
 	RegionId int32 `protobuf:"varint,3,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
