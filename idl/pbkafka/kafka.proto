@@ -80,7 +80,7 @@ service KafkaService {
   // 查询Kafka明细 - 支持云类型、区域、账户、分页等过滤条件
   rpc ListKafkaDetail(ListDetailReq) returns (ListDetailResp) {
     option (google.api.http) = {
-      post : "/kafka/detail"
+      post : "/apis/kafka/detail"
       body : "*"
     };
   }
@@ -88,7 +88,7 @@ service KafkaService {
   // 查询Kafka全量 - 根据云类型
   rpc ListKafka(ListReq) returns (ListResp) {
     option (google.api.http) = {
-      post : "/kafka"
+      post : "/apis/kafka"
       body : "*"
     };
   }

@@ -313,11 +313,11 @@ func RegisterEcsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_EcsService_ListEcsDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"ecs", "detail"}, ""))
+	pattern_EcsService_ListEcsDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"apis", "ecs", "detail"}, ""))
 
-	pattern_EcsService_ListEcs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"ecs"}, ""))
+	pattern_EcsService_ListEcs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"apis", "ecs"}, ""))
 
-	pattern_EcsService_ListEcsAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"ecs", "all"}, ""))
+	pattern_EcsService_ListEcsAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"apis", "ecs", "all"}, ""))
 )
 
 var (

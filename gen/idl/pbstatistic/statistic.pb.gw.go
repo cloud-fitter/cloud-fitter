@@ -236,9 +236,9 @@ func RegisterStatisticServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 }
 
 var (
-	pattern_StatisticService_Statistic_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"statistic"}, ""))
+	pattern_StatisticService_Statistic_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"apis", "statistic"}, ""))
 
-	pattern_StatisticService_StatisticAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"statistic", "all"}, ""))
+	pattern_StatisticService_StatisticAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"apis", "statistic", "all"}, ""))
 )
 
 var (

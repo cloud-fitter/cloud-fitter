@@ -82,7 +82,7 @@ service RdsService {
   // 查询RDS明细 - 支持云类型、区域、账户、分页等过滤条件
   rpc ListRdsDetail(ListDetailReq) returns (ListDetailResp) {
     option (google.api.http) = {
-      post : "/rds/detail"
+      post : "/apis/rds/detail"
       body : "*"
     };
   }
@@ -90,7 +90,7 @@ service RdsService {
   // 查询RDS全量 - 根据云类型
   rpc ListRds(ListReq) returns (ListResp) {
     option (google.api.http) = {
-      post : "/rds"
+      post : "/apisrds"
       body : "*"
     };
   }

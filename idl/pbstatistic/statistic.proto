@@ -36,7 +36,7 @@ service StatisticService {
   // 按云统计云产品数量
   rpc Statistic(StatisticReq) returns (StatisticResp) {
     option (google.api.http) = {
-      post : "/statistic"
+      post : "/apis/statistic"
       body : "*"
     };
   }
@@ -44,7 +44,7 @@ service StatisticService {
   // 全量统计云产品数量
   rpc StatisticAll(StatisticAllReq) returns (StatisticResp) {
     option (google.api.http) = {
-      post : "/statistic/all"
+      post : "/apis/statistic/all"
       body : "*"
     };
   }

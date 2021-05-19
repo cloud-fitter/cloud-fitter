@@ -6,6 +6,11 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/golang/glog"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/pkg/errors"
+	"google.golang.org/grpc"
+
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/demo" // Update
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbbilling"
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbdomain"
@@ -16,21 +21,16 @@ import (
 	"github.com/cloud-fitter/cloud-fitter/gen/idl/pbstatistic"
 	"github.com/cloud-fitter/cloud-fitter/internal/server"
 	"github.com/cloud-fitter/cloud-fitter/internal/tenanter"
-	"github.com/golang/glog"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/pkg/errors"
-	"google.golang.org/grpc"
 )
 
 var (
 	// command-line options:
 	// gRPC server endpoint
-	grpcServerEndpoint = flag.String("grpc-server-endpoint", "localhost:9090", "gRPC server endpoint")
+	grpcServerEndpoint = flag.String("grpc-server-endpoint", ":9090", "gRPC server endpoint")
 )
 
 func run() error {
-	ctx := context.Background()
-	ctx, cancel := context.WithCancel(ctx)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	// Register gRPC server endpoint
