@@ -88,7 +88,7 @@ service EcsService {
   // 查询ECS明细 - 支持云类型、区域、账户、分页等过滤条件
   rpc ListEcsDetail(ListDetailReq) returns (ListDetailResp) {
     option (google.api.http) = {
-      post : "/ecs/detail"
+      post : "/apis/ecs/detail"
       body : "*"
     };
   }
@@ -96,7 +96,7 @@ service EcsService {
   // 查询ECS全量 - 根据云类型
   rpc ListEcs(ListReq) returns (ListResp) {
     option (google.api.http) = {
-      post : "/ecs"
+      post : "/apis/ecs"
       body : "*"
     };
   }
@@ -104,7 +104,7 @@ service EcsService {
   // 查询所有云的ECS
   rpc ListEcsAll(ListAllReq) returns (ListResp) {
     option (google.api.http) = {
-      post : "/ecs/all"
+      post : "/apis/ecs/all"
       body : "*"
     };
   }

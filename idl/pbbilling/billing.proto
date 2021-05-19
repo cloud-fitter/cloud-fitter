@@ -76,7 +76,7 @@ service BillingService {
   // 查询费用明细  - 支持云类型、账户过滤条件
   rpc ListBillingDetail(ListDetailReq) returns (ListDetailResp) {
     option (google.api.http) = {
-      post : "/billing/detail"
+      post : "/apis/billing/detail"
       body : "*"
     };
   }
@@ -84,7 +84,7 @@ service BillingService {
   // 查询费用全量 - 根据云类型
   rpc ListBilling(ListReq) returns (ListResp) {
     option (google.api.http) = {
-      post : "/billing"
+      post : "/apis/billing"
       body : "*"
     };
   }

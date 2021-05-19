@@ -236,9 +236,9 @@ func RegisterDomainServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 }
 
 var (
-	pattern_DomainService_ListDomainDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"domain", "detail"}, ""))
+	pattern_DomainService_ListDomainDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"apis", "domain", "detail"}, ""))
 
-	pattern_DomainService_ListDomain_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"domain"}, ""))
+	pattern_DomainService_ListDomain_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"apis", "domain"}, ""))
 )
 
 var (

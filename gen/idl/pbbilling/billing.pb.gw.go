@@ -236,9 +236,9 @@ func RegisterBillingServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 }
 
 var (
-	pattern_BillingService_ListBillingDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"billing", "detail"}, ""))
+	pattern_BillingService_ListBillingDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"apis", "billing", "detail"}, ""))
 
-	pattern_BillingService_ListBilling_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"billing"}, ""))
+	pattern_BillingService_ListBilling_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"apis", "billing"}, ""))
 )
 
 var (

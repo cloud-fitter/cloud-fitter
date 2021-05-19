@@ -236,9 +236,9 @@ func RegisterKafkaServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 }
 
 var (
-	pattern_KafkaService_ListKafkaDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"kafka", "detail"}, ""))
+	pattern_KafkaService_ListKafkaDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"apis", "kafka", "detail"}, ""))
 
-	pattern_KafkaService_ListKafka_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"kafka"}, ""))
+	pattern_KafkaService_ListKafka_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"apis", "kafka"}, ""))
 )
 
 var (
