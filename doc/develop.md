@@ -87,7 +87,7 @@ cp config_template.yaml config.yaml
 ./cloud-fitter -conf=config_template.yaml
 
 ## 通过HTTP请求访问到结果
-curl --location --request POST 'http://localhost:8081/v1/demo'
+curl --location --request POST 'http://localhost:8081/apis/demo'
 ```
 
 ## 容器环境验证(可选)
@@ -101,5 +101,5 @@ docker pull cloudfitter/cloud-fitter
 docker run -v {config_dir}:/app/config/ -p 8081:8081 -p 9090:9090 cloudfitter/cloud-fitter:latest
 
 ## 通过HTTP请求访问到结果
-curl --location --request POST 'http://localhost:8081/v1/demo'
+curl --location --request POST 'http://localhost:8081/apis/demo'
 ```

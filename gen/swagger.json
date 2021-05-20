@@ -77,6 +77,45 @@
         }
       }
     },
+    "/apis/demo": {
+      "post": {
+        "security": [],
+        "tags": [
+          "DemoService"
+        ],
+        "summary": "Echo 样例接口",
+        "externalDocs": {
+          "description": "Find out more about the interface",
+          "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+        },
+        "operationId": "DemoService_Echo",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/demoStringMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/demoStringMessage"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/apis/domain": {
       "post": {
         "tags": [
@@ -407,6 +446,72 @@
         }
       }
     },
+    "/apis/redis": {
+      "post": {
+        "tags": [
+          "RedisService"
+        ],
+        "summary": "查询Redis全量 - 根据云类型",
+        "operationId": "RedisService_ListRedis",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbredisListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbredisListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/redis/detail": {
+      "post": {
+        "tags": [
+          "RedisService"
+        ],
+        "summary": "查询Redis明细 - 支持云类型、区域、账户、分页等过滤条件",
+        "operationId": "RedisService_ListRedisDetail",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbredisListDetailReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbredisListDetailResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/apis/statistic": {
       "post": {
         "tags": [
@@ -462,45 +567,6 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/pbstatisticStatisticResp"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/v1/demo": {
-      "post": {
-        "security": [],
-        "tags": [
-          "DemoService"
-        ],
-        "summary": "Echo 样例接口",
-        "externalDocs": {
-          "description": "Find out more about the interface",
-          "url": "https://github.com/grpc-ecosystem/grpc-gateway"
-        },
-        "operationId": "DemoService_Echo",
-        "deprecated": true,
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/demoStringMessage"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/demoStringMessage"
             }
           },
           "default": {
@@ -1307,6 +1373,135 @@
         }
       }
     },
+    "pbredisListDetailReq": {
+      "type": "object",
+      "properties": {
+        "accountName": {
+          "type": "string",
+          "title": "账户名称，根据config.yaml中的配置，默认为第一个配置的账户"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "regionId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "区域Id，参考 tenant.proto 中的各个云的区域"
+        }
+      }
+    },
+    "pbredisListDetailResp": {
+      "type": "object",
+      "properties": {
+        "finished": {
+          "type": "boolean",
+          "title": "查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询"
+        },
+        "nextToken": {
+          "type": "string",
+          "title": "分页相关参数，下一页的token"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分页相关参数，每页数量"
+        },
+        "redises": {
+          "type": "array",
+          "title": "Redis 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbredisRedisInstance"
+          }
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求id，出现问题后提供给云厂商，排查问题"
+        }
+      }
+    },
+    "pbredisListReq": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "title": "云名称",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        }
+      }
+    },
+    "pbredisListResp": {
+      "type": "object",
+      "properties": {
+        "redises": {
+          "type": "array",
+          "title": "Redis 机器集合",
+          "items": {
+            "$ref": "#/definitions/pbredisRedisInstance"
+          }
+        }
+      }
+    },
+    "pbredisRedisInstance": {
+      "type": "object",
+      "properties": {
+        "accoutName": {
+          "type": "string",
+          "title": "账号名称"
+        },
+        "creationTime": {
+          "type": "string",
+          "title": "创建时间，ISO8601"
+        },
+        "expireTime": {
+          "type": "string",
+          "title": "过期时间"
+        },
+        "instanceId": {
+          "type": "string",
+          "title": "实例id"
+        },
+        "instanceName": {
+          "type": "string",
+          "title": "实例名称"
+        },
+        "provider": {
+          "title": "云类型",
+          "$ref": "#/definitions/pbtenantCloudProvider"
+        },
+        "regionName": {
+          "type": "string",
+          "title": "地域，数据中心"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32",
+          "title": "实例容量大小，单位:MB"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        }
+      }
+    },
     "pbstatisticStatisticAllReq": {
       "type": "object"
     },
@@ -1437,6 +1632,9 @@
     },
     {
       "name": "RdsService"
+    },
+    {
+      "name": "RedisService"
     },
     {
       "name": "StatisticService"
