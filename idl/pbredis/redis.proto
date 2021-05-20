@@ -1,0 +1,91 @@
+syntax = "proto3";
+package pbredis;
+
+option go_package = "github.com/cloud-fitter/cloud-fitter/gen/idl/pbredis";
+
+import "idl/pbtenant/tenant.proto";
+import "google/api/annotations.proto";
+
+message RedisInstance {
+  // 云类型
+  pbtenant.CloudProvider provider = 1;
+  // 账号名称
+  string accout_name = 2;
+  // 实例id
+  string instance_id = 3;
+  // 实例名称
+  string instance_name = 4;
+  // 地域，数据中心
+  string region_name = 5;
+  // 实例容量大小，单位:MB
+  int32 size = 6;
+  // 状态
+  string status = 7;
+  // 创建时间，ISO8601
+  string creation_time = 8;
+  // 过期时间
+  string expire_time = 9;
+}
+
+message ListDetailReq {
+  // 云名称
+  pbtenant.CloudProvider provider = 1;
+  // 账户名称，根据config.yaml中的配置，默认为第一个配置的账户
+  string account_name = 2;
+  // 区域Id，参考 tenant.proto 中的各个云的区域
+  int32 region_id = 3;
+  // 分页相关参数，页码
+  int32 page_number = 4;
+  // 分页相关参数，每页数量
+  int32 page_size = 5;
+  // 分页相关参数，下一页的token
+  string next_token = 6;
+}
+
+message ListDetailResp {
+  // Redis 机器集合
+  repeated RedisInstance redises = 1;
+  // 查询是否完成，如果为否-false，则可以将下面三个分页参数填入到请求中，继续查询
+  bool finished = 2;
+  // 分页相关参数，页码
+  int32 page_number = 3;
+  // 分页相关参数，每页数量
+  int32 page_size = 4;
+  // 分页相关参数，下一页的token
+  string next_token = 5;
+  // 请求id，出现问题后提供给云厂商，排查问题
+  string request_id = 6;
+}
+
+message ListReq {
+  // 云名称
+  pbtenant.CloudProvider provider = 1;
+}
+
+message ListResp {
+  // Redis 机器集合
+  repeated RedisInstance redises = 1;
+}
+
+
+// Redis类产品接口
+// 阿里云 - Redis
+// 腾讯云 - CDB
+service RedisService {
+
+  // 查询Redis明细 - 支持云类型、区域、账户、分页等过滤条件
+  rpc ListRedisDetail(ListDetailReq) returns (ListDetailResp) {
+    option (google.api.http) = {
+      post : "/apis/redis/detail"
+      body : "*"
+    };
+  }
+
+  // 查询Redis全量 - 根据云类型
+  rpc ListRedis(ListReq) returns (ListResp) {
+    option (google.api.http) = {
+      post : "/apis/redis"
+      body : "*"
+    };
+  }
+}

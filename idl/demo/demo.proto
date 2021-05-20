@@ -23,7 +23,7 @@ service DemoService {
   // Echo 样例接口
   rpc Echo(StringMessage) returns (StringMessage) {
     option (google.api.http) = {
-      post : "/apis/v1/demo"
+      post : "/apis/demo"
       body : "*"
     };
 
