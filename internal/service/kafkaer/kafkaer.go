@@ -34,6 +34,8 @@ func NewKafkaClient(provider pbtenant.CloudProvider, region tenanter.Region, ten
 		return newAliKafkaerClient(region, tenant)
 	case pbtenant.CloudProvider_tencent:
 		return newTencentKafkaerClient(region, tenant)
+	case pbtenant.CloudProvider_huawei:
+		return newHuaweiKafkaClient(region, tenant)
 	}
 
 	err = errors.WithMessagef(ErrKafkaListNotSupported, "cloud provider %v region %v", provider, region)

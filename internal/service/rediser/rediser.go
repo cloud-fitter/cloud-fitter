@@ -33,6 +33,8 @@ func NewRedisClient(provider pbtenant.CloudProvider, region tenanter.Region, ten
 	switch provider {
 	case pbtenant.CloudProvider_tencent:
 		return newTencentRedisClient(region, tenant)
+	case pbtenant.CloudProvider_huawei:
+		return newHuaweiDcsClient(region, tenant)
 	}
 
 	err = errors.WithMessagef(ErrRedisListNotSupported, "cloud provider %v region %v", provider, region)
