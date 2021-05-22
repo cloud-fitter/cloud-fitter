@@ -18,9 +18,9 @@ func TestKafkaer_ListDetail(t *testing.T) {
 	tc, _ := NewKafkaClient(pbtenant.CloudProvider_tencent, region, tcTenant[0])
 	tcFailed, _ := NewKafkaClient(pbtenant.CloudProvider_tencent, region, tenanter.NewTenantWithAccessKey("empty", "", ""))
 
-	// region, _ = tenanter.NewRegion(pbtenant.CloudProvider_huawei, int32(pbtenant.HuaweiRegionId_hw_cn_southwest_2))
-	// hw, _ := NewHuaweiEcsClient(region, hwTenant[0])
-	// // hwFailed, _ := NewHuaweiEcsClient(int32(pbtenant.HuaweiRegionId_hw_cn_north_1), tenanter.NewTenantWithAccessKey("empty", "", "", ""))
+	region, _ = tenanter.NewRegion(pbtenant.CloudProvider_huawei, int32(pbtenant.HuaweiRegionId_hw_cn_south_1))
+	hw, _ := NewKafkaClient(pbtenant.CloudProvider_huawei, region, hwTenant[0])
+	// hwFailed, _ := NewHuaweiEcsClient(int32(pbtenant.HuaweiRegionId_hw_cn_north_1), tenanter.NewTenantWithAccessKey("empty", "", "", ""))
 	//
 	// region, _ = tenanter.NewRegion(pbtenant.CloudProvider_aws, int32(pbtenant.AwsRegionId_aws_us_east_2))
 	// aws, _ := NewAwsEcsClient(region, awsTenant[0])
@@ -45,7 +45,7 @@ func TestKafkaer_ListDetail(t *testing.T) {
 		{name: "tc right cli", fields: tc, args: args{&pbkafka.ListDetailReq{PageNumber: 1, PageSize: 10}}, wantErr: false},
 
 		// {name: "hw wrong cli", fields: hwFailed, args: args{pageNumber: 1, pageSize: 1}, wantErr: true},
-		// {name: "hw right cli", fields: hw, args: args{&pbecs.ListDetailReq{PageNumber: 1, PageSize: 10}}, wantErr: false},
+		{name: "hw right cli", fields: hw, args: args{&pbkafka.ListDetailReq{PageNumber: 1, PageSize: 10}}, wantErr: false},
 
 		// {name: "aws right cli", fields: aws, args: args{&pbecs.ListDetailReq{PageNumber: 1, PageSize: 10}}, wantErr: false},
 
