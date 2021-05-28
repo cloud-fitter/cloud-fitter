@@ -21,5 +21,10 @@ func (s *Server) ListBillingDetail(ctx context.Context, req *pbbilling.ListDetai
 }
 
 func (s *Server) ListBilling(ctx context.Context, req *pbbilling.ListReq) (*pbbilling.ListResp, error) {
-	return &pbbilling.ListResp{}, nil
+	resp, err := billing.List(ctx, req)
+	if err != nil {
+		glog.Errorf("ListBilling error %+v", err)
+		return nil, status.Errorf(codes.Internal, err.Error())
+	}
+	return resp, nil
 }
