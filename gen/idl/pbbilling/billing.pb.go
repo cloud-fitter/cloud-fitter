@@ -242,7 +242,7 @@ type ListDetailReq struct {
 
 	// 云名称
 	Provider pbtenant.CloudProvider `protobuf:"varint,1,opt,name=provider,proto3,enum=pbtenant.CloudProvider" json:"provider,omitempty"`
-	// 计费周期
+	// 计费周期,格式为 YYYY-MM
 	BillingCycle string `protobuf:"bytes,2,opt,name=billing_cycle,json=billingCycle,proto3" json:"billing_cycle,omitempty"`
 	// 账户名称，根据config.yaml中的配置，默认为第一个配置的账户
 	AccountName string `protobuf:"bytes,3,opt,name=account_name,json=accountName,proto3" json:"account_name,omitempty"`
@@ -356,7 +356,7 @@ type ListReq struct {
 
 	// 云名称
 	Provider pbtenant.CloudProvider `protobuf:"varint,1,opt,name=provider,proto3,enum=pbtenant.CloudProvider" json:"provider,omitempty"`
-	// 计费周期
+	// 计费周期,格式为 YYYY-MM
 	BillingCycle string `protobuf:"bytes,2,opt,name=billing_cycle,json=billingCycle,proto3" json:"billing_cycle,omitempty"`
 }
 

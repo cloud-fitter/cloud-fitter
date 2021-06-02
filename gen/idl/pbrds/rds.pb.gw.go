@@ -238,7 +238,7 @@ func RegisterRdsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 var (
 	pattern_RdsService_ListRdsDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"apis", "rds", "detail"}, ""))
 
-	pattern_RdsService_ListRds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"apisrds"}, ""))
+	pattern_RdsService_ListRds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"apis", "rds"}, ""))
 )
 
 var (

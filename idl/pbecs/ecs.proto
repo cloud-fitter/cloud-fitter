@@ -33,6 +33,14 @@ message EcsInstance {
   string creation_time = 12;
   // 过期时间
   string expire_time = 13;
+  // 内网ip
+  repeated string inner_ips = 14;
+  // vcp id
+  string vpc_id = 15;
+  // 资源组id
+  string resource_group_id = 16;
+  // 收费类型
+  string charge_type = 17;
 }
 
 message ListDetailReq {

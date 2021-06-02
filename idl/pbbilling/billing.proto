@@ -45,7 +45,7 @@ message AliProductInfo {
 message ListDetailReq {
   // 云名称
   pbtenant.CloudProvider provider = 1;
-  // 计费周期
+  // 计费周期,格式为 YYYY-MM
   string billing_cycle = 2;
   // 账户名称，根据config.yaml中的配置，默认为第一个配置的账户
   string account_name = 3;
@@ -59,7 +59,7 @@ message ListDetailResp {
 message ListReq {
   // 云名称
   pbtenant.CloudProvider provider = 1;
-  // 计费周期
+  // 计费周期,格式为 YYYY-MM
   string billing_cycle = 2;
 }
 
