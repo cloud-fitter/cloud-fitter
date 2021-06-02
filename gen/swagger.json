@@ -413,6 +413,39 @@
         }
       }
     },
+    "/apis/rds": {
+      "post": {
+        "tags": [
+          "RdsService"
+        ],
+        "summary": "查询RDS全量 - 根据云类型",
+        "operationId": "RdsService_ListRds",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbrdsListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbrdsListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/apis/rds/detail": {
       "post": {
         "tags": [
@@ -577,39 +610,6 @@
           }
         }
       }
-    },
-    "/apisrds": {
-      "post": {
-        "tags": [
-          "RdsService"
-        ],
-        "summary": "查询RDS全量 - 根据云类型",
-        "operationId": "RdsService_ListRds",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/pbrdsListReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/pbrdsListResp"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
     }
   },
   "definitions": {
@@ -680,7 +680,7 @@
         },
         "billingCycle": {
           "type": "string",
-          "title": "计费周期"
+          "title": "计费周期,格式为 YYYY-MM"
         },
         "provider": {
           "title": "云名称",
@@ -705,7 +705,7 @@
       "properties": {
         "billingCycle": {
           "type": "string",
-          "title": "计费周期"
+          "title": "计费周期,格式为 YYYY-MM"
         },
         "provider": {
           "title": "云名称",
@@ -847,6 +847,10 @@
           "type": "string",
           "title": "账号名称"
         },
+        "chargeType": {
+          "type": "string",
+          "title": "收费类型"
+        },
         "cpu": {
           "type": "integer",
           "format": "int32",
@@ -863,6 +867,13 @@
         "expireTime": {
           "type": "string",
           "title": "过期时间"
+        },
+        "innerIps": {
+          "type": "array",
+          "title": "内网ip",
+          "items": {
+            "type": "string"
+          }
         },
         "instanceId": {
           "type": "string",
@@ -896,9 +907,17 @@
           "type": "string",
           "title": "地域，数据中心"
         },
+        "resourceGroupId": {
+          "type": "string",
+          "title": "资源组id"
+        },
         "status": {
           "type": "string",
           "title": "状态"
+        },
+        "vpcId": {
+          "type": "string",
+          "title": "vcp id"
         }
       }
     },

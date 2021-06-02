@@ -60,19 +60,23 @@ func (ecs *AliEcs) ListDetail(ctx context.Context, req *pbecs.ListDetailReq) (*p
 	var ecses = make([]*pbecs.EcsInstance, len(resp.Instances.Instance))
 	for k, v := range resp.Instances.Instance {
 		ecses[k] = &pbecs.EcsInstance{
-			Provider:     pbtenant.CloudProvider_ali,
-			AccountName:  ecs.tenanter.AccountName(),
-			InstanceId:   v.InstanceId,
-			InstanceName: v.InstanceName,
-			RegionName:   ecs.region.GetName(),
-			PublicIps:    v.PublicIpAddress.IpAddress,
-			InstanceType: v.InstanceType,
-			Cpu:          int32(v.CPU),
-			Memory:       int32(v.Memory),
-			Description:  v.Description,
-			Status:       v.Status,
-			CreationTime: v.CreationTime,
-			ExpireTime:   v.ExpiredTime,
+			Provider:        pbtenant.CloudProvider_ali,
+			AccountName:     ecs.tenanter.AccountName(),
+			InstanceId:      v.InstanceId,
+			InstanceName:    v.InstanceName,
+			RegionName:      ecs.region.GetName(),
+			PublicIps:       v.PublicIpAddress.IpAddress,
+			InstanceType:    v.InstanceType,
+			Cpu:             int32(v.Cpu),
+			Memory:          int32(v.Memory),
+			Description:     v.Description,
+			Status:          v.Status,
+			CreationTime:    v.CreationTime,
+			ExpireTime:      v.ExpiredTime,
+			InnerIps:        v.InnerIpAddress.IpAddress,
+			VpcId:           v.VpcAttributes.VpcId,
+			ResourceGroupId: v.ResourceGroupId,
+			ChargeType:      v.InstanceChargeType,
 		}
 	}
 

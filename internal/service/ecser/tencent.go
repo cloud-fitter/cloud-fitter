@@ -53,22 +53,29 @@ func (ecs *TencentCvm) ListDetail(ctx context.Context, req *pbecs.ListDetailReq)
 	var ecses = make([]*pbecs.EcsInstance, len(resp.Response.InstanceSet))
 	for k, v := range resp.Response.InstanceSet {
 		ecses[k] = &pbecs.EcsInstance{
-			Provider:     pbtenant.CloudProvider_tencent,
-			AccountName:  ecs.tenanter.AccountName(),
-			InstanceId:   *v.InstanceId,
-			InstanceName: *v.InstanceName,
-			RegionName:   ecs.region.GetName(),
-			InstanceType: *v.InstanceType,
-			PublicIps:    make([]string, len(v.PublicIpAddresses)),
-			Cpu:          int32(*v.CPU),
-			Memory:       int32(*v.Memory),
-			Description:  "",
-			Status:       *v.InstanceState,
-			CreationTime: *v.CreatedTime,
-			ExpireTime:   *v.ExpiredTime,
+			Provider:        pbtenant.CloudProvider_tencent,
+			AccountName:     ecs.tenanter.AccountName(),
+			InstanceId:      *v.InstanceId,
+			InstanceName:    *v.InstanceName,
+			RegionName:      ecs.region.GetName(),
+			PublicIps:       make([]string, len(v.PublicIpAddresses)),
+			InstanceType:    *v.InstanceType,
+			Cpu:             int32(*v.CPU),
+			Memory:          int32(*v.Memory),
+			Description:     "",
+			Status:          *v.InstanceState,
+			CreationTime:    *v.CreatedTime,
+			ExpireTime:      *v.ExpiredTime,
+			InnerIps:        make([]string, len(v.PrivateIpAddresses)),
+			VpcId:           *v.VirtualPrivateCloud.VpcId,
+			ResourceGroupId: "",
+			ChargeType:      *v.InstanceChargeType,
 		}
 		for k1, v1 := range v.PublicIpAddresses {
 			ecses[k].PublicIps[k1] = *v1
+		}
+		for k1, v1 := range v.PrivateIpAddresses {
+			ecses[k].InnerIps[k1] = *v1
 		}
 	}
 
